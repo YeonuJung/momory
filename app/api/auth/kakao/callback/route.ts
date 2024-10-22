@@ -40,7 +40,9 @@ export async function GET(request: NextRequest) {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-
+  if(!userEmailResponse.ok){
+    return NextResponse.json({error: "kakao user email request failed"})
+  }
   // 사용자 정보를 받아옴
   const userEmail = await userEmailResponse.json();
 

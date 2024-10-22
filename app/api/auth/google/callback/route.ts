@@ -40,6 +40,10 @@ export async function GET(request: NextRequest) {
       },
     },
   );
+  if (!userEmailResponse.ok) {
+    return NextResponse.json({ error: "google user email request failed" });
+  }
+  // 사용자 정보를 받아옴
   const userEmail = await userEmailResponse.json();
 
   return NextResponse.json({ data: userEmail });
