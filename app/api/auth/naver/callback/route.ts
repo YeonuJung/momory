@@ -1,3 +1,4 @@
+// import { signAccessToken, signRefreshToken } from "@/backend/utils/jwt-utils";
 import { NextRequest, NextResponse } from "next/server";
 // 사용자가 네이버 로그인 요청후 네이버 서버에서 인가코드를 보내주는 곳
 export async function GET(request: NextRequest) {
@@ -25,12 +26,12 @@ export async function GET(request: NextRequest) {
    const naverToken = await naverTokenResponse.json()
 
    // 엑세스 토큰
-   const accessToken = naverToken.access_token;
+   const naverAccessToken = naverToken.access_token;
 
     // 네이버 서버에 액세스 토큰을 보내서 사용자 정보를 받아오는 과정
    const userEmailResponse = await fetch ('https://openapi.naver.com/v1/nid/me', {
     headers: {
-        Authorization: `Bearer ${accessToken}`
+        Authorization: `Bearer ${naverAccessToken}`
     }
    })
    if(!userEmailResponse.ok){
@@ -38,4 +39,7 @@ export async function GET(request: NextRequest) {
    }
    const userEmail = await userEmailResponse.json()
    return NextResponse.json({data: userEmail})
+
+//    const accessToken = signAccessToken(userEmail.response.id)
+//    const refreshToken = signRefreshToken(userEmail.response.id)
 }

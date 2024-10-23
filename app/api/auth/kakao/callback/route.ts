@@ -31,13 +31,13 @@ export async function GET(request: NextRequest) {
   const kakaoToken = await kakaoTokenResponse.json();
 
   // 엑세스 토큰
-  const accessToken = kakaoToken.access_token;
+  const kakaoAccessToken = kakaoToken.access_token;
 
   // 카카오 서버에 액세스 토큰을 보내서 사용자 정보를 받아오는 과정
   const userEmailResponse = await fetch("https://kapi.kakao.com/v2/user/me", {
     headers: {
       "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${kakaoAccessToken}`,
     },
   });
   if(!userEmailResponse.ok){

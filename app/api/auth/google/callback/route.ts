@@ -29,14 +29,14 @@ export async function GET(request: NextRequest) {
   }
   const googleToken = await googleTokenResponse.json();
   // 엑세스 토큰
-  const accessToken = googleToken.access_token;
+  const googleAccessToken = googleToken.access_token;
 
   // 구글 서버에 액세스 토큰을 보내서 사용자 정보를 받아오는 과정
   const userEmailResponse = await fetch(
     'https://www.googleapis.com/oauth2/v3/userinfo',
     {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${googleAccessToken}`,
       },
     },
   );
