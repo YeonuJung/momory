@@ -31,7 +31,7 @@ export const verifyAccessToken = (token: string) => {
       return {
         ok: false,
         name: e.name,
-        message: e.message,
+        message: 'jwt expired',
         expireAt: e.expiredAt,
       };
     }
@@ -84,7 +84,7 @@ export const verifyRefreshToken = (token: string) => {
         return {
           ok: false,
           name: e.name,
-          message: e.message,
+          message: 'jwt expired',
           expireAt: e.expiredAt,
         };
       }

@@ -66,7 +66,20 @@ export async function GET(request: NextRequest) {
     const accessToken = signAccessToken(data[0].id);
     const refreshToken = signRefreshToken(data[0].id);
 
-    return NextResponse.json({ accessToken, refreshToken });
+    const response = NextResponse.redirect(`${process.env.JWT_REDIRECT_URI}`);
+    
+    response.cookies.set("access_token", accessToken, {
+      httpOnly: false,
+    })
+    response.cookies.set("refresh_token", refreshToken, {
+      httpOnly: true,
+      sameSite: "lax",
+      path: "/api",
+      maxAge: 60 * 60 * 24 * 30,
+    });
+    return response;
+    
+   
   }
   // 기존에 가입된 유저가 아니라면 새로 등록 후 토큰 발급
   const { data: insertData, error: insertError } = await supabase
@@ -81,5 +94,17 @@ export async function GET(request: NextRequest) {
   // 엑세스 토큰과 리프레시 토큰을 발급
   const accessToken = signAccessToken(insertData[0].id);
   const refreshToken = signRefreshToken(insertData[0].id);
-  return NextResponse.json({ accessToken, refreshToken });
+
+ const response = NextResponse.redirect(`${process.env.JWT_REDIRECT_URI}`);
+    
+ response.cookies.set("access_token", accessToken, {
+   httpOnly: false,
+ })
+ response.cookies.set("refresh_token", refreshToken, {
+   httpOnly: true,
+   sameSite: "lax",
+   path: "/api",
+   maxAge: 60 * 60 * 24 * 30,
+ });
+ return response;
 }
