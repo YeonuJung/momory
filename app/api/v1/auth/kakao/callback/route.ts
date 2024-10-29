@@ -1,10 +1,9 @@
+import { checkUserByEmail, createUser } from "@/backend/query/user";
 import { signAccessToken, signRefreshToken } from "@/backend/utils/jwt-utils";
-import { createClient } from "@/backend/utils/supabase-utils";
 import { NextRequest, NextResponse } from "next/server";
 
 // 사용자가 카카오 로그인 요청후 카카오 서버에서 인가코드를 보내주는 곳
 export async function GET(request: NextRequest) {
-  const supabase = createClient();
   // 인가코드를 받아옴
   const code = request.nextUrl.searchParams.get("code");
   if (!code) {
@@ -51,60 +50,54 @@ export async function GET(request: NextRequest) {
   } = await userEmailResponse.json();
 
   // 기존에 가입된 유저인지 확인(이메일과 소셜타입으로 구분)
-  const { data, error } = await supabase
-    .from("user")
-    .select("*")
-    .eq("email", email)
-    .eq("social_type", "kakao");
+  const isUserExists = await checkUserByEmail({
+    email: email,
+    social_type: "kakao",
+  });
 
-  if (error) {
-    return NextResponse.json({ error: error }, { status: 500 });
+  if (isUserExists instanceof Error) {
+    return NextResponse.json({ error: isUserExists }, { status: 500 });
   }
   // 기존에 가입된 유저라면 토큰을 바로 발급
-  if (data && data?.length > 0) {
+  if (isUserExists.length > 0) {
     // 엑세스 토큰과 리프레시 토큰을 발급
-    const accessToken = signAccessToken(data[0].id);
-    const refreshToken = signRefreshToken(data[0].id);
+    const accessToken = signAccessToken(isUserExists[0].id);
+    const refreshToken = signRefreshToken(isUserExists[0].id);
 
     const response = NextResponse.redirect(`${process.env.JWT_REDIRECT_URI}`);
-    
+
     response.cookies.set("access_token", accessToken, {
       httpOnly: false,
-    })
+    });
     response.cookies.set("refresh_token", refreshToken, {
       httpOnly: true,
       sameSite: "lax",
-      path: "/api",
+      path: "/api/refresh",
       maxAge: 60 * 60 * 24 * 30,
     });
     return response;
-    
-   
   }
   // 기존에 가입된 유저가 아니라면 새로 등록 후 토큰 발급
-  const { data: insertData, error: insertError } = await supabase
-    .from("user")
-    .insert([{ email: email, social_type: "kakao" }])
-    .select("id");
+  const insertData = await createUser({ email: email, social_type: "kakao" });
 
-  if (insertError) {
-    return NextResponse.json({ error: insertError }, { status: 500 });
+  if (insertData instanceof Error) {
+    return NextResponse.json({ error: insertData }, { status: 500 });
   }
 
   // 엑세스 토큰과 리프레시 토큰을 발급
   const accessToken = signAccessToken(insertData[0].id);
   const refreshToken = signRefreshToken(insertData[0].id);
 
- const response = NextResponse.redirect(`${process.env.JWT_REDIRECT_URI}`);
-    
- response.cookies.set("access_token", accessToken, {
-   httpOnly: false,
- })
- response.cookies.set("refresh_token", refreshToken, {
-   httpOnly: true,
-   sameSite: "lax",
-   path: "/api",
-   maxAge: 60 * 60 * 24 * 30,
- });
- return response;
+  const response = NextResponse.redirect(`${process.env.JWT_REDIRECT_URI}`);
+
+  response.cookies.set("access_token", accessToken, {
+    httpOnly: false,
+  });
+  response.cookies.set("refresh_token", refreshToken, {
+    httpOnly: true,
+    sameSite: "lax",
+    path: "/api",
+    maxAge: 60 * 60 * 24 * 30,
+  });
+  return response;
 }
