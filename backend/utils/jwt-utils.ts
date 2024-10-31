@@ -1,109 +1,107 @@
-import * as jwt from "jsonwebtoken";
-import { JwtPayload } from "jsonwebtoken";
-const secret = process.env.JWT_SECRET_KEY as string;
+import * as jose from "jose";
 
-export const signAccessToken = (id: number) => {
-  return jwt.sign({ id, type: "access" }, secret, {
-    expiresIn: "1h",
-    algorithm: "HS256",
-  });
+const secret = new TextEncoder().encode(process.env.JWT_SECRET_KEY);
+
+export const signAccessToken = async (id: number) => {
+  return new jose.SignJWT({ id, type: "access" })
+    .setProtectedHeader({ alg: "HS256" })
+    .setExpirationTime("1h")
+    .sign(secret);
 };
 
-export const verifyAccessToken = (token: string) => {
-  let decoded = null;
+export const verifyAccessToken = async (token: string) => {
   try {
-    decoded = jwt.verify(token, secret) as JwtPayload;
-    // 토큰의 타입이 access가 아닐 때
-    if (decoded.type !== "access") {
+    const { payload } = await jose.jwtVerify(token, secret);
+
+    if (payload.type !== "access") {
       return {
         ok: false,
         error: "Invalid token",
       };
     }
-    // 토큰이 유효할 때
+
     return {
       ok: true,
-      payload: decoded,
+      payload,
     };
-  } catch (e) {
-    // 토큰이 만료됐을 때
-    if (e instanceof jwt.TokenExpiredError) {
+  } catch (e: any) {
+    if (e.code === "ERR_JWT_EXPIRED") {
       return {
         ok: false,
-        name: e.name,
-        message: 'jwt expired',
-        expireAt: e.expiredAt,
+        error: e.code,
+        message: e.reason,
+        expireAt: new Date(e.claim.exp * 1000),
       };
     }
-    // 토큰이 변조됐을 때
-    if (e instanceof jwt.JsonWebTokenError) {
+    if (e.code === "ERR_JWT_INVALID") {
       return {
         ok: false,
-        name: e.name,
-        error: e.message,
+        error: e.code,
+        message: e.reason,
       };
     }
-    // 토큰이 활성화되기 전일 때
-    if (e instanceof jwt.NotBeforeError) {
+    if (e.code === "ERR_JWT_CLAIM_VALIDATION_FAILED") {
       return {
         ok: false,
-        name: e.name,
-        error: e.message,
-        date: e.date,
+        error: e.code,
+        message: e.reason,
       };
     }
+    return {
+      ok: false,
+      error: e,
+    };
   }
 };
 
-export const signRefreshToken = (id: number) => {
-  return jwt.sign({ id, type: "refresh" }, secret, {
-    expiresIn: "30d",
-    algorithm: "HS256",
-  });
+export const signRefreshToken = async (id: number) => {
+  return new jose.SignJWT({ id, type: "refresh" })
+    .setProtectedHeader({ alg: "HS256" })
+    .setExpirationTime("30d")
+    .sign(secret);
 };
 
-export const verifyRefreshToken = (token: string) => {
-    let decoded = null;
-    try {
-      decoded = jwt.verify(token, secret) as JwtPayload;
-      // 토큰의 타입이 refresh가 아닐 때
-      if (decoded.type !== "refresh") {
-        return {
-          ok: false,
-          error: "Invalid token",
-        };
-      }
-      // 토큰이 유효할 때
+export const verifyRefreshToken = async (token: string) => {
+  try {
+    const { payload } = await jose.jwtVerify(token, secret);
+
+    if (payload.type !== "refresh") {
       return {
-        ok: true,
-        payload: decoded,
+        ok: false,
+        error: "Invalid token",
       };
-    } catch (e) {
-      // 토큰이 만료됐을 때
-      if (e instanceof jwt.TokenExpiredError) {
-        return {
-          ok: false,
-          name: e.name,
-          message: 'jwt expired',
-          expireAt: e.expiredAt,
-        };
-      }
-      // 토큰이 변조됐을 때
-      if (e instanceof jwt.JsonWebTokenError) {
-        return {
-          ok: false,
-          name: e.name,
-          error: e.message,
-        };
-      }
-      // 토큰이 활성화되기 전일 때
-      if (e instanceof jwt.NotBeforeError) {
-        return {
-          ok: false,
-          name: e.name,
-          error: e.message,
-          date: e.date,
-        };
-      }
     }
+
+    return {
+      ok: true,
+      payload,
+    };
+  } catch (e: any) {
+    if (e.code === "ERR_JWT_EXPIRED") {
+      return {
+        ok: false,
+        error: e.code,
+        message: e.reason,
+        expireAt: new Date(e.claim.exp * 1000),
+      };
+    }
+    if (e.code === "ERR_JWT_INVALID") {
+      return {
+        ok: false,
+        error: e.code,
+        message: e.reason,
+      };
+    }
+    if (e.code === "ERR_JWT_CLAIM_VALIDATION_FAILED") {
+      return {
+        ok: false,
+        error: e.code,
+        message: e.reason,
+      };
+    }
+    return {
+      ok: false,
+      error: e,
+    };
+  }
 };

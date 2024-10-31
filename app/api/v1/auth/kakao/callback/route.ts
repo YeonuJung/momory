@@ -61,19 +61,18 @@ export async function GET(request: NextRequest) {
   // 기존에 가입된 유저라면 토큰을 바로 발급
   if (isUserExists.length > 0) {
     // 엑세스 토큰과 리프레시 토큰을 발급
-    const accessToken = signAccessToken(isUserExists[0].id);
-    const refreshToken = signRefreshToken(isUserExists[0].id);
-
+   const [accessToken, refreshToken] = await Promise.all([signAccessToken(isUserExists[0].id),signRefreshToken(isUserExists[0].id)])
     const response = NextResponse.redirect(`${process.env.JWT_REDIRECT_URI}`);
 
     response.cookies.set("access_token", accessToken, {
       httpOnly: false,
+      maxAge: (60 * 60 * 24 * 30) + (60 * 60),
     });
     response.cookies.set("refresh_token", refreshToken, {
       httpOnly: true,
       sameSite: "lax",
       path: "/api/refresh",
-      maxAge: 60 * 60 * 24 * 30,
+      maxAge: (60 * 60 * 24 * 30) + (60 * 60),
     });
     return response;
   }
@@ -85,19 +84,19 @@ export async function GET(request: NextRequest) {
   }
 
   // 엑세스 토큰과 리프레시 토큰을 발급
-  const accessToken = signAccessToken(insertData[0].id);
-  const refreshToken = signRefreshToken(insertData[0].id);
+  const [accessToken, refreshToken] = await Promise.all([signAccessToken(isUserExists[0].id),signRefreshToken(isUserExists[0].id)])
 
   const response = NextResponse.redirect(`${process.env.JWT_REDIRECT_URI}`);
 
   response.cookies.set("access_token", accessToken, {
     httpOnly: false,
+    maxAge: (60 * 60 * 24 * 30) + (60 * 60),
   });
   response.cookies.set("refresh_token", refreshToken, {
     httpOnly: true,
     sameSite: "lax",
     path: "/api",
-    maxAge: 60 * 60 * 24 * 30,
+    maxAge: (60 * 60 * 24 * 30) + (60 * 60),
   });
   return response;
 }

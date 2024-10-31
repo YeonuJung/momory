@@ -1,8 +1,8 @@
 import { PostgrestError } from "@supabase/supabase-js";
-import { createClient } from "../utils/supabase-utils";
+import { supabase } from "../utils/supabase-utils";
 import { User } from "@/types/model";
 
-const supabase = createClient();
+
 
 export interface checkUserByEmailProps {
   email: string;

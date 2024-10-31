@@ -1,6 +1,5 @@
-import { createClient } from "../utils/supabase-utils";
+import { supabase } from "../utils/supabase-utils";
 
-const supabase = createClient();
 
 export const checkMomory = async (id : number) => {
   const { data, error } = await supabase
