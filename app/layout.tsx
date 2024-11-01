@@ -1,17 +1,17 @@
 import localFont from "next/font/local"
-import "./globals.css";
+import './globals.css'
 
 
 const pretendard = localFont({
   src: "../public/fonts/PretendardVariable.woff2",
   variable: "--font-pretendard",
-  display: "swap"
+  display: "block"
 })
 
 const nanumHaNaSonGeurSsi = localFont({
   src: "../public/fonts/NanumHaNaSonGeurSsi.ttf",
   variable: "--font-nanum-Hana",
-  display: "swap",
+  display: "block",
   weight: "400"
 })
 
