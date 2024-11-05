@@ -19,18 +19,22 @@ const config: Config = {
       fontFamily:{
         pretendard: ["var(--font-pretendard)"],
         "nanum-Hana": ["var(--font-nanum-Hana)"],
+        "nanum-Jung": ["var(--font-nanum-Jung)"]
       },
       screens: {
-        // xs -> 가로
+        // xs -> 디바이스 가로
         xs: '480px',
-        // short -> 세로
+        // short -> 디바이스 세로(가로모드 대비)
         short: {
           raw: '(max-height: 400px)',
         },
         watch: {
           raw: '(max-height: 225px)',
         }
-
+      },
+      backgroundImage: {
+        "title-illustration": "url('/image/타이틀 주변.svg')",
+        "polaroid-frame": "url('/image/frame.png')"
       }
     },
   },

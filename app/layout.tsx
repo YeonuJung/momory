@@ -15,13 +15,20 @@ const nanumHaNaSonGeurSsi = localFont({
   weight: "400"
 })
 
+const nanumJungHagSaeng = localFont({
+  src: "../public/fonts/NanumJungHagSaeng.ttf",
+  variable: "--font-nanum-Jung",
+  display: "block",
+  weight: "400"
+})
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${pretendard.variable} ${nanumHaNaSonGeurSsi.variable}`}>
+    <html lang="en" className={`${pretendard.variable} ${nanumHaNaSonGeurSsi.variable} ${nanumJungHagSaeng.variable}`}>
       <body className="min-h-screen flex flex-col items-center bg-slate-300">
         {children}
       </body>
