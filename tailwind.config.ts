@@ -21,7 +21,16 @@ const config: Config = {
         "nanum-Hana": ["var(--font-nanum-Hana)"],
       },
       screens: {
+        // xs -> 가로
         xs: '480px',
+        // short -> 세로
+        short: {
+          raw: '(max-height: 400px)',
+        },
+        watch: {
+          raw: '(max-height: 225px)',
+        }
+
       }
     },
   },
