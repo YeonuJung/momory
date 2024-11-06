@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${pretendard.variable} ${nanumHaNaSonGeurSsi.variable} ${nanumJungHagSaeng.variable}`}>
-      <body className="min-h-screen flex flex-col items-center bg-slate-300">
+      <body className="min-h-screen flex flex-col items-center bg-white">
         {children}
       </body>
     </html>

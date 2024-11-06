@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="relative flex min-h-screen w-full max-w-[48rem] flex-col justify-center gap-y-[6.9vw] overflow-auto bg-ruby xs:gap-y-[3.312rem] short:h-[85rem] watch:h-[22.5rem]">
+    <div className="relative flex min-h-screen w-full max-w-[48rem] flex-col justify-center gap-y-[6.9vw] overflow-auto bg-ruby xs:gap-y-[3.312rem] landscape:min-h-[85rem] watch:h-[22.5rem]">
       <Image
         src={"/image/1.png"}
         alt="배경 주변 폴라로이드"
@@ -90,7 +90,7 @@ export default function Home() {
       ></Image>
       <div className="relative flex flex-col items-center justify-center gap-y-[2.3vw] xs:gap-y-[1.104rem]">
         <Image
-          src={"/image/배경 일러스트.svg"}
+          src={"/image/배경 일러스트.png"}
           width={339}
           height={521}
           alt={"배경 일러스트"}
@@ -99,7 +99,7 @@ export default function Home() {
         <div className="relative px-[3.2vw] pt-[5.3vw] xs:px-[1.536rem] xs:pt-[2.544rem]">
           <Image
             alt={"메인로고"}
-            src={"/image/메인로고.svg"}
+            src={"/image/메인로고.png"}
             width={200}
             height={53.13}
             className="absolute left-1/2 top-0 h-auto w-[53.3vw] -translate-x-1/2 xs:w-[25.584rem]"

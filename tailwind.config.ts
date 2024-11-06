@@ -24,16 +24,12 @@ const config: Config = {
       screens: {
         // xs -> 디바이스 가로
         xs: '480px',
-        // short -> 디바이스 세로(가로모드 대비)
-        short: {
-          raw: '(max-height: 400px)',
-        },
         watch: {
-          raw: '(max-height: 225px)',
+          raw: '(max-width: 225px)',
         }
       },
       backgroundImage: {
-        "title-illustration": "url('/image/타이틀 주변.svg')",
+        "title-illustration": "url('/image/타이틀 주변.png')",
         "polaroid-frame": "url('/image/frame.png')"
       }
     },
