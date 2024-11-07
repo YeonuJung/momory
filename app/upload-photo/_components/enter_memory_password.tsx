@@ -6,7 +6,6 @@ export default function Enter_memory_password() {
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if(!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(e.target.value)){
-      alert
     }
     setPassword(e.target.value);
   }

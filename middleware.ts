@@ -81,9 +81,13 @@ export async function middleware(request: NextRequest) {
       return NextResponse.json({ error: "invalid access_token" }, { status: 401 });
     }
   // access_token이 유효할 때
-    console.log("middleware", "access_token 유효함");
+    const response = NextResponse.next();
+    response.headers.set('x-middleware-data', JSON.stringify({ 
+    userId: decoded.payload?.id
+  }))
+  return response;
   }
-  return NextResponse.next();
+ return NextResponse.next();
 }
 
 export const config = {

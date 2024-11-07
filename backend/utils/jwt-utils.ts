@@ -2,8 +2,12 @@ import * as jose from "jose";
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET_KEY);
 
-export const signAccessToken = async (id: number) => {
-  return new jose.SignJWT({ id, type: "access" })
+interface signAccessTokenParams {
+  user_id: number;
+  momory_id?: string;
+}
+export const signAccessToken = async ({user_id, momory_id}: signAccessTokenParams) => {
+  return new jose.SignJWT({ user_id, type: "access", momory_id })
     .setProtectedHeader({ alg: "HS256" })
     .setExpirationTime("1h")
     .sign(secret);

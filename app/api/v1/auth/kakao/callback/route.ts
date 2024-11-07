@@ -5,13 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 // 사용자가 카카오 로그인 요청후 카카오 서버에서 인가코드를 보내주는 곳
 export async function GET(request: NextRequest) {
   // 인가코드를 받아옴
-  const code = request.nextUrl.searchParams.get("code");
-  if (!code) {
-    return NextResponse.json(
-      { error: "Authorization code is required" },
-      { status: 400 },
-    );
-  }
+  const code = request.nextUrl.searchParams.get("code")!
+
   // 카카오 서버에 인가코드를 보내서 토큰을 받아오는 과정
   const kakaoTokenResponse = await fetch(
     `https://kauth.kakao.com/oauth/token`,
@@ -29,7 +24,7 @@ export async function GET(request: NextRequest) {
     },
   );
   if (!kakaoTokenResponse.ok) {
-    return NextResponse.json({ error: "kakao token request failed" });
+    return NextResponse.redirect(new URL("/", request.url))
   }
   // 카카오 서버에서 받아온 액세스토큰을 추출
   const { access_token } = await kakaoTokenResponse.json();
@@ -42,7 +37,7 @@ export async function GET(request: NextRequest) {
     },
   });
   if (!userEmailResponse.ok) {
-    return NextResponse.json({ error: "kakao user email request failed" });
+    return NextResponse.redirect(new URL("/", request.url))
   }
   // 유저 이메일 추출
   const {
@@ -56,13 +51,13 @@ export async function GET(request: NextRequest) {
   });
 
   if (isUserExists instanceof Error) {
-    return NextResponse.json({ error: isUserExists }, { status: 500 });
+    return NextResponse.redirect(new URL("/", request.url));
   }
   // 기존에 가입된 유저라면 토큰을 바로 발급
   if (isUserExists.length > 0) {
     // 엑세스 토큰과 리프레시 토큰을 발급
-   const [accessToken, refreshToken] = await Promise.all([signAccessToken(isUserExists[0].id),signRefreshToken(isUserExists[0].id)])
-    const response = NextResponse.redirect(`${process.env.JWT_REDIRECT_URI}`);
+   const [accessToken, refreshToken] = await Promise.all([signAccessToken({user_id: isUserExists[0].id}),signRefreshToken(isUserExists[0].id)])
+  const response = NextResponse.redirect(new URL("/", request.url));
 
     response.cookies.set("access_token", accessToken, {
       httpOnly: false,
@@ -80,13 +75,13 @@ export async function GET(request: NextRequest) {
   const insertData = await createUser({ email: email, social_type: "kakao" });
 
   if (insertData instanceof Error) {
-    return NextResponse.json({ error: insertData }, { status: 500 });
+    return NextResponse.redirect(new URL("/", request.url))
   }
 
   // 엑세스 토큰과 리프레시 토큰을 발급
-  const [accessToken, refreshToken] = await Promise.all([signAccessToken(isUserExists[0].id),signRefreshToken(isUserExists[0].id)])
+  const [accessToken, refreshToken] = await Promise.all([signAccessToken({user_id: isUserExists[0].id}),signRefreshToken(isUserExists[0].id)])
 
-  const response = NextResponse.redirect(`${process.env.JWT_REDIRECT_URI}`);
+  const response = NextResponse.redirect(new URL("/", request.url));
 
   response.cookies.set("access_token", accessToken, {
     httpOnly: false,

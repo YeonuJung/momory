@@ -1,6 +1,5 @@
 // import { generateRandomState } from "@/utils/generateRandomState";
 import { verifyAccessToken } from "@/backend/utils/jwt-utils";
-import { supabase } from "@/backend/utils/supabase-utils";
 import { NextRequest, NextResponse } from "next/server";
 
 // const state: string = generateRandomState();
@@ -20,21 +19,10 @@ export async function GET(request: NextRequest) {
       response.cookies.delete("refresh_token");
       return response;
     }
-    if (payload && payload.id) {
-      const { data, error } = await supabase
-        .from("momory")
-        .select("*")
-        .eq("user_id", payload.id);
-      if (error) {
-        return NextResponse.json(
-          { error: "Database error occurred" },
-          { status: 500 },
-        );
-      }
-      if (data && data.length > 0) {
-        return NextResponse.redirect("/momory");
-      }
+    if (payload && payload.momory_id) {
+      return NextResponse.redirect(new URL("/momory", request.url));
     }
+    return NextResponse.redirect(new URL("/create-momory", request.url));
   }
   return NextResponse.redirect(
     `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_REDIRECT_URI}&state=test`,

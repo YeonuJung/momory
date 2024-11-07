@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
   // 기존에 가입된 유저라면 토큰을 바로 발급
   if (isUserExists.length > 0) {
     // 엑세스 토큰과 리프레시 토큰을 발급
-    const [accessToken, refreshToken] = await Promise.all([signAccessToken(isUserExists[0].id),signRefreshToken(isUserExists[0].id)])
+    const [accessToken, refreshToken] = await Promise.all([signAccessToken({user_id: isUserExists[0].id}),signRefreshToken(isUserExists[0].id)])
 
     const response = NextResponse.redirect(`${process.env.JWT_REDIRECT_URI}`);
 
@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
   }
 
   // 엑세스 토큰과 리프레시 토큰을 발급
-  const [accessToken, refreshToken] = await Promise.all([signAccessToken(isUserExists[0].id),signRefreshToken(isUserExists[0].id)])
+  const [accessToken, refreshToken] = await Promise.all([signAccessToken({user_id: isUserExists[0].id}),signRefreshToken(isUserExists[0].id)])
 
   const response = NextResponse.redirect(`${process.env.JWT_REDIRECT_URI}`);
 

@@ -1,5 +1,4 @@
 import { verifyAccessToken } from "@/backend/utils/jwt-utils";
-import { supabase } from "@/backend/utils/supabase-utils";
 import { NextRequest, NextResponse } from "next/server";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID as string;
@@ -17,18 +16,10 @@ export async function GET(request: NextRequest) {
       response.cookies.delete("refresh_token");
       return response;
     }
-    if (payload && payload.id) {
-      const {data, error} = await supabase
-        .from("momory")
-        .select("*")
-        .eq("user_id", payload.id);
-        if(error){
-          return NextResponse.json({error: "Database error occurred"}, {status: 500});
-        }
-        if(data && data.length > 0){
-          return NextResponse.redirect("/momory");
-        }
+    if (payload && payload.momory_id) {
+      return NextResponse.redirect(new URL("/momory", request.url));
     }
+    return NextResponse.redirect(new URL("/create-momory", request.url));
   }
   return NextResponse.redirect(
     `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=email%20profile`,
