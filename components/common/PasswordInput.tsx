@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export default function Enter_memory_password() {
+export default function PasswordInput() {
   const [password, setPassword] = useState("");
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {

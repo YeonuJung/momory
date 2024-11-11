@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function Nickname_input() {
+export default function NicknameInput() {
     const [nickname, setNickname] = useState("")
   return (
     <div className="flex items-center justify-center">

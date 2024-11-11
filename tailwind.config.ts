@@ -24,13 +24,16 @@ const config: Config = {
       screens: {
         // xs -> 디바이스 가로
         xs: '480px',
-        watch: {
-          raw: '(max-width: 225px)',
+        shortLandscape: {
+          raw: '(orientation: landscape) and (max-height: 850px)',
         }
       },
       backgroundImage: {
         "title-illustration": "url('/image/타이틀 주변.png')",
         "polaroid-frame": "url('/image/frame.png')"
+      },
+      boxShadow: {
+        "frame": "0px 1.5px 3px 0px #252525"
       }
     },
   },

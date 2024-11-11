@@ -4,10 +4,10 @@ const secret = new TextEncoder().encode(process.env.JWT_SECRET_KEY);
 
 interface signAccessTokenParams {
   user_id: number;
-  momory_id?: string;
+  momory_uuid?: string;
 }
-export const signAccessToken = async ({user_id, momory_id}: signAccessTokenParams) => {
-  return new jose.SignJWT({ user_id, type: "access", momory_id })
+export const signAccessToken = async ({user_id, momory_uuid}: signAccessTokenParams) => {
+  return new jose.SignJWT({ user_id, type: "access", momory_uuid })
     .setProtectedHeader({ alg: "HS256" })
     .setExpirationTime("1h")
     .sign(secret);

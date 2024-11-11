@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-export default function Create_momory() {
+export default function CreateMomory() {
   return (
     <div>
       

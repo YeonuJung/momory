@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 @layer base {
-  html {
+  :root {
     font-size: 10px;
   },
+
   body{
     font-size: 1rem;
   }

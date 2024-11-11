@@ -1,10 +1,11 @@
 import Image from "next/image";
-import MomoryImage from "../../components/momory_image";
-import PageDots from "../../components/page_dots";
+import MomoryImage from "../../components/common/MomoryImage";
+import PageDots from "../../components/ui/PageDots";
+import TopContainer from "@/components/layout/TopContainer";
 
-export default function Momory() {
-  return (
-    <div className="relative flex min-h-screen w-full max-w-[48rem] flex-col justify-center gap-y-[5.6vw] overflow-auto bg-ruby xs:gap-y-[2.688rem] landscape:min-h-[85rem] watch:h-[30rem]">
+export default function Momory_page() {
+  return (     
+    <TopContainer verticalSpacing="gap-y-[5.6vw] xs:gap-y-[2.688rem]">
       <div className="flex items-center justify-center">
         <div className="flex h-[19vw] w-[83.3vw] items-center justify-center gap-[0.83vw] bg-title-illustration bg-cover bg-center bg-no-repeat font-nanum-Jung font-normal text-sky xs:h-[9.12rem] xs:w-[39.984rem] xs:gap-[0.398rem]">
           <span className="flex -translate-y-[1.6vw] items-center justify-center text-[13.54vw] leading-[15.63vw] xs:-translate-y-[0.768rem] xs:text-[6.499rem] xs:leading-[7.502rem]">
@@ -49,6 +50,6 @@ export default function Momory() {
         height={19}
         className="absolute right-[2.67vw] w-[3.47vw] cursor-pointer xs:right-[1.282rem] xs:w-[1.3rem]"
       ></Image>
-    </div>
+    </TopContainer>
   );
 }

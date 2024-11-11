@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function Momory_image() {
+export default function MomoryImage() {
   return (
     <div className="relative flex flex-wrap content-center items-center justify-center gap-x-[5.6vw] gap-y-[4.75vw] xs:gap-x-[2.688rem] xs:gap-y-[2.28rem]">
       <div className="flex h-[33.9vw] w-[23vw] -rotate-[1.75deg] flex-col items-center justify-center bg-polaroid-frame bg-cover bg-center bg-no-repeat xs:h-[16.032rem] xs:w-[10.8rem]">

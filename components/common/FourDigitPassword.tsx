@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 
-export default function Password_input() {
+export default function FourDigitPassword() {
   const [password, setPassword] = useState(["", "", "", ""]);
   const inputRefs = [
     useRef<HTMLInputElement>(null),

@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
+import TopContainer from "@/components/layout/TopContainer";
 
-export default function Home() {
+export default function Home_Page() {
   return (
-    <div className="relative flex min-h-screen w-full max-w-[48rem] flex-col justify-center gap-y-[6.9vw] overflow-auto bg-ruby xs:gap-y-[3.312rem] landscape:min-h-[85rem] watch:h-[22.5rem]">
+    <TopContainer verticalSpacing="gap-y-[6.9vw] xs:gap-y-[3.312rem]">
       <Image
         src={"/image/1.png"}
         alt="배경 주변 폴라로이드"
@@ -153,6 +154,6 @@ export default function Home() {
           </Link>
         </div>
       </div>
-    </div>
+    </TopContainer>
   );
 }

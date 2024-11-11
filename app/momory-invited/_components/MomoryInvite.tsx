@@ -1,8 +1,9 @@
-import Image from "next/image"
+import PageDots from "@/components/ui/PageDots";
+import Image from "next/image";
 
-export default function Momory_invite() {
+export default function MomoryInvite() {
   return (
-    <div className="relative flex min-h-screen w-full max-w-[48rem] flex-col justify-center gap-y-[5.6vw] overflow-auto bg-ruby xs:gap-y-[2.688rem] landscape:min-h-[85rem] watch:h-[30rem]">
+    <>
       <div className="flex items-center justify-center">
         <div className="flex h-[19vw] w-[83.3vw] items-center justify-center gap-[0.83vw] bg-title-illustration bg-cover bg-center bg-no-repeat font-nanum-Jung font-normal text-sky xs:h-[9.12rem] xs:w-[39.984rem] xs:gap-[0.398rem]">
           <span className="flex -translate-y-[1.6vw] items-center justify-center text-[13.54vw] leading-[15.63vw] xs:-translate-y-[0.768rem] xs:text-[6.499rem] xs:leading-[7.502rem]">
@@ -76,12 +77,7 @@ export default function Momory_invite() {
           className="absolute left-[6.46vw] top-[-4.17vw] w-[89.87vw] xs:left-[3.1rem] xs:top-[-2rem] xs:w-[43.138rem]"
         ></Image>
       </div>
-      <div className="flex items-center justify-center gap-x-[2.9vw] xs:gap-x-[1.392rem]">
-        <div className="h-[1.25vw] w-[1.25vw] rounded-full bg-sky xs:h-[0.6rem] xs:w-[0.6rem]"></div>
-        <div className="h-[1.25vw] w-[1.25vw] rounded-full bg-white xs:h-[0.6rem] xs:w-[0.6rem]"></div>
-        <div className="h-[1.25vw] w-[1.25vw] rounded-full bg-white xs:h-[0.6rem] xs:w-[0.6rem]"></div>
-        <div className="h-[1.25vw] w-[1.25vw] rounded-full bg-white xs:h-[0.6rem] xs:w-[0.6rem]"></div>
-      </div>
+      <PageDots />
       <div className="flex gap-x-[1.5vw] px-[2.7vw] font-nanum-Jung font-normal xs:gap-x-[0.72rem] xs:px-[1.296rem]">
         <button
           type="button"
@@ -118,8 +114,6 @@ export default function Momory_invite() {
         height={19}
         className="absolute right-[2.67vw] w-[3.47vw] cursor-pointer xs:right-[1.282rem] xs:w-[1.3rem]"
       ></Image>
-    </div>
-  )
+    </>
+  );
 }
-
-

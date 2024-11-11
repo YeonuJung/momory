@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
   response.cookies.set("refresh_token", refreshToken, {
     httpOnly: true,
     sameSite: "lax",
-    path: "/api",
+    path: "/api/refresh",
     maxAge: (60 * 60 * 24 * 30) + (60 * 60),
   });
   return response;

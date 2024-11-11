@@ -1,8 +1,12 @@
-// import Enter_momory_password from "./_components/enter_momory_password";
-import Momory_invite from "./_components/momory_invite";
-export default function Momory_invited() {
+import TopContainer from "@/components/layout/TopContainer";
+import MomoryInvite from "./_components/MomoryInvite";
+// import EnterMomoryPassword from "./_components/EnterMomoryPassword";
+
+export default function MomoryInvited_page() {
   return (
-    // <Enter_momory_password/>
-    <Momory_invite/>
+    <TopContainer verticalSpacing="gap-y-[5.6vw] xs:gap-y-[2.688rem]">
+      {/* <EnterMomoryPassword/> */}
+      <MomoryInvite />
+    </TopContainer>
   );
 }

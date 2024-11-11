@@ -1,13 +1,12 @@
-import React from "react";
-// import Create_nickname from "./_components/create_nickname";
-import Create_password from "./_components/create_password";
+import TopContainer from "@/components/layout/TopContainer";
+import CreatePassword from "./_components/CreatePassword";
+// import CreateNickname from "./_components/CreateNickname";
 
-export default function Create_momory_page() {
+export default function CreateMomory_page() {
   return (
-    <>
-      {/* <Create_nickname></Create_nickname> */}
-      
-       <Create_password></Create_password>
-    </>
+    <TopContainer>
+      {/* <CreateNickname/> */}
+      <CreatePassword/>
+    </TopContainer>
   );
 }

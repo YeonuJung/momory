@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
       response.cookies.delete("refresh_token");
       return response;
     }
-    if (payload && payload.momory_id) {
+    if (payload && payload.momory_uuid) {
       return NextResponse.redirect(new URL("/momory", request.url));
     }
     return NextResponse.redirect(new URL("/create-momory", request.url));

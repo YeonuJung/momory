@@ -1,9 +1,9 @@
-import Enter_memory_password from "./_components/enter_memory_password";
-import Header from "@/components/header";
+import Header from '@/components/common/Header'
+import PasswordInput from '@/components/common/PasswordInput'
 
-export default function Upload_photo() {
+export default function EnterMemoryPassword() {
   return (
-    <div className="relative flex min-h-screen w-full max-w-[48rem] flex-col justify-center overflow-auto bg-ruby watch:h-[25rem] landscape:min-h-[85rem]">
+    <>
       <Header type={"finish"} />
       <div className="flex flex-col gap-y-[5.2vw] xs:gap-y-[2.496rem]">
         <div className="flex items-center justify-center">
@@ -11,7 +11,7 @@ export default function Upload_photo() {
             내 사진 비밀번호를 정해주세요
           </h1>
         </div>
-        <Enter_memory_password />
+        <PasswordInput/>
         <div className="flex flex-col items-center justify-center">
           <h2 className="w-[72.08vw] font-pretendard text-[3.7vw] font-normal tracking-tight text-white xs:w-[36.2rem] xs:text-[1.8rem]">
             <span className="font-semibold">
@@ -24,6 +24,6 @@ export default function Upload_photo() {
           </h2>
         </div>
       </div>
-    </div>
-  );
+    </>
+  )
 }
