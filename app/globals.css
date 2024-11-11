@@ -3,11 +3,21 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  html {
     font-size: 10px;
-  },
-
-  body{
-    font-size: 1rem;
   }
+  ,
+  body {
+    font-size: 1rem;
+
+  },
+  /* globals.css */
+.scroll-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.scroll-hide::-webkit-scrollbar {
+  display: none;            /* Chrome, Safari, Opera */
+}
 }

@@ -1,38 +1,63 @@
-import Header from '@/components/common/Header'
-import React from 'react'
+"use client";
+
+import Header from "@/components/common/Header";
+import React, { MutableRefObject, useRef } from "react";
+import { useDraggable } from "react-use-draggable-scroll";
 
 export default function SelectFilter() {
+  const ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
+  const { events } = useDraggable(ref, {
+    applyRubberBandEffect: true,
+    decayRate: 0.8,
+
+
+
+  });
+  const filterList = [
+    "원본",
+    "필터 1",
+    "필터 2",
+    "필터 3",
+    "필터 4",
+    "필터 5",
+    "필터 6",
+    "필터 7",
+    "필터 8",
+    "필터 9",
+    "필터 10",
+    "필터 11",
+    "필터 12",
+    "필터 13",
+    "필터 14",
+    "필터 15",
+    "필터 16",
+  ];
   return (
     <>
-    <Header type={"arrow"} />
-    <div className="flex flex-col items-center justify-center gap-y-[5.63vw] xs:gap-y-[2.7rem] mt-[20.83vw] xs:mt-[10rem]">
-      <div className="relative flex h-[63.7vh] w-[76.3vw] justify-center bg-white shadow-frame xs:h-[54.2rem] xs:w-[36.622rem]">
-        <div className="absolute top-[3.71vw] flex h-[51.33vh] w-[68.45vw] items-center justify-center border-[2.5px] border-sky xs:top-[1.779rem] xs:h-[43.632rem] xs:w-[32.855rem]">
+      <Header type={"arrow"} />
+      <div className="mt-[20.83vw] flex flex-col items-center justify-center gap-y-[5.63vw] xs:mt-[10rem] xs:gap-y-[2.7rem]">
+        <div className="relative flex h-[63.7vh] w-[76.3vw] justify-center bg-white shadow-frame xs:h-[54.2rem] xs:w-[36.622rem]">
+          <div className="absolute top-[3.71vw] flex h-[51.33vh] w-[68.45vw] items-center justify-center border-[2.5px] border-sky xs:top-[1.779rem] xs:h-[43.632rem] xs:w-[32.855rem]"></div>
+        </div>
+        <div
+          ref={ref}
+          {...events}
+          className="flex w-[90.63vw] gap-x-[1.04vw] overflow-x-scroll font-nanum-Jung text-[6.67vw] font-normal text-white  xs:w-[43.5rem] xs:gap-x-[0.5rem] xs:text-[3.2rem] cursor-grab  select-none touch-pan-x scroll-hide"
+         
+        >
+          {filterList.map((filter, idx) => {
+            return (
+              <div
+                key={idx}
+                className="flex flex-col items-center justify-center gap-y-[0.83vw] xs:gap-y-[0.4rem]"
+              >
+                <div className="h-[16.88vw] w-[16.88vw] rounded-[11px] border-[2px] border-sky xs:h-[8.1rem] xs:w-[8.1rem]"></div>
+                <span>{filter}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
-      <div className="flex gap-x-[1.04vw] xs:gap-x-[0.5rem] font-nanum-Jung text-[6.67vw] leading-[1.9rem] font-normal text-white xs:text-[3.2rem]">
-        <div className='flex flex-col justify-center items-center gap-y-2.5vw] xs:gap-y-[1.2rem] '>
-            <div className='w-[16.88vw] xs:w-[8.1rem] h-[16.88vw] xs:h-[8.1rem] rounded-[11px] border-sky border-[2px]'></div>
-            <span>원본</span>
-        </div>
-        <div className='flex flex-col justify-center items-center gap-y-2.5vw] xs:gap-y-[1.2rem] '>
-            <div className='w-[16.88vw] xs:w-[8.1rem] h-[16.88vw] xs:h-[8.1rem] rounded-[11px] border-sky border-[2px]'></div>
-            <span>필터 1</span>
-        </div>
-        <div className='flex flex-col justify-center items-center gap-y-2.5vw] xs:gap-y-[1.2rem] '>
-            <div className='w-[16.88vw] xs:w-[8.1rem] h-[16.88vw] xs:h-[8.1rem] rounded-[11px] border-sky border-[2px]'></div>
-            <span>필터 2</span>
-        </div>
-        <div className='flex flex-col justify-center items-center gap-y-2.5vw] xs:gap-y-[1.2rem] '>
-            <div className='w-[16.88vw] xs:w-[8.1rem] h-[16.88vw] xs:h-[8.1rem] rounded-[11px] border-sky border-[2px]'></div>
-            <span>필터 3</span>
-        </div>
-        <div className='flex flex-col justify-center items-center gap-y-2.5vw] xs:gap-y-[1.2rem] '>
-            <div className='w-[16.88vw] xs:w-[8.1rem] h-[16.88vw] xs:h-[8.1rem] rounded-[11px] border-sky border-[2px]'></div>
-            <span>필터 4</span>
-        </div>
-      </div>
-    </div>
-  </>
-  )
+    </>
+  );
 }
