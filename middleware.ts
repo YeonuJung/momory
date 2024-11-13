@@ -1,4 +1,4 @@
-import { verifyAccessToken } from "@/backend/utils/jwt-utils";
+import { verifyAccessToken } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {

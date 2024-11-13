@@ -1,5 +1,5 @@
 // import { generateRandomState } from "@/utils/generateRandomState";
-import { verifyAccessToken } from "@/backend/utils/jwt-utils";
+import { verifyAccessToken } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 // const state: string = generateRandomState();

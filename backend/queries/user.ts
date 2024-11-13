@@ -1,5 +1,5 @@
 import { PostgrestError } from "@supabase/supabase-js";
-import { supabase } from "../utils/supabase-utils";
+import { supabase } from "../../libs/supabase";
 import { User } from "@/types/model";
 
 

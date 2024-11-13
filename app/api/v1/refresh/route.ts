@@ -1,4 +1,4 @@
-import { signAccessToken, verifyRefreshToken } from "@/backend/utils/jwt-utils";
+import { signAccessToken, verifyRefreshToken } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {

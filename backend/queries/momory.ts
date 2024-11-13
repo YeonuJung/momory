@@ -1,4 +1,4 @@
-import { supabase } from "../utils/supabase-utils";
+import { supabase } from "../../libs/supabase";
 
 
 export const checkMomory = async (id : number) => {

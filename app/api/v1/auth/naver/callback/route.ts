@@ -1,5 +1,5 @@
-import { checkUserByEmail, createUser } from "@/backend/query/user";
-import { signAccessToken, signRefreshToken } from "@/backend/utils/jwt-utils";
+import { checkUserByEmail, createUser } from "@/backend/queries/user";
+import { signAccessToken, signRefreshToken } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";
 // 사용자가 네이버 로그인 요청후 네이버 서버에서 인가코드를 보내주는 곳
 export async function GET(request: NextRequest) {

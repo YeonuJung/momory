@@ -1,4 +1,4 @@
-import { verifyAccessToken } from "@/backend/utils/jwt-utils";
+import { verifyAccessToken } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 // 유저가 로그인 버튼을 누르면 카카오 로그인 페이지로 리다이렉트 시키는 곳

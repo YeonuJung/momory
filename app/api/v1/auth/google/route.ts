@@ -1,4 +1,4 @@
-import { verifyAccessToken } from "@/backend/utils/jwt-utils";
+import { verifyAccessToken } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID as string;
