@@ -1,12 +1,17 @@
 import Image from "next/image";
 
-export default function MomoryImage() {
+interface MomoryImageProps {
+  nickname?: string[];
+  // 필수로 전환할 것
+}
+export default function MomoryImage({nickname}: MomoryImageProps) {
   return (
     <div className="relative flex flex-wrap content-center items-center justify-center gap-x-[5.6vw] gap-y-[4.75vw] xs:gap-x-[2.688rem] xs:gap-y-[2.28rem]">
       <div className="flex h-[33.9vw] w-[23vw] -rotate-[1.75deg] flex-col items-center justify-center bg-polaroid-frame bg-cover bg-center bg-no-repeat xs:h-[16.032rem] xs:w-[10.8rem]">
         <div className="h-[25.52vw] w-[19.28vw] xs:h-[12.25rem] xs:w-[9.256rem]"></div>
         <div className="w-full px-[1.85vw] py-[1.76vw] align-top font-nanum-Jung text-[3.75vw] font-normal text-[#252525] xs:px-[0.888rem] xs:py-[0.845rem] xs:text-[1.8rem]">
           @트리플스타
+          {nickname}
         </div>
       </div>
       <div className="flex h-[33.9vw] w-[23vw] flex-col items-center justify-center bg-polaroid-frame bg-cover bg-center bg-no-repeat xs:h-[16.032rem] xs:w-[10.8rem]">

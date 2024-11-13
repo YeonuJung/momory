@@ -1,4 +1,6 @@
-import PageDots from "@/components/ui/PageDots";
+import { Button, ButtonWithCaption } from "@/components/common/Button/Button";
+import ButtonContainer from "@/components/common/Button/ButtonContainer";
+import PageDots from "@/components/common/PageDots";
 import Image from "next/image";
 
 export default function MomoryInvite() {
@@ -78,28 +80,13 @@ export default function MomoryInvite() {
         ></Image>
       </div>
       <PageDots />
-      <div className="flex gap-x-[1.5vw] px-[2.7vw] font-nanum-Jung font-normal xs:gap-x-[0.72rem] xs:px-[1.296rem]">
-        <button
-          type="button"
-          className="flex h-[17.7vw] flex-1 flex-col items-center justify-center gap-y-[1vw] rounded-[8.59px] border-2 border-sky text-white xs:h-[8.496rem] xs:gap-y-[0.48rem]"
-        >
-          <span className="text-[6.7vw] leading-[5vw] xs:text-[3.216rem] xs:leading-[2.4rem]">
-            사진 남기기
-          </span>
-          <span className="text-[4.4vw] leading-[4vw] xs:text-[2.112rem] xs:leading-[1.92rem]">
-            *하나만 남길 수 있어요
-          </span>
-        </button>
-        {/* 사진을 남기고 나면 사진남기기 버튼 없애고 내 모모리 만들기 버튼만 남기기 */}
-        <button
-          type="button"
-          className="h-[17.7vw] flex-1 rounded-[8.59px] border-2 border-sky text-white xs:h-[8.496rem]"
-        >
-          <span className="text-[6.7vw] leading-[5vw] xs:text-[3.216rem] xs:leading-[2.4rem]">
-            내 모모리 만들기
-          </span>
-        </button>
-      </div>
+      <ButtonContainer>
+        <ButtonWithCaption caption={"*하나만 남길 수 있어요"}>사진 남기기</ButtonWithCaption>
+        <Button>내 모모리 만들기</Button>
+        {/* 사진 남기고 나면 내 모모리 만들기만 남도록
+        만약 로그인 한 상태라면 내 모모리로 이동하기로 변경
+        */}
+      </ButtonContainer>
       <Image
         src={"/image/arrow-left.svg"}
         alt={"왼쪽 화살표"}

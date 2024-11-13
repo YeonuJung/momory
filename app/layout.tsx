@@ -29,6 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${pretendard.variable} ${nanumHaNaSonGeurSsi.variable} ${nanumJungHagSaeng.variable}`}>
+      <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cssgram/0.1.10/cssgram.min.css"></link>
+      </head>
       <body className="min-h-screen flex flex-col items-center bg-white">
         {children}
       </body>

@@ -1,10 +1,16 @@
 import Image from "next/image";
 import MomoryImage from "../../components/common/MomoryImage";
-import PageDots from "../../components/ui/PageDots";
+import PageDots from "../../components/common/PageDots";
 import TopContainer from "@/components/layout/TopContainer";
+import ModalContainer from "@/components/common/Modal/ModalContainer";
+import ImageDetail from "../../components/common/Modal/ImageDetail";
+import ButtonContainer from "@/components/common/Button/ButtonContainer";
+import { Button } from "@/components/common/Button/Button";
+import PasswordInput from "@/components/common/Input/PasswordInput";
+import InputLabel from "@/components/common/Input/InputLabel";
 
 export default function Momory_page() {
-  return (     
+  return (
     <TopContainer verticalSpacing="gap-y-[5.6vw] xs:gap-y-[2.688rem]">
       <div className="flex items-center justify-center">
         <div className="flex h-[19vw] w-[83.3vw] items-center justify-center gap-[0.83vw] bg-title-illustration bg-cover bg-center bg-no-repeat font-nanum-Jung font-normal text-sky xs:h-[9.12rem] xs:w-[39.984rem] xs:gap-[0.398rem]">
@@ -16,26 +22,12 @@ export default function Momory_page() {
           </span>
         </div>
       </div>
-      <MomoryImage/>
-      <PageDots/>
-      <div className="flex gap-x-[1.5vw] px-[2.7vw] font-nanum-Jung font-normal xs:gap-x-[0.72rem] xs:px-[1.296rem]">
-        <button
-          type="button"
-          className="flex h-[17.7vw] flex-1 flex-col items-center justify-center gap-y-[1vw] rounded-[8.59px] border-2 border-sky text-white xs:h-[8.496rem] xs:gap-y-[0.48rem]"
-        >
-          <span className="text-[6.7vw] leading-[5vw] xs:text-[3.216rem] xs:leading-[2.4rem]">
-            내 모모리 공유하기
-          </span>
-        </button>
-        <button
-          type="button"
-          className="h-[17.7vw] flex-1 rounded-[8.59px] border-2 border-sky text-white xs:h-[8.496rem]"
-        >
-          <span className="text-[6.7vw] leading-[5vw] xs:text-[3.216rem] xs:leading-[2.4rem]">
-            모모리 간직하기
-          </span>
-        </button>
-      </div>
+      <MomoryImage />
+      <PageDots />
+      <ButtonContainer>
+        <Button>내 모모리 공유하기</Button>
+        <Button>모모리 간직하기</Button>
+      </ButtonContainer>
       <Image
         src={"/image/arrow-left.svg"}
         alt={"왼쪽 화살표"}
@@ -50,6 +42,20 @@ export default function Momory_page() {
         height={19}
         className="absolute right-[2.67vw] w-[3.47vw] cursor-pointer xs:right-[1.282rem] xs:w-[1.3rem]"
       ></Image>
+      <ModalContainer verticalSpacing="gap-y-[2rem]">
+        <InputLabel>내 사진 비밀번호를 입력해주세요</InputLabel>
+        <PasswordInput/>
+        {/* 
+        위에 있는 요소들은 사진 클릭했을 때 나오는 비밀번호창
+        밑에 요소들은 비밀번호 입력 후 모달에 나오는 내용들
+         */}
+        {/* <ImageDetail />
+        <ButtonContainer>
+          <Button>삭제</Button>
+          <Button>기억 간직하기</Button>
+        </ButtonContainer> */}
+        {/* 모모리 오너만 삭제버튼있고 보는 사람들은 기억 간직하기만 있도록 */}
+      </ModalContainer>
     </TopContainer>
   );
 }

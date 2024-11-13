@@ -5,8 +5,6 @@ export default function PasswordInput() {
   const [password, setPassword] = useState("");
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if(!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(e.target.value)){
-    }
     setPassword(e.target.value);
   }
   return (
