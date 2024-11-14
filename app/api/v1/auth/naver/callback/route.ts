@@ -1,16 +1,15 @@
 import { checkUserByEmail, createUser } from "@/backend/queries/user";
 import { signAccessToken, signRefreshToken } from "@/libs/jwt";
+import { redirectWithError } from "@/utils/server/redirectWithError";
 import { NextRequest, NextResponse } from "next/server";
 // 사용자가 네이버 로그인 요청후 네이버 서버에서 인가코드를 보내주는 곳
 export async function GET(request: NextRequest) {
   // 인가코드를 받아옴
   const code = request.nextUrl.searchParams.get("code");
   if (!code) {
-    return NextResponse.json(
-      { error: "Authorization code is required" },
-      { status: 400 },
-    );
+    return redirectWithError(request, 'auth', 'naver_auth')
   }
+  
   // 네이버 서버에 인가코드를 보내서 토큰을 받아오는 과정
   const naverTokenResponse = await fetch(
     `https://nid.naver.com/oauth2.0/token`,
@@ -29,7 +28,7 @@ export async function GET(request: NextRequest) {
     },
   );
   if (!naverTokenResponse.ok) {
-    return NextResponse.json({ error: "naver token request failed" });
+    return redirectWithError(request, 'auth', 'naver_auth')
   }
   // 네이버 서버에서 받아온 액세스토큰을 추출
   const { access_token } = await naverTokenResponse.json();
@@ -41,7 +40,7 @@ export async function GET(request: NextRequest) {
     },
   });
   if (!userEmailResponse.ok) {
-    return NextResponse.json({ error: "naver user email request failed" });
+    return redirectWithError(request, 'auth', 'naver_auth')
   }
   // 유저 이메일 추출
   const {
@@ -54,23 +53,25 @@ export async function GET(request: NextRequest) {
     social_type: "naver",
   });
 
-  if (isUserExists instanceof Error) {
-    return NextResponse.json({ error: isUserExists }, { status: 500 });
+  if ("error" in isUserExists) {
+    return redirectWithError(request, 'server', 'server_error')
   }
   // 기존에 가입된 유저라면 토큰을 바로 발급
-  if (isUserExists.length > 0) {
+  if (isUserExists.data.length > 0) {
     // 엑세스 토큰과 리프레시 토큰을 발급
-    const [accessToken, refreshToken] = await Promise.all([signAccessToken({user_id: isUserExists[0].id}),signRefreshToken(isUserExists[0].id)])
+    const [accessToken, refreshToken] = await Promise.all([signAccessToken({user_id: isUserExists.data[0].id}),signRefreshToken(isUserExists.data[0].id)])
 
-    const response = NextResponse.redirect(`${process.env.JWT_REDIRECT_URI}`);
+    const response = NextResponse.redirect(new URL("/", request.url));
 
     response.cookies.set("access_token", accessToken, {
-      httpOnly: false,
+      httpOnly: true,
+      sameSite: "strict",
+      path: "/api/v1",
       maxAge: (60 * 60 * 24 * 30) + (60 * 60),
     });
     response.cookies.set("refresh_token", refreshToken, {
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: "strict",
       path: "/api/refresh",
       maxAge: (60 * 60 * 24 * 30) + (60 * 60),
     });
@@ -79,22 +80,24 @@ export async function GET(request: NextRequest) {
   // 기존에 가입된 유저가 아니라면 새로 등록 후 토큰 발급
   const insertData = await createUser({ email: email, social_type: "naver" });
 
-  if (insertData instanceof Error) {
-    return NextResponse.json({ error: insertData }, { status: 500 });
+  if ("error" in insertData) {
+    return redirectWithError(request, 'server', 'server_error')
   }
 
   // 엑세스 토큰과 리프레시 토큰을 발급
-  const [accessToken, refreshToken] = await Promise.all([signAccessToken({user_id: isUserExists[0].id}),signRefreshToken(isUserExists[0].id)])
+  const [accessToken, refreshToken] = await Promise.all([signAccessToken({user_id: isUserExists.data[0].id}),signRefreshToken(isUserExists.data[0].id)])
 
-  const response = NextResponse.redirect(`${process.env.JWT_REDIRECT_URI}`);
+  const response = NextResponse.redirect(new URL("/", request.url));
 
   response.cookies.set("access_token", accessToken, {
-    httpOnly: false,
+    httpOnly: true,
+    sameSite: "strict",
+    path: "/api/v1",
     maxAge: (60 * 60 * 24 * 30) + (60 * 60),
   });
   response.cookies.set("refresh_token", refreshToken, {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: "strict",
     path: "/api/refresh",
     maxAge: (60 * 60 * 24 * 30) + (60 * 60),
   });

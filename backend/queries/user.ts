@@ -4,7 +4,7 @@ import { User } from "@/types/model";
 
 
 
-export interface checkUserByEmailProps {
+export interface CheckUserByEmailProps {
   email: string;
   social_type: "google" | "kakao" | "naver";
 }
@@ -12,7 +12,7 @@ export interface checkUserByEmailProps {
 export const checkUserByEmail = async ({
   email,
   social_type,
-}: checkUserByEmailProps): Promise<User[] | PostgrestError> => {
+}: CheckUserByEmailProps)  => {
   const { data, error } = await supabase
     .from("user")
     .select("*")
@@ -20,21 +20,21 @@ export const checkUserByEmail = async ({
     .eq("social_type", social_type);
   //처리하는 곳에서 에러를 처리하기 위해서 error를 반환
   if (error) {
-    return error;
+    return {error};
   }
 
-  return data
+  return {data}
 };
 
-export const createUser = async ({email, social_type} : checkUserByEmailProps): Promise<Pick<User, 'id'>[]| PostgrestError>  => {
+export const createUser = async ({email, social_type} : CheckUserByEmailProps): Promise<{error: PostgrestError} | {data: Pick<User, "id">[]}>  => {
     const { data, error } = await supabase
         .from("user")
         .insert([{ email: email, social_type: social_type }])
         .select("id");
     //처리하는 곳에서 에러를 처리하기 위해서 error를 반환
     if (error) {
-        return error;
+        return {error};
     }
     
-    return data
+    return {data}
 }

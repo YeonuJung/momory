@@ -3,7 +3,7 @@ import MomoryImage from "../../components/common/MomoryImage";
 import PageDots from "../../components/common/PageDots";
 import TopContainer from "@/components/layout/TopContainer";
 import ModalContainer from "@/components/common/Modal/ModalContainer";
-import ImageDetail from "../../components/common/Modal/ImageDetail";
+// import ImageDetail from "../../components/common/Modal/ImageDetail";
 import ButtonContainer from "@/components/common/Button/ButtonContainer";
 import { Button } from "@/components/common/Button/Button";
 import PasswordInput from "@/components/common/Input/PasswordInput";

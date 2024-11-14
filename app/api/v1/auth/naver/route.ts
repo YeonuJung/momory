@@ -1,8 +1,6 @@
-// import { generateRandomState } from "@/utils/generateRandomState";
 import { verifyAccessToken } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
-// const state: string = generateRandomState();
 const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID as string;
 const NAVER_REDIRECT_URI = process.env.NAVER_REDIRECT_URI as string;
 
