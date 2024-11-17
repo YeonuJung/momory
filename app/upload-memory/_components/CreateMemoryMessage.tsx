@@ -13,7 +13,7 @@ export default function CreateMemoryMessage() {
   
   return (
     <div className="flex items-center justify-center">
-      {/* <Header type={"finish"}/>  */}
+      {/* <Header type="finish"/>  */}
       <div className="relative">
         <textarea
           maxLength={maxLength}

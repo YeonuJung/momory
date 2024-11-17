@@ -63,7 +63,7 @@ export default function MomoryImage({nickname}: MomoryImageProps) {
         </div>
       </div>
       <Image
-        src={"/image/모모리 일러스트.png"}
+        src="/image/모모리 일러스트.png"
         alt="모모리 일러스트"
         width={337}
         height={467}

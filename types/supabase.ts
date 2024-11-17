@@ -40,6 +40,7 @@ export type Database = {
           id: number
           image_path: string
           message: string
+          momory_uuid: string
           nickname: string
           password: string
           user_id: number
@@ -49,6 +50,7 @@ export type Database = {
           id?: never
           image_path: string
           message: string
+          momory_uuid?: string
           nickname: string
           password: string
           user_id: number
@@ -58,11 +60,19 @@ export type Database = {
           id?: never
           image_path?: string
           message?: string
+          momory_uuid?: string
           nickname?: string
           password?: string
           user_id?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "memory_momory_id_fkey"
+            columns: ["momory_uuid"]
+            isOneToOne: false
+            referencedRelation: "momory"
+            referencedColumns: ["uuid"]
+          },
           {
             foreignKeyName: "memory_user_id_fkey"
             columns: ["user_id"]

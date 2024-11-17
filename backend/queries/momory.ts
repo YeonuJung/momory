@@ -1,30 +1,26 @@
-import { PostgrestError } from "@supabase/supabase-js";
 import { supabase } from "../../libs/supabase";
-import { Momory } from "@/types/model";
 
-interface CreateMomoryProps {
+interface CreateMomoryParams {
   user_id: number;
   nickname: string;
   password: string;
 }
-export const createMomory = async ({user_id, nickname, password}: CreateMomoryProps): Promise<{error: PostgrestError} | {data: Momory[]}> => {
+// 모모리를 생성하는 쿼리
+export const createMomory = async ({user_id, nickname, password}: CreateMomoryParams) => {
   const { data, error } = await supabase
     .from("momory")
     .insert([{user_id: user_id, password: password, nickname: nickname}])
     .select();
-  if (error) {
-    return {error};
-  }
-  return {data};
+  
+  return {data, error};
 }
-
-export const checkMomory = async (id : number): Promise<{error: PostgrestError} | {data: Momory[]}> => {
-  const { data, error } = await supabase
+// 
+export const checkMomory = async (id : number) => {
+  const { count, error } = await supabase
     .from("momory")
-    .select("*")
-    .eq("id", id);
-  if (error) {
-    return {error};
-  }
-  return {data};
+    .select("id", { count: "exact"})
+    .eq("id", id)
+    .limit(1)
+ 
+  return {exist: (count?? 0) > 0, error};
 }

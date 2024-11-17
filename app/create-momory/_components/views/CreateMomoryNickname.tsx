@@ -1,5 +1,5 @@
 import React from "react";
-import NicknameInput from "../../../components/common/Input/NicknameInput";
+import NicknameInput from "../../../../components/common/Input/NicknameInput";
 import Header from "@/components/layout/Header";
 import InputLabel from "@/components/common/Input/InputLabel";
 

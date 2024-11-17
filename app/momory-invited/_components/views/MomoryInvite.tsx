@@ -72,7 +72,7 @@ export default function MomoryInvite() {
           </div>
         </div>
         <Image
-          src={"/image/모모리 일러스트.png"}
+          src="/image/모모리 일러스트.png"
           alt="모모리 일러스트"
           width={337}
           height={467}
@@ -88,15 +88,15 @@ export default function MomoryInvite() {
         */}
       </ButtonContainer>
       <Image
-        src={"/image/arrow-left.svg"}
-        alt={"왼쪽 화살표"}
+        src="/image/arrow-left.svg"
+        alt="왼쪽 화살표"
         width={13}
         height={19}
         className="absolute left-[2.67vw] w-[3.47vw] cursor-pointer xs:left-[1.282rem] xs:w-[1.3rem]"
       ></Image>
       <Image
-        src={"/image/arrow-right.svg"}
-        alt={"오른쪽 화살표"}
+        src="/image/arrow-right.svg"
+        alt="오른쪽 화살표"
         width={13}
         height={19}
         className="absolute right-[2.67vw] w-[3.47vw] cursor-pointer xs:right-[1.282rem] xs:w-[1.3rem]"

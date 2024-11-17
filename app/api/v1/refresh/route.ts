@@ -56,7 +56,8 @@ export async function GET(request: NextRequest) {
       { status: 200 },
     );
     response.cookies.set("access_token", new_access_token, {
-      httpOnly: false,
+      httpOnly: true,
+      sameSite: "strict",
       maxAge: maxAge,
     });
     return response;

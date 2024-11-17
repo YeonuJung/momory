@@ -48,25 +48,24 @@ export async function GET(request: NextRequest) {
   } = await userEmailResponse.json();
 
   // 기존에 가입된 유저인지 확인(이메일과 소셜타입으로 구분)
-  const isUserExists = await checkUserByEmail({
+  const {data:isUserExists, error: isUserExistsError} = await checkUserByEmail({
     email: email,
     social_type: "naver",
   });
 
-  if ("error" in isUserExists) {
+  if (isUserExistsError) {
     return redirectWithError(request, 'server', 'server_error')
   }
   // 기존에 가입된 유저라면 토큰을 바로 발급
-  if (isUserExists.data.length > 0) {
+  if (isUserExists && isUserExists.length > 0) {
     // 엑세스 토큰과 리프레시 토큰을 발급
-    const [accessToken, refreshToken] = await Promise.all([signAccessToken({user_id: isUserExists.data[0].id}),signRefreshToken(isUserExists.data[0].id)])
+    const [accessToken, refreshToken] = await Promise.all([signAccessToken({user_id: isUserExists[0].id}),signRefreshToken(isUserExists[0].id)])
 
-    const response = NextResponse.redirect(new URL("/", request.url));
+    const response = NextResponse.redirect(new URL("/create-momory", request.url));
 
     response.cookies.set("access_token", accessToken, {
       httpOnly: true,
       sameSite: "strict",
-      path: "/api/v1",
       maxAge: (60 * 60 * 24 * 30) + (60 * 60),
     });
     response.cookies.set("refresh_token", refreshToken, {
@@ -78,21 +77,20 @@ export async function GET(request: NextRequest) {
     return response;
   }
   // 기존에 가입된 유저가 아니라면 새로 등록 후 토큰 발급
-  const insertData = await createUser({ email: email, social_type: "naver" });
+  const {data:insertData, error:insertDataError} = await createUser({ email: email, social_type: "naver" });
 
-  if ("error" in insertData) {
+  if (insertDataError) {
     return redirectWithError(request, 'server', 'server_error')
   }
 
   // 엑세스 토큰과 리프레시 토큰을 발급
-  const [accessToken, refreshToken] = await Promise.all([signAccessToken({user_id: isUserExists.data[0].id}),signRefreshToken(isUserExists.data[0].id)])
+  const [accessToken, refreshToken] = await Promise.all([signAccessToken({user_id: insertData?.[0].id}),signRefreshToken(insertData?.[0].id)])
 
-  const response = NextResponse.redirect(new URL("/", request.url));
+  const response = NextResponse.redirect(new URL("/create-momory", request.url));
 
   response.cookies.set("access_token", accessToken, {
     httpOnly: true,
     sameSite: "strict",
-    path: "/api/v1",
     maxAge: (60 * 60 * 24 * 30) + (60 * 60),
   });
   response.cookies.set("refresh_token", refreshToken, {
@@ -102,4 +100,5 @@ export async function GET(request: NextRequest) {
     maxAge: (60 * 60 * 24 * 30) + (60 * 60),
   });
   return response;
+
 }

@@ -35,6 +35,8 @@ export async function middleware(request: NextRequest) {
       );
     }
     // access_token이 유효할 때
+    // 다음 미들웨어로 넘어가기 전에 헤더에 userId를 담아서 넘겨줌
+    // 이렇게 하면 api 요청을 보낼 때마다 토큰을 검증할 필요가 없음
     const response = NextResponse.next();
         response.headers.set(
       "x-middleware-data",

@@ -1,13 +1,13 @@
 import React from "react";
 
-interface TopContainerProps {
+interface PageLayoutProps {
   children?: React.ReactNode;
   verticalSpacing?: string;
 }
-export default function TopContainer({
+export default function PageLayout({
   children,
   verticalSpacing,
-}: TopContainerProps) {
+}: PageLayoutProps) {
   return (
     <div
       className={`relative flex min-h-screen w-full max-w-[48rem] flex-col justify-center ${verticalSpacing} overflow-auto bg-ruby shortLandscape:min-h-[85rem]`}
