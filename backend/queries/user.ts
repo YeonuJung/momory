@@ -21,7 +21,7 @@ export const checkUserByEmail = async ({
   return {data, error}
 };
 
-export const createUser = async ({email, social_type} : CheckUserByEmailParams)  => {
+export const createUser = async ({email, social_type} : CheckUserByEmailParams)=> {
     const { data, error } = await supabase
         .from("user")
         .insert([{ email: email, social_type: social_type }])

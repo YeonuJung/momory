@@ -6,7 +6,7 @@ interface GetMemoryParams {
   momory_uuid: string;
   cursor?: string;
 }
-export const getMemory = async ({momory_uuid, cursor}: GetMemoryParams ) => {
+export const readMemory = async ({momory_uuid, cursor}: GetMemoryParams ) => {
   let query = supabase.from('memory').select("*", {count: 'exact'}).eq("momory_uuid", momory_uuid ).order('id', {ascending: false}).limit(9)
   if(cursor){
     query = query.lt('id', cursor);
@@ -19,9 +19,21 @@ export const getMemory = async ({momory_uuid, cursor}: GetMemoryParams ) => {
   
 };
 
-// 모모리에 메모리를 남기는 쿼리
-// 사진을 눌렀을 때 무엇을 확인해야 하는가?
-// 1. 사진 ID를 통해 해당 사진을 등록한 사람의 비밀번호를 가져온다.
-// 2. 가져온 비밀번호와 해당 사진을 클릭한 사람의 비밀번호를 비교한다.
-// 3. 비밀번호가 일치하면 해당 사진을 보여준다.
-// 4. 비밀번호가 일치하지 않으면 권한이 없다고 표시한다.
+
+// export const uploadMemory = async({momory_uuid, }: {momory_uuid: string, content: string}) => {
+//   // 버킷에 이미지를 업로드하고 이미지의 url을 반환한다.
+// 어떻게 저장하고 어떤 값을 넣을지는 고민해봐야함
+// }
+
+export const createMemory = async ({momory_uuid, user_id, image_path, nickname, filter, message}: {momory_uuid: string, user_id: number, image_path: string, nickname: string, filter: string, message: string}) => {
+  // 메모리를 생성하는 쿼리
+  const {data, error} = await supabase.from('memory').insert([{momory_uuid, user_id, image_path, nickname, filter, message}]).select();
+  return {data, error}
+}
+// 메모리를 삭제하는 쿼리
+// 1. 메모리 테이블에서 해당 메모리의 id를 가진 메모리를 삭제한다.
+export const deleteMemory= async ({memory_id}: {memory_id: number}) => {
+  const {data, error} = await supabase.from('memory').delete().eq('id', memory_id);
+  return {data, error}
+  // 여기에 추가로 버킷에 있는 이미지도 삭제해야함
+}

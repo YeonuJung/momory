@@ -42,7 +42,6 @@ export type Database = {
           message: string
           momory_uuid: string
           nickname: string
-          password: string
           user_id: number
         }
         Insert: {
@@ -52,7 +51,6 @@ export type Database = {
           message: string
           momory_uuid?: string
           nickname: string
-          password: string
           user_id: number
         }
         Update: {
@@ -62,7 +60,6 @@ export type Database = {
           message?: string
           momory_uuid?: string
           nickname?: string
-          password?: string
           user_id?: number
         }
         Relationships: [
