@@ -23,7 +23,7 @@ export const checkMomory = async ({momory_uuid}: {momory_uuid: string}) => {
     .select("uuid", { count: "exact", head: true })
     .eq("uuid", momory_uuid)
  
-  return {exist: (count?? 0) > 0, error};
+  return {data: {exist: (count?? 0) > 0}, error};
 }
 // 모모리 닉네임 및 비밀번호를 가져오는 쿼리
 export const readMomory = async ({momory_uuid}: {momory_uuid: string}) => {

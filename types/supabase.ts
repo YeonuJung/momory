@@ -34,6 +34,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      failed_deletions: {
+        Row: {
+          created_at: string
+          error_message: string
+          id: number
+          image_path: string
+        }
+        Insert: {
+          created_at?: string
+          error_message: string
+          id?: number
+          image_path: string
+        }
+        Update: {
+          created_at?: string
+          error_message?: string
+          id?: number
+          image_path?: string
+        }
+        Relationships: []
+      }
       memory: {
         Row: {
           filter: string
