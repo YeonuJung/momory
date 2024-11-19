@@ -67,11 +67,13 @@ export async function GET(request: NextRequest) {
     response.cookies.set("access_token", accessToken, {
       httpOnly: true,
       sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
       maxAge: (60 * 60 * 24 * 30) + (60 * 60),
     });
     response.cookies.set("refresh_token", refreshToken, {
       httpOnly: true,
       sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
       path: "/api/refresh",
       maxAge: (60 * 60 * 24 * 30) + (60 * 60),
     });
@@ -84,6 +86,9 @@ export async function GET(request: NextRequest) {
     return redirectWithError(request, 'server', 'server_error')
   }
 
+  if(!insertData || insertData.length === 0){
+    return redirectWithError(request, 'server', 'server_error')
+  }
   // 엑세스 토큰과 리프레시 토큰을 발급
   const [accessToken, refreshToken] = await Promise.all([signAccessToken({user_id: insertData?.[0].id}),signRefreshToken(insertData?.[0].id)])
 
@@ -92,11 +97,13 @@ export async function GET(request: NextRequest) {
   response.cookies.set("access_token", accessToken, {
     httpOnly: true,
     sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
     maxAge: (60 * 60 * 24 * 30) + (60 * 60),
   });
   response.cookies.set("refresh_token", refreshToken, {
     httpOnly: true,
     sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
     path: "/api/refresh",
     maxAge: (60 * 60 * 24 * 30) + (60 * 60),
   });

@@ -10,38 +10,34 @@ export async function middleware(request: NextRequest) {
     pathname.includes("/api/v1/memory") ||
     pathname.includes("/api/v1/momory")
   ) {
-    // access_token이 없을 때
+    // access_token이 없을 때(로그인 하도록 리다이렉트)
     if (!access_token) {
-      return NextResponse.json(
-        { error: "access_token not found" },
-        { status: 401 },
-      );
+      return NextResponse.redirect(new URL("/", request.url));
     }
     // access_token이 있을 때
     const decoded = await verifyAccessToken(access_token.value);
-    // access_token이 유효하지 않을 때
+    // access_token 검증 실패 시
     if (decoded && decoded.ok === false) {
-      // access_token이 만료됐을 때
+      // access_token이 만료됐을 때(401리턴 -> axios에서 처리)
       if (decoded.error === "ERR_JWT_EXPIRED") {
         return NextResponse.json(
           { error: "access_token expired" },
           { status: 401 },
         );
       }
-      // access_token 만료 이외의 에러일 때
-      return NextResponse.json(
-        { error: "invalid access_token" },
-        { status: 401 },
-      );
+      // access_token 만료 이외의 에러일 때(로그인 하도록 리다이렉트)
+      return NextResponse.redirect(new URL("/", request.url));
     }
     // access_token이 유효할 때
-    // 다음 미들웨어로 넘어가기 전에 헤더에 userId를 담아서 넘겨줌
-    // 이렇게 하면 api 요청을 보낼 때마다 토큰을 검증할 필요가 없음
+    // 다음 미들웨어로 넘어가기 전에 헤더에 페이로드 값들을 담아서 넘겨줌
+    // 이렇게 하면 api route에서 토큰을 다시 검증할 필요가 없음
     const response = NextResponse.next();
-        response.headers.set(
+    response.headers.set(
       "x-middleware-data",
       JSON.stringify({
         userId: decoded.payload?.id,
+        momory_uuid: decoded.payload?.momory_uuid,
+        exp: decoded.payload?.exp,
       }),
     );
     return response;

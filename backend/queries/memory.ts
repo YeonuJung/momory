@@ -8,9 +8,9 @@ interface GetMemoryParams {
   cursor?: string;
 }
 export const readMemory = async ({momory_uuid, cursor}: GetMemoryParams ) => {
-  let query = supabase.from('memory').select("*", {count: 'exact'}).eq("momory_uuid", momory_uuid ).order('id', {ascending: false}).limit(9)
+  let query = supabase.from('memory').select("*", {count: 'exact'}).eq("momory_uuid", momory_uuid ).order('id', {ascending: true}).limit(9)
   if(cursor){
-    query = query.lt('id', cursor);
+    query = query.gt('id', cursor);
   }
  
   const {data, error, count} = await query;
@@ -52,7 +52,7 @@ export const uploadAndCreateMemory = async ({
       })
       // 업로드 실패시 에러 반환(어차피 db에 저장실패해도 업로드 된 이미지는 삭제해야함)
     if (uploadError){
-      return {data: null, error: uploadError}
+      return {data: imageData, error: uploadError}
     }
     
     // 3. DB에 메모리 저장(앞서 받은 이미지 경로를 함께 저장)
@@ -69,31 +69,35 @@ export const uploadAndCreateMemory = async ({
       .select()
       
       // DB 저장 실패시 업로드된 이미지 삭제(이미지는 업로드 성공했으므로 삭제해야함)
+      // 스토리지 이미지 삭제는 cronjob 같은 거 이용해서 구현하면 유저입장에서는 처리가 빠르다고 느낄 수 있을 듯.
     if (insertError) {
-      await supabase.storage
-        .from('memories')
-        .remove([imageData.path])
+      // await supabase.storage
+      //   .from('memories')
+      //   .remove([imageData.path])
       
       return { data: null, error: insertError }
     }
 
-    return { data, error: null }
+    return { data, error: insertError }
 }
 
 // 메모리를 삭제하는 쿼리
 // 1. 메모리 테이블에서 해당 메모리의 id를 가진 메모리를 삭제한다.
 export const deleteMemory= async ({memory_id, image_path}: {memory_id: number, image_path: string}) => {
-  const {data, error: deleteError} = await supabase.from('memory').delete().eq('id', memory_id);
-  if(deleteError){
-    return {data: null, error: deleteError}
+  const {error} = await supabase.from('memory').delete().eq('id', memory_id);
+  if(error){
+    return {data: null, error}
   }
   // 2. 스토리지에서 해당 이미지 삭제
   // 만약 실패하더라도 이미 메모리 테이블에서는 제거된 상태이기 때문에 따로 처리해주어야 함.
-  // 그래서 에러가 발생해도 data는 성공적으로 반환하고, 에러처리용 테이블에 에러내용 삽입. 
-  const {error: storageError} = await supabase.storage.from('memories').remove([image_path])
-  if(storageError){
-    await supabase.from('failed_deletions').insert({ image_path, error: storageError.message })
+  // 그래서 에러가 발생해도 data는 성공적으로 반환하고, 에러처리용 테이블에 에러내용 삽입.
+  // 스토리지 이미지 삭제는 cronjob 같은 거 이용해서 구현하면 유저입장에서는 처리가 빠르다고 느낄 수 있을 듯. 
+  const { error: storageError} = await supabase.storage.from('memories').remove([image_path])
+  console.log(storageError)
+  // if(storageError){
+  //   await supabase.from('failed_deletions').insert({ image_path, error: storageError.message })
     
-    return {data, error: null}
-  }
+  //   return {data, error: null}
+  // }
+  return {data: ["Successfully Deleted"], error} 
 }

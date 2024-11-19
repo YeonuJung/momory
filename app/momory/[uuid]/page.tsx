@@ -1,15 +1,15 @@
-import MomoryImage from "../../components/common/MomoryImage";
-import PageDots from "../../components/common/PageDots";
+import MomoryImage from "../../../components/common/MomoryImage";
+import PageDots from "../../../components/common/PageDots";
 import PageLayout from "@/components/layout/PageLayout";
 // import ModalContainer from "@/components/common/Modal/ModalContainer";
 // import ImageDetail from "../../components/common/Modal/ImageDetail";
 import ButtonContainer from "@/components/common/Button/ButtonContainer";
 import { Button } from "@/components/common/Button/Button";
-import HeaderTitle from "./_components/HeaderTitle";
-import DecoratedHeader from "./_components/DecoratedHeader";
-import HeaderSection from "./_components/sections/HeaderSection";
-import ContentSection from "./_components/sections/ContentSection";
-import NavigationArrow from "./_components/NavigationArrow";
+import HeaderTitle from "../_components/HeaderTitle";
+import DecoratedHeader from "../_components/DecoratedHeader";
+import HeaderSection from "../_components/sections/HeaderSection";
+import ContentSection from "../_components/sections/ContentSection";
+import NavigationArrow from "../_components/NavigationArrow";
 
 export default function Momory_page() {
   return (

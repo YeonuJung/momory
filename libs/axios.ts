@@ -5,15 +5,14 @@ export const request = axios.create({
   withCredentials: true,
 });
 
-// 401 에러 발생 시 리프레시 토큰으로 재발급 후 재요청
+// 액세스 토큰 만료시 리프레시 토큰으로 재발급 후 재요청
 request.interceptors.response.use(
   // 응답 성공 시
   (response) => response,
-  // 응답 에러 시
+  // 응답 에러 시(토큰 만료 케이스만 처리)
   async (error) => {
-    console.log(error.response?.status);
     const originalRequest = error.config;
-    // 401 에러 발생 및 access_token 만료 시
+    // access_token 만료 시
     if (error.response?.status === 401 && error.response?.data.error === "access_token expired") {
       try {
         // refresh_token으로 access_token 재발급
@@ -24,10 +23,12 @@ request.interceptors.response.use(
         }
       } // access_token 재발급 실패 시 
         catch (refreshError) {
-        return Promise.reject(refreshError);
+        console.log(refreshError)
+        alert("다시 로그인해주세요.");
+        window.location.href = "/";
       }
     }
-    // access_token 만료 이외의 에러 발생 시
+    // access_token 만료 이외의 모든 에러 발생 시 각 지점으로 전파
     return Promise.reject(error);
   }
 );  
