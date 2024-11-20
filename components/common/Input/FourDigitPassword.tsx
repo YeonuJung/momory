@@ -1,9 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
-
-export default function FourDigitPassword() {
-  const [password, setPassword] = useState(["", "", "", ""]);
+import { useRef} from "react";
+interface FourDigitPasswordProps {
+  momoryPassword: string[];
+  setMomoryPassword: (newPassword: string[]) => void;
+}
+export default function FourDigitPassword({momoryPassword, setMomoryPassword}: FourDigitPasswordProps) {
   const inputRefs = [
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
@@ -14,9 +16,9 @@ export default function FourDigitPassword() {
     // 숫자만 입력 가능하도록
     if (!/^\d*$/.test(value)) return;
 
-    const newPassword = [...password];
+    const newPassword = [...momoryPassword];
     newPassword[index] = value;
-    setPassword(newPassword);
+    setMomoryPassword(newPassword);
 
     // 값이 입력되면 다음 input으로 focus
     if (value && index < 3) {
@@ -28,14 +30,15 @@ export default function FourDigitPassword() {
     e: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     // Backspace 키를 눌렀을 때 이전 input으로 focus
-    if (e.key === "Backspace" && !password[index] && index > 0) {
+    // 해당 칸에 값이 없어야 하고 첫 번째 칸이 아니도록
+    if (e.key === "Backspace" && !momoryPassword[index] && index > 0) {
       inputRefs[index - 1].current?.focus();
     }
   };
 
   return (
     <div className="flex items-center justify-center gap-x-[3vw] xs:gap-x-[1.423rem]">
-      {password.map((digit, index) => {
+      {momoryPassword.map((digit, index) => {
         return (
           <input
             key={index}

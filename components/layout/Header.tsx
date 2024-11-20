@@ -3,6 +3,7 @@ import Image from "next/image";
 
 interface HeaderProps {
   type: "finish" | "arrow";
+  setCurrentPage?: (currentPage: string) => void;
 }
 export default function Header({ type }: HeaderProps) {
   return (
