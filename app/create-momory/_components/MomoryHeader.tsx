@@ -1,13 +1,30 @@
 "use client";
-import Header from '@/components/layout/Header'
-import { useMomoryStore } from '@/store/useMomoryStore'
+import Header from "@/components/common/Header";
+import { useMomoryStore } from "@/store/useMomoryStore";
 
-
-export default function MomoryHeader() {
-    const setCurrentPage = useMomoryStore((state) => state.setCurrentPage)
+interface MomoryHeaderProps {
+  page: "create_nickname" | "create_password";
+}
+export default function MomoryHeader({ page }: MomoryHeaderProps) {
+  const setCurrentPage = useMomoryStore((state) => state.setCurrentPage);
+  const momoryNickname = useMomoryStore((state) => state.momoryNickname);
+  const momoryPassword = useMomoryStore((state) => state.momoryPassword);
   return (
     <>
-     <Header type={"arrow"} setCurrentPage={setCurrentPage}/> 
+      {page === "create_nickname" ? (
+        <Header
+          page={page}
+          setCurrentPage={setCurrentPage}
+          momoryNickname={momoryNickname}
+        />
+      ) : (
+        <Header
+          page={page}
+          setCurrentPage={setCurrentPage}
+          momoryNickname={momoryNickname}
+          momoryPassword={momoryPassword}
+        />
+      )}
     </>
-  )
+  );
 }

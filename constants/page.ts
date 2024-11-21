@@ -1,0 +1,2 @@
+export const PAGES_WITH_FINISHBUTTON = ["create_password", "enter_password", "create_nicknameAndmessage"];
+export const PAGES_WITHOUT_FINISHBUTTON = ["create_nickname", "upload_photo", "select_filter"];

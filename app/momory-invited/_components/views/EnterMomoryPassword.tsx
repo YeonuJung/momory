@@ -1,4 +1,4 @@
-import Header from "@/components/layout/Header";
+import Header from "@/components/common/Header";
 import FourDigitPassword from "@/components/common/Input/FourDigitPassword";
 import InputLabel from "@/components/common/Input/InputLabel";
 

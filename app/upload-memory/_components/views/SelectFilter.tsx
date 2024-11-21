@@ -1,6 +1,6 @@
 "use client";
 
-import Header from "@/components/layout/Header";
+import Header from "@/components/common/Header";
 import React, { MutableRefObject, useRef } from "react";
 import { useDraggable } from "react-use-draggable-scroll";
 

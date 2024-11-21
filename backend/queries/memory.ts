@@ -24,14 +24,14 @@ export const readMemory = async ({momory_uuid, cursor}: GetMemoryParams ) => {
 
 
 export const uploadAndCreateMemory = async ({
-  file,
+  photo,
   momory_uuid,
   user_id,
   nickname,
   filter,
   message
 }: {
-  file: File;
+  photo: File;
   momory_uuid: string;
   user_id: number;
   nickname: string;
@@ -44,10 +44,10 @@ export const uploadAndCreateMemory = async ({
     // 업데이트 불가, 삭제 후 재업로드 해도 경로가 바뀌기 때문에 캐시를 길게 잡음
     const now = new Date()
     const formattedDate = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`
-    const fileName = `${formattedDate}/${momory_uuid}/${now.getTime()}-${file.name}`
+    const fileName = `${formattedDate}/${momory_uuid}/${now.getTime()}-${photo.name}`
     const { data: imageData, error: uploadError } = await supabase.storage
       .from('memories')
-      .upload(fileName, file, {
+      .upload(fileName, photo, {
         cacheControl: '31536000'
       })
       // 업로드 실패시 에러 반환(어차피 db에 저장실패해도 업로드 된 이미지는 삭제해야함)

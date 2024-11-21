@@ -1,4 +1,4 @@
-import Header from '@/components/layout/Header'
+import Header from '@/components/common/Header'
 import PasswordInput from '@/components/common/Input/PasswordInput'
 
 export default function CreateMemoryPassword() {

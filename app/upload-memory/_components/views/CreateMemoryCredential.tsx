@@ -1,4 +1,4 @@
-import Header from "@/components/layout/Header";
+import Header from "@/components/common/Header";
 import NicknameInput from "@/components/common/Input/NicknameInput";
 import PageLayout from "@/components/layout/PageLayout";
 import CreateMemoryMessage from "../CreateMemoryMessage";

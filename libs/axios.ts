@@ -1,12 +1,12 @@
 import axios from "axios"
 
-export const request = axios.create({
+export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_URL,
   withCredentials: true,
 });
 
 // 액세스 토큰 만료시 리프레시 토큰으로 재발급 후 재요청
-request.interceptors.response.use(
+api.interceptors.response.use(
   // 응답 성공 시
   (response) => response,
   // 응답 에러 시(토큰 만료 케이스만 처리)
@@ -16,10 +16,10 @@ request.interceptors.response.use(
     if (error.response?.status === 401 && error.response?.data.error === "access_token expired") {
       try {
         // refresh_token으로 access_token 재발급
-        const refreshResponse = await request.get("/api/v1/refresh");
+        const refreshResponse = await api.get("/api/v1/refresh");
         // access_token 발급 성공 시 재요청
         if (refreshResponse.status === 200) {
-          return request(originalRequest);
+          return api(originalRequest);
         }
       } // access_token 재발급 실패 시 
         catch (refreshError) {

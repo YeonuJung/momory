@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
   // 요청본문에서 파일, momory_uuid, nickname, filter, message를 가져옴
   const formData = await request.formData();
   const formValues = { 
-    file: formData.get("file") as File,
+    photo: formData.get("file") as File,
     momory_uuid: formData.get("momory_uuid") as string,
     nickname: formData.get("nickname") as string,
     filter: formData.get("filter") as string,
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
   );
   const { user_id } = middlewareData;
   // 이미지 업로드 및 메모리 생성 쿼리 호출
-  const {data, error} = await uploadAndCreateMemory({file: formValues.file, momory_uuid: formValues.momory_uuid, user_id, nickname: formValues.nickname, filter: formValues.filter, message: formValues.message})
+  const {data, error} = await uploadAndCreateMemory({photo: formValues.photo, momory_uuid: formValues.momory_uuid, user_id, nickname: formValues.nickname, filter: formValues.filter, message: formValues.message})
   // 에러 발생 시 에러 메시지 및 500 상태코드 반환
   if(error){
     return NextResponse.json({error: error.message}, {status: 500})

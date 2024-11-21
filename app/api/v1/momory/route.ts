@@ -24,9 +24,9 @@ export async function POST(request:NextRequest) {
   const maxAge = Math.max(AccessTokenExp - now, 0);
   // 모모리 생성 쿼리 호출
   const {data, error} = await createMomory({user_id, nickname, password})
-  // 에러 발생 시 에러 메시지 및 500 상태코드 반환
+  // 에러 발생 시 에러 메시지를 쿼리파라미터로 넘겨준 뒤 닉네임 설정페이지로 다시 리다이렉트
   if(error){
-    return NextResponse.json({error: error.message}, {status: 500})
+    return NextResponse.redirect(new URL(`/create-momory?error=${error.message}`, request.url))
   }
   // 모모리 생성 성공 시 생성된 모모리의 uuid를 가져옴
   const momory_uuid = data?.[0].uuid
