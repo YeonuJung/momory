@@ -1,6 +1,7 @@
 "use client";
 
 import Header from "@/components/common/Header";
+import { FILTER_LIST } from "@/constants/page";
 import React, { MutableRefObject, useRef } from "react";
 import { useDraggable } from "react-use-draggable-scroll";
 
@@ -10,36 +11,7 @@ export default function SelectFilter() {
     applyRubberBandEffect: true,
     decayRate: 0.8,
   });
-  const filterList = [
-    {filter: "원본", class: "none"},
-    {filter: "1977", class: "_1977"},
-    {filter: "Aden", class: "aden"},
-    {filter: "Brannan", class: "brannan"},
-    {filter: "Brooklyn", class: "brooklyn"},
-    {filter: "Clarendon", class: "clarendon"},
-    {filter: "Earlybird", class: "earlybird"},
-    {filter: "Gingham", class: "gingham"},
-    {filter: "Hudson", class: "hudson"},
-    {filter: "Inkwell", class: "inkwell"},
-    {filter: "Kelvin", class: "kelvin"},
-    {filter: "Lark", class: "lark"},
-    {filter: "Lofi", class: "lofi"},
-    {filter: "Maven", class: "maven"},
-    {filter: "Mayfair", class: "mayfair"},
-    {filter: "Moon", class: "moon"},
-    {filter: "Nashville", class: "nashville"},
-    {filter: "Perpetua", class: "perpetua"},
-    {filter: "Reyes", class: "reyes"},
-    {filter: "Rise", class: "rise"},
-    {filter: "Slumber", class: "slumber"},
-    {filter: "Stinson", class: "stinson"},
-    {filter: "Toaster", class: "toaster"},
-    {filter: "Valencia", class: "valencia"},
-    {filter: "Walden", class: "walden"},
-    {filter: "Willow", class: "willow"},
-    {filter: "X-pro ||", class: "xpro2"},
 
-  ];
   return (
     <>
       <Header type="arrow" />
@@ -53,7 +25,7 @@ export default function SelectFilter() {
           className="flex w-[90.63vw] gap-x-[1.04vw] overflow-x-scroll font-nanum-Jung text-[5.42vw] font-extralight text-white  xs:w-[43.5rem] xs:gap-x-[0.5rem] xs:text-[2.6rem] cursor-grab  select-none touch-pan-x scroll-hide"
          
         >
-          {filterList.map((filter, idx) => {
+          {FILTER_LIST.map((filter, idx) => {
             return (
               <div
                 key={idx}

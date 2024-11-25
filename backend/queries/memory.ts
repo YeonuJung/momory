@@ -3,19 +3,29 @@ import { supabase } from "@/libs/supabase";
 // 모모리에 남겨진 메모리를 가져오는 쿼리
 // 1. 메모리 테이블에서 해당 모모리의 uuid를 가진 메모리를 모두 가져온다.
 // 2. 커서 기반으로 가져온다. (맨 처음 서버사이드 에서 내려줄 때는 커서없이 첫페이지 고정으로)
+// 3. 뿐만 아니라 커서가 없는 경우 첫 페이지라는 것을 알 수 있다.
 interface GetMemoryParams {
   momory_uuid: string;
   cursor?: string;
 }
 export const readMemory = async ({momory_uuid, cursor}: GetMemoryParams ) => {
   let query = supabase.from('memory').select("*", {count: 'exact'}).eq("momory_uuid", momory_uuid ).order('id', {ascending: true}).limit(9)
+  const isFirstPage = !cursor
   if(cursor){
     query = query.gt('id', cursor);
   }
  
   const {data, error, count} = await query;
-  const prevCursor = data?.[0].id
-  const nextCursor = data?.[data.length - 1]?.id
+  
+  if(error){
+    return {data: null, error}
+  }
+
+  if(data && data.length === 0){
+    return {data, error: null, count: 0}
+  }
+  const prevCursor = !isFirstPage? data?.[0].id : null 
+  const nextCursor = data?.[data.length - 1]?.id 
   
 
   return {data, error, count, nextCursor, prevCursor}

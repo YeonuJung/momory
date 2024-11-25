@@ -3,15 +3,16 @@ import { devtools } from "zustand/middleware";
 import { MemoryState } from "@/types/store";
 
 export const useMemoryStore = create<MemoryState>()(devtools((set) => ({
-    memoryPhoto: {photo: null, previewUrl: ""},
+    // 수정 필요
+    memoryPhoto: {photo: null as File | null, previewUrl: ""},
     memoryFilter: "",
     memoryNicknameAndMessage: {
         nickname: "",
         message: ""
     },
-    currentPage: "upload_photo",
+    currentAction: "upload_photo",
     setMemoryPhoto: (photo, previewUrl) => set({ memoryPhoto: {photo, previewUrl} }),
     setMemoryFilter: (memoryFilter) => set({ memoryFilter }),
     setMemoryNicknameAndMessage: (nickname, message) => set({ memoryNicknameAndMessage: { nickname, message } }),
-    setCurrentPage: (currentPage: string) => set({currentPage})
+    setCurrentAction: (currentAction: string) => set({currentAction})
 })))

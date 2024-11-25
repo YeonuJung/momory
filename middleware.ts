@@ -7,8 +7,8 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   // 모모리 또는 메모리 관련 api 경로일 때
   if (
-    pathname.includes("/api/v1/memory") ||
-    pathname.includes("/api/v1/momory")
+    pathname.startsWith("/api/v1/memory") ||
+    pathname.startsWith("/api/v1/momory")
   ) {
     // access_token이 없을 때(로그인 하도록 리다이렉트)
     if (!access_token) {
@@ -35,7 +35,7 @@ export async function middleware(request: NextRequest) {
     response.headers.set(
       "x-middleware-data",
       JSON.stringify({
-        userId: decoded.payload?.id,
+        user_id: decoded.payload?.user_id,
         momory_uuid: decoded.payload?.momory_uuid,
         exp: decoded.payload?.exp,
       }),

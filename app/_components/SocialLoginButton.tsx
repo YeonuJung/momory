@@ -9,13 +9,13 @@ interface SocialLoginButtonProps {
 export default function SocialLoginButton({href, src, alt}: SocialLoginButtonProps) {
   return (
     <Link href={`${href}`} className="z-20">
-    <Image
+    <img
       alt={`${alt}`}
       src={`${src}`}
-      width={46}
-      height={46}
+      width="46"
+      height="46"
       className="h-auto w-[12.3vw] xs:w-[5.904rem]"
-    ></Image>
+    ></img>
   </Link>
   )
 }

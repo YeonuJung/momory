@@ -11,7 +11,15 @@ import HeroSection from "./_components/sections/HeroSection";
 import SocialSection from "./_components/sections/SocialSection";
 import SocialLoginButtonConatiner from "./_components/containers/SocialLoginButtonConatiner";
 
-export default function Home_Page() {
+export default async function HomePage({searchParams} : {searchParams: Promise<{[key: string]: string | string[] | undefined}>}) {
+  // const {error} = await searchParams
+  // if(error && error === 'server'){
+    
+  // }
+  // if(error && error === 'not_found'){
+
+  // }
+
   return (
     <PageLayout verticalSpacing="gap-y-[6.9vw] xs:gap-y-[3.312rem]">
       <PolaroidDecoration />
@@ -31,13 +39,13 @@ export default function Home_Page() {
             올 한 해 따뜻했던 기억들, 이곳에 채워보세요
           </SerivceGuide>
         </ServiceGuideContainer>
-        <Image
+        <img
           alt="로고 주변 일러스트"
           src="/image/로고 주변 일러스트.svg"
-          width={304}
-          height={181}
+          width="304"
+          height="181"
           className="absolute top-[1.68rem] h-auto w-[81vw] xs:w-[38.88rem]"
-        ></Image>
+        ></img>
       </HeroSection>
       <SocialSection>
         <SocialLoginText>소셜 로그인</SocialLoginText>

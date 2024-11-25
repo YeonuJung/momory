@@ -62,13 +62,13 @@ export async function GET(request: NextRequest) {
   if (isUserExists &&isUserExists.length > 0) {
     // 엑세스 토큰과 리프레시 토큰을 발급
     const [accessToken, refreshToken] = await Promise.all([signAccessToken({user_id: isUserExists[0].id}),signRefreshToken(isUserExists[0].id)])
-
     const response = NextResponse.redirect(new URL("/create-momory", request.url));
 
     response.cookies.set("access_token", accessToken, {
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
+      path: "/",
       maxAge: (60 * 60 * 24 * 30) + (60 * 60),
     });
     response.cookies.set("refresh_token", refreshToken, {
@@ -97,8 +97,9 @@ export async function GET(request: NextRequest) {
 
   response.cookies.set("access_token", accessToken, {
     httpOnly: true,
-    sameSite: "strict",
+    sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
+    path: "/",
     maxAge: (60 * 60 * 24 * 30) + (60 * 60),
   });
   response.cookies.set("refresh_token", refreshToken, {

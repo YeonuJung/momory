@@ -5,22 +5,6 @@ const REST_API_KEY = process.env.KAKAO_REST_API_KEY as string;
 const REDIRECT_URI = process.env.KAKAO_REDIRECT_URI as string;
 
 export async function GET() {
-  // const accessToken = request.cookies.get("access_token")?.value;
-  // if (accessToken) {
-  //   const { payload, ok } = await verifyAccessToken(accessToken);
-  //   if (ok === false) {
-  //     const response = NextResponse.redirect(
-  //       `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`,
-  //     );
-  //     response.cookies.delete("access_token");
-  //     response.cookies.delete("refresh_token");
-  //     return response;
-  //   }
-  //   if (payload && payload.momory_uuid) {
-  //     return NextResponse.redirect(new URL("/momory", request.url));
-  //   }
-  //   return NextResponse.redirect(new URL("/create-momory", request.url));
-  // }
   return NextResponse.redirect(
     `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`,
   );

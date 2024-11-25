@@ -1,8 +1,6 @@
 "use client"
 
 import { useMomoryStore } from "@/store/useMomoryStore"
-import { useRouter, useSearchParams } from "next/navigation"
-import { useEffect } from "react"
 
 
 interface CreateMomoryContainerProps {
@@ -11,21 +9,12 @@ interface CreateMomoryContainerProps {
 }
 
 export default function CreateMomoryContainer({ createMomoryNickname, createMomoryPassword }: CreateMomoryContainerProps) {
-  const currentPage = useMomoryStore((state) => state.currentPage)
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const error = searchParams.get("error")
+  const currentAction = useMomoryStore((state) => state.currentAction)
 
-  useEffect(() => {
-    if(error){
-      alert(error)
-      router.replace("/create-momory")
-    }
-  }, [error, router])
   return (
     <>
-      {currentPage === "create_nickname" && createMomoryNickname}
-      {currentPage === "create_password" && createMomoryPassword}
+      {currentAction === "create_nickname" && createMomoryNickname}
+      {currentAction === "create_password" && createMomoryPassword}
     </>
   )
 }

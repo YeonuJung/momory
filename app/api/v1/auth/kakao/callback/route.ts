@@ -66,8 +66,9 @@ export async function GET(request: NextRequest) {
 
     response.cookies.set("access_token", accessToken, {
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
+      path: "/",
       maxAge: (60 * 60 * 24 * 30) + (60 * 60),
     });
     response.cookies.set("refresh_token", refreshToken, {
@@ -96,8 +97,9 @@ export async function GET(request: NextRequest) {
 
   response.cookies.set("access_token", accessToken, {
     httpOnly: true,
-    sameSite: "strict",
+    sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
+    path: "/",
     maxAge: (60 * 60 * 24 * 30) + (60 * 60),
   });
   response.cookies.set("refresh_token", refreshToken, {

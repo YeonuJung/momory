@@ -1,6 +1,6 @@
 import { Button, ButtonWithCaption } from "@/components/common/Button/Button";
 import ButtonContainer from "@/components/common/Button/ButtonContainer";
-import PageDots from "@/components/common/PageDots";
+import PageDots from "@/app/momory/[uuid]/_components/PageDots";
 import Image from "next/image";
 
 export default function MomoryInvite() {
