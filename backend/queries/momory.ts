@@ -11,7 +11,7 @@ export const createMomory = async ({user_id, momoryNickname, hashedPassword}: Cr
     .from("momory")
     .insert([{user_id: user_id, password: hashedPassword, nickname: momoryNickname}])
     .select();
-  
+
   return {data, error};
 }
 // 모모리가 존재하는지 확인하는 쿼리
@@ -20,13 +20,13 @@ export const checkMomory = async ({user_id}: {user_id: number}) => {
     .from("momory")
     .select("uuid")
     .eq("user_id", user_id)
- 
+
   return {data, error};
 }
 
 // 모모리 닉네임 및 비밀번호를 가져오는 쿼리
 export const readMomory = async ({momory_uuid}: {momory_uuid: string}) => {
   const {data, error} = await supabase.from('momory').select("*").eq("uuid", momory_uuid);
-  
+
   return {data, error}
 }

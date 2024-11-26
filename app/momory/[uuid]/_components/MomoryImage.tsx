@@ -5,33 +5,41 @@ import { Memory } from "@/types/model";
 
 interface MomoryImageProps {
   memoryData: Memory[];
+  userId: number;
+  uuid: string;
 }
 
-export default function MomoryImage({ memoryData }: MomoryImageProps) {
+export default function MomoryImage({ memoryData, userId, uuid }: MomoryImageProps) {
   const openModal = useMomoryViewStore((state) => state.openModal);
   return (
     <div className="flex flex-wrap content-center items-center justify-center gap-x-[5.6vw] gap-y-[4.75vw] xs:gap-x-[2.688rem] xs:gap-y-[2.28rem]">
       {ROTATION_ANGLES.map((angle, idx) => {
+        const currentMemory = memoryData[idx];
         return (
           <div
             key={idx}
             className={`relative flex h-[33.46vw] w-[22.5vw] ${angle} cursor-pointer flex-col items-center justify-center bg-polaroid-frame bg-cover bg-center bg-no-repeat xs:h-[16.062rem] xs:w-[10.8rem]`}
-            onClick={() =>
+            onClick={() => {
+              if (!currentMemory) return;
               openModal({
-                filter: memoryData[idx].filter,
-                memoryId: memoryData[idx].id,
-                nickname: memoryData[idx].nickname,
-                imagePath: memoryData[idx].image_path,
-                message: memoryData[idx].message,
-              })
-            }
+                filter: currentMemory.filter,
+                memoryId: currentMemory.id,
+                nickname: currentMemory.nickname,
+                imagePath: currentMemory.image_path,
+                message: currentMemory.message,
+                memory_user_id: currentMemory.user_id,
+                logined_user_id: userId,
+                memory_momory_uuid: currentMemory.momory_uuid,
+                momory_uuid: uuid,
+              });
+            }}
           >
             <div
-              className={`${memoryData[idx]?.filter ? memoryData[idx].filter : ""} h-[25.52vw] w-[18.75vw] xs:h-[11.9rem] xs:w-[9rem]`}
+              className={`${currentMemory?.filter ? currentMemory?.filter : "none"} h-[25.52vw] w-[18.75vw] xs:h-[11.9rem] xs:w-[9rem]`}
             ></div>
             <div className="h-[5.83vw] w-full pl-[2.08vw] align-top font-nanum-Jung text-[3.75vw] font-medium tracking-wide text-[#252525] xs:h-[2.8rem] xs:pl-[1rem] xs:text-[1.8rem]">
-              {memoryData[idx]?.nickname
-                ? `@${memoryData[idx].nickname}`
+              {currentMemory?.nickname
+                ? `@${currentMemory?.nickname}`
                 : "@닉네임"}
             </div>
             {ILLUSTRATIONS[idx].map((illust, i) => {

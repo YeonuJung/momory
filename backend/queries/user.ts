@@ -22,11 +22,11 @@ export const checkUserByEmail = async ({
 };
 
 export const createUser = async ({email, social_type} : CheckUserByEmailParams)=> {
-    const { data, error } = await supabase
-        .from("user")
-        .insert([{ email: email, social_type: social_type }])
-        .select("id");
-  
+  const { data, error } = await supabase
+    .from("user")
+    .insert([{ email: email, social_type: social_type }])
+    .select("id");
+
     
     return {data, error}
 }

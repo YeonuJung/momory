@@ -13,17 +13,21 @@ export const MomoryStateSchema = z.object({
 export type MomoryState = z.infer<typeof MomoryStateSchema>
 
 export const OpenModalPropsSchema = z.object({
-    memoryId: z.number().or(z.null()),
-    message: z.string().min(1, {message: "메시지를 입력해주세요"}).max(50, {message: "메시지는 50자 이내로 입력해주세요"}),
-    nickname: z.string().min(1, {message: "닉네임을 입력해주세요"}).max(4, {message: "닉네임은 4글자 이내로 입력해주세요"}).max(4, {message: "닉네임은 4글자 이내로 입력해주세요"}),
-    imagePath: z.string(),
-    filter: z.string(),
+    memoryId: z.number().optional(),
+    message: z.string().min(1, {message: "메시지를 입력해주세요"}).max(50, {message: "메시지는 50자 이내로 입력해주세요"}).optional(),
+    nickname: z.string().min(1, {message: "닉네임을 입력해주세요"}).max(4, {message: "닉네임은 4글자 이내로 입력해주세요"}).max(4, {message: "닉네임은 4글자 이내로 입력해주세요"}).optional(),
+    imagePath: z.string().optional(),
+    filter: z.string().optional(),
+    memory_user_id: z.number().optional(),
+    logined_user_id: z.number().optional(),
+    memory_momory_uuid: z.string().optional(),
+    momory_uuid: z.string().optional(),
 })
 export const MomoryViewStateSchema = z.object({
-    cursor: z.number().or(z.null()),
+    cursor: z.number().nullish(),
     isModalOpen: z.boolean(),
     modalData: OpenModalPropsSchema,
-    setCursor: z.function().args(z.number().or(z.null())).returns(z.void()),
+    setCursor: z.function().args(z.number().nullish()).returns(z.void()),
     openModal: z.function().args(OpenModalPropsSchema).returns(z.void()),
     closeModal: z.function().returns(z.void()),
 })

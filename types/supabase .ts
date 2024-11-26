@@ -34,29 +34,9 @@ export type Database = {
   }
   public: {
     Tables: {
-      failed_deletions: {
-        Row: {
-          created_at: string
-          error_message: string
-          id: number
-          image_path: string
-        }
-        Insert: {
-          created_at?: string
-          error_message: string
-          id?: number
-          image_path: string
-        }
-        Update: {
-          created_at?: string
-          error_message?: string
-          id?: number
-          image_path?: string
-        }
-        Relationships: []
-      }
       memory: {
         Row: {
+          created_at: string
           filter: string
           id: number
           image_path: string
@@ -66,6 +46,7 @@ export type Database = {
           user_id: number
         }
         Insert: {
+          created_at?: string
           filter: string
           id?: never
           image_path: string
@@ -75,6 +56,7 @@ export type Database = {
           user_id: number
         }
         Update: {
+          created_at?: string
           filter?: string
           id?: never
           image_path?: string
@@ -102,18 +84,21 @@ export type Database = {
       }
       momory: {
         Row: {
+          created_at: string
           nickname: string
           password: string
           user_id: number
           uuid: string
         }
         Insert: {
+          created_at?: string
           nickname: string
           password: string
           user_id: number
           uuid?: string
         }
         Update: {
+          created_at?: string
           nickname?: string
           password?: string
           user_id?: number

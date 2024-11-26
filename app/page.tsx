@@ -10,16 +10,37 @@ import ServiceGuideContainer from "./_components/containers/ServiceGuideContaine
 import HeroSection from "./_components/sections/HeroSection";
 import SocialSection from "./_components/sections/SocialSection";
 import SocialLoginButtonConatiner from "./_components/containers/SocialLoginButtonConatiner";
+import { redirect } from "next/navigation";
+import { checkMomory } from "@/backend/queries/momory";
+import { cookies } from "next/headers";
+import { verifyAccessToken } from "@/libs/jwt";
 
-export default async function HomePage({searchParams} : {searchParams: Promise<{[key: string]: string | string[] | undefined}>}) {
-  // const {error} = await searchParams
-  // if(error && error === 'server'){
-    
-  // }
-  // if(error && error === 'not_found'){
-
-  // }
-
+export default async function HomePage() {
+  // ValidateToken 유틸은 토큰이 없는 경우 랜딩페이지로 리다이렉트 시키기 때문에
+  // 여기서는 사용하면 무한 리다이렉트가 발생할 수 있어서 직접 쿠키에서 파싱
+  const cookieStore = cookies();
+  const access_token = cookieStore.get("access_token");
+  // 액세스 토큰이 있다면
+  if(access_token){
+    // 액세스 토큰을 검증
+    const verifiedAccessToken = await verifyAccessToken(access_token.value);
+    // 액세스 토큰이 유효하다면
+    if (verifiedAccessToken.ok && verifiedAccessToken.payload) {
+      // 유저 아이디를 가져와서 모모리 체크(verify가 성공했으므로 user_id는 존재함)
+      const { data } = await checkMomory({
+        user_id: verifiedAccessToken.payload.user_id as number,
+      });
+      // 모모리가 존재한다면 해당 모모리로 리다이렉트
+      if (data && data.length > 0) {
+        const momory_uuid = data[0].uuid;
+        return redirect(`/momory/${momory_uuid}`);
+      }
+      // 모모리가 존재하지 않는다면 모모리 생성 페이지로 리다이렉트
+      return redirect(`/create-momory`);
+    }
+  }
+  
+  // 액세스 토큰이 없다면 페이지에 머무르도록 해서 로그인 시킴
   return (
     <PageLayout verticalSpacing="gap-y-[6.9vw] xs:gap-y-[3.312rem]">
       <PolaroidDecoration />
@@ -29,6 +50,7 @@ export default async function HomePage({searchParams} : {searchParams: Promise<{
           width={339}
           height={521}
           alt="배경 일러스트"
+          priority={true}
           className="absolute z-20 h-auto w-[90.4vw] xs:w-[43.4rem]"
         ></Image>
         <MainLogoContainer>

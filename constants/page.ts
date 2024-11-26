@@ -136,7 +136,7 @@ export const ILLUSTRATIONS = [
     {
       path: "/image/일러스트17.svg",
       position:
-        "-botttom-[9.76vw] left-[4.58vw] xs:-bottom-[4.686rem] xs:left-[2.2rem]",
+        "-bottom-[9.76vw] left-[4.58vw] xs:-bottom-[4.686rem] xs:left-[2.2rem]",
     },
     {
       path: "/image/일러스트18.svg",

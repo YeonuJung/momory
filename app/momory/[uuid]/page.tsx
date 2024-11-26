@@ -20,6 +20,7 @@ export default async function MomoryPage({
   params: Promise<{ uuid: string }>;
 }) {
   const [{ uuid }, user_id] = await Promise.all([params, validateToken()]);
+ 
   const [readMomoryResult, readMemoryResult] = await Promise.all([
     readMomory({ momory_uuid: uuid }),
     readMemory({ momory_uuid: uuid }),
@@ -28,7 +29,7 @@ export default async function MomoryPage({
   const { data: readMemoryData, error: readMemoryError } = readMemoryResult;
 
   if (readMomoryError || readMemoryError) {
-    redirect(`/?error=server`);
+    redirect(`/?server_error=db_fetch_failed`);
   }
 
   return (
@@ -39,7 +40,7 @@ export default async function MomoryPage({
         </DecoratedHeader>
       </HeaderSection>
       <ContentSection>
-        <MomoryImage memoryData={readMemoryData} />
+        <MomoryImage memoryData={readMemoryData} userId={user_id} uuid={uuid}/>
         <PageDots />
       </ContentSection>
       <ButtonContainer>
