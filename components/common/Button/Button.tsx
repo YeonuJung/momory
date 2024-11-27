@@ -1,6 +1,7 @@
-
+"use client";
 interface ButtonProps {
     children: React.ReactNode;
+    action: "share_momory" | "save_momory" | "create_momory" | "leave_memory" | "delete_memory" | "save_memory" | "go_to_my_momory"
 }
 interface ButtonWithCaptionProps extends ButtonProps {
     caption: string;

@@ -17,7 +17,7 @@ export default function MomoryHeader({ page }: MomoryHeaderProps) {
   const handleNext = () => {
     if(!setCurrentAction("create_password")) return;
   };
-  // 제출할 때 비밀번호 검증도 같이 해주어야함
+  // 제출할 때 비밀번호 검증
   // 검증실패 시 api 요청 안보내도록  return
   const handleSubmit = async () => {
     if(!setCurrentAction("submit")) return
@@ -32,7 +32,7 @@ export default function MomoryHeader({ page }: MomoryHeaderProps) {
     }
     if(response.data.error){
       alert("모모리 생성에 실패했습니다. 다시 시도해주세요!")
-      reset()
+      reset("create_nickname")
       router.push("/create-momory")
     }
   };
@@ -45,14 +45,11 @@ export default function MomoryHeader({ page }: MomoryHeaderProps) {
       {page === "create_nickname" ? (
         <Header
           page={page}
-          momoryNickname={momoryNickname}
           handleNext={handleNext}
         />
       ) : (
         <Header
           page={page}
-          momoryNickname={momoryNickname}
-          momoryPassword={momoryPassword}
           handleSubmit={handleSubmit}
           handlePrev={handlePrev}
         />

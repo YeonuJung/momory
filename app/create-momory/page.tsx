@@ -7,8 +7,8 @@ import { redirect } from "next/navigation";
 import { validateToken } from "@/utils/server/validateToken";
 
 export default async function CreateMomoryPage() {
-  const user_id = await validateToken()
-
+  // 토큰 검증 및 유저 아이디 가져오기(토큰이 없다면 랜딩 페이지로 리다이렉트)
+  const {user_id} = await validateToken()
   // 유저 아이디를 통해 모모리가 존재하는지 확인
   const { data, error } = await checkMomory({
     user_id: user_id
@@ -25,8 +25,8 @@ export default async function CreateMomoryPage() {
   return (
     <PageLayout>
       <CreateMomoryContainer
-        createMomoryNickname={<CreateMomoryNickname />}
-        createMomoryPassword={<CreateMomoryPassword />}
+        CreateMomoryNickname={<CreateMomoryNickname />}
+        CreateMomoryPassword={<CreateMomoryPassword />}
       />
     </PageLayout>
   );

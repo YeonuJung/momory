@@ -4,17 +4,19 @@ import { useMomoryViewStore } from "@/store/useMomoryViewStore";
 import { Memory } from "@/types/model";
 
 interface MomoryImageProps {
-  memoryData: Memory[];
+  memoryData: Memory[] | null;
   userId: number;
   uuid: string;
 }
 
 export default function MomoryImage({ memoryData, userId, uuid }: MomoryImageProps) {
+  console.log(memoryData);
+  console.log(uuid)
   const openModal = useMomoryViewStore((state) => state.openModal);
   return (
     <div className="flex flex-wrap content-center items-center justify-center gap-x-[5.6vw] gap-y-[4.75vw] xs:gap-x-[2.688rem] xs:gap-y-[2.28rem]">
       {ROTATION_ANGLES.map((angle, idx) => {
-        const currentMemory = memoryData[idx];
+        const currentMemory = memoryData?.[idx];
         return (
           <div
             key={idx}

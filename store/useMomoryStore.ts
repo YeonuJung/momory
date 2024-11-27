@@ -11,7 +11,7 @@ export const useMomoryStore = create<MomoryState>()(
       set({ momoryPassword: newPassword }),
     setMomoryNickname: (momoryNickname: string) => set({ momoryNickname }),
     setCurrentAction: (currentAction: string) => {
-      const { momoryNickname, momoryPassword} = get();
+      const { momoryNickname, momoryPassword } = get();
       switch (currentAction) {
         case "create_password":
           const validateNicknameResult =
@@ -22,26 +22,41 @@ export const useMomoryStore = create<MomoryState>()(
           }
           set({ currentAction });
           return true;
-          
+
         case "create_nickname":
           set({ currentAction });
           return true;
-          
+
         case "submit":
-         const validatePasswordResult =   MomoryStateSchema.shape.momoryPassword.safeParse(momoryPassword)
-          if(!validatePasswordResult.success){
+          const validatePasswordResult =
+            MomoryStateSchema.shape.momoryPassword.safeParse(momoryPassword);
+          if (!validatePasswordResult.success) {
             alert(validatePasswordResult.error.errors[0].message);
             return false;
           }
           return true;
-        }
-        return false;
+        case "enter_password":
+          set({ currentAction });
+          return true;
+        case "view_momory_after_password":
+          const validatePasswordResult2 =
+            MomoryStateSchema.shape.momoryPassword.safeParse(momoryPassword);
+          if (!validatePasswordResult2.success) {
+            alert(validatePasswordResult2.error.errors[0].message);
+            return false;
+          }
+          return true;
+        case "view_momory":
+          set({ currentAction });
+          return true;
+      }
+      return false;
     },
-    reset: () =>
+    reset: (action: "create_nickname" | "enter_password") =>
       set({
         momoryPassword: ["", "", "", ""],
         momoryNickname: "",
-        currentAction: "create_nickname",
+        currentAction: action,
       }),
   })),
 );

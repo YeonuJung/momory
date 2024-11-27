@@ -28,7 +28,7 @@ export const useMomoryViewStore = create<MomoryViewState>((set) => ({
     const isMomoryOwner = props.memory_momory_uuid === props.momory_uuid;
     const isMemoryOwner = props.memory_user_id === props.logined_user_id;
    
-    if(!isMomoryOwner && !isMemoryOwner){
+    if(!isMomoryOwner || !isMemoryOwner){
         alert("이 메모리에 대한 접근 권한이 없습니다")
         return;
     }

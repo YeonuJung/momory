@@ -24,7 +24,7 @@ export const checkMomory = async ({user_id}: {user_id: number}) => {
   return {data, error};
 }
 
-// 모모리 닉네임 및 비밀번호를 가져오는 쿼리
+// 모모리 정보를 가져오는 쿼리
 export const readMomory = async ({momory_uuid}: {momory_uuid: string}) => {
   const {data, error} = await supabase.from('momory').select("*").eq("uuid", momory_uuid);
 

@@ -7,7 +7,7 @@ export const MomoryStateSchema = z.object({
     setMomoryPassword: z.function().args(z.array(z.string()).length(4)).returns(z.void()),
     setMomoryNickname: z.function().args(z.string().max(4)).returns(z.void()),
     setCurrentAction: z.function().args(z.string()).returns(z.boolean()),
-    reset: z.function().returns(z.void())
+    reset: z.function().args(z.union([z.literal("create_nickname"), z.literal("enter_password")])).returns(z.void())
 })
 
 export type MomoryState = z.infer<typeof MomoryStateSchema>

@@ -4,17 +4,17 @@ import { useMomoryStore } from "@/store/useMomoryStore"
 
 
 interface CreateMomoryContainerProps {
-  createMomoryNickname: React.ReactNode
-  createMomoryPassword: React.ReactNode
+  CreateMomoryNickname: React.ReactNode
+  CreateMomoryPassword: React.ReactNode
 }
 
-export default function CreateMomoryContainer({ createMomoryNickname, createMomoryPassword }: CreateMomoryContainerProps) {
+export default function CreateMomoryContainer({ CreateMomoryNickname, CreateMomoryPassword }: CreateMomoryContainerProps) {
   const currentAction = useMomoryStore((state) => state.currentAction)
 
   return (
     <>
-      {currentAction === "create_nickname" && createMomoryNickname}
-      {currentAction === "create_password" && createMomoryPassword}
+      {currentAction === "create_nickname" && CreateMomoryNickname}
+      {currentAction === "create_password" && CreateMomoryPassword}
     </>
   )
 }

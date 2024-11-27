@@ -7,7 +7,7 @@ import CreateMemoryCredential from "./_components/views/CreateMemoryCredential";
 
 export default function UploadMemoryPage() {
   return (
-    <PageLayout>
+    <PageLayout >
       {/* <UploadMemory/> */}
       {/* <SelectFilter/> */}
      <CreateMemoryCredential/>
