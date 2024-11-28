@@ -2,14 +2,14 @@ import * as jose from "jose";
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET_KEY);
 
-interface signAccessTokenParams {
+interface signTokenParams {
   user_id: number;
   momory_uuid?: string;
 }
-export const signAccessToken = async ({user_id, momory_uuid}: signAccessTokenParams) => {
+export const signAccessToken = async ({user_id, momory_uuid}: signTokenParams) => {
   return new jose.SignJWT({ user_id, type: "access", momory_uuid })
     .setProtectedHeader({ alg: "HS256" })
-    .setExpirationTime("1h")
+    .setExpirationTime("1hour")
     .sign(secret);
 };
 
@@ -34,7 +34,7 @@ export const verifyAccessToken = async (token: string) => {
         ok: false,
         error: e.code,
         message: e.reason,
-        expireAt: new Date(e.claim.exp * 1000),
+        expireAt: new Date(e.payload.exp * 1000),
       };
     }
     if (e.code === "ERR_JWT_INVALID") {
@@ -58,8 +58,8 @@ export const verifyAccessToken = async (token: string) => {
   }
 };
 
-export const signRefreshToken = async (id: number) => {
-  return new jose.SignJWT({ id, type: "refresh" })
+export const signRefreshToken = async ({user_id, momory_uuid}: signTokenParams ) => {
+  return new jose.SignJWT({ user_id, type: "refresh", momory_uuid })
     .setProtectedHeader({ alg: "HS256" })
     .setExpirationTime("30d")
     .sign(secret);
@@ -86,7 +86,7 @@ export const verifyRefreshToken = async (token: string) => {
         ok: false,
         error: e.code,
         message: e.reason,
-        expireAt: new Date(e.claim.exp * 1000),
+        expireAt: new Date(e.payload.exp * 1000),
       };
     }
     if (e.code === "ERR_JWT_INVALID") {

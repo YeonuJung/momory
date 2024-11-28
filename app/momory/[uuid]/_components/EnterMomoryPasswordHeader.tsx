@@ -2,7 +2,7 @@
 import Header from "@/components/common/Header";
 import { api } from "@/libs/axios";
 import { useMomoryStore } from "@/store/useMomoryStore";
-import { useParams} from "next/navigation";
+import { useParams } from "next/navigation";
 
 export default function EnterMomoryPasswordHeader() {
   const params = useParams();
@@ -19,14 +19,19 @@ export default function EnterMomoryPasswordHeader() {
       uuid: uuid,
       momoryPassword: momoryPassword,
     });
-    if(!verifiedResult.data.success){
-      alert("비밀번호가 일치하지 않습니다")
-      reset("enter_password")
-      return
+    if (verifiedResult.data.error) {
+      alert("비밀번호 확인 중 오류가 발생했습니다. 다시 시도해주세요!");
+      reset("enter_password");
+      return;
     }
-    setCurrentAction("view_momory")
+    if (!verifiedResult.data.success) {
+      alert("비밀번호가 일치하지 않습니다");
+      reset("enter_password");
+      return;
+    }
+    setCurrentAction("view_momory");
   };
- 
+
   return (
     <>
       <Header page={"enter_password"} handleSubmit={handleSubmit} />

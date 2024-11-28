@@ -11,10 +11,15 @@ export default async function MomoryPage({
 }: {
   params: Promise<{ uuid: string }>;
 }) {
-  // 파라미터 파싱 + 토큰 검증 및 유저 아이디 가져오기
+  // 파라미터 파싱 + 토큰 검증 및 유저 아이디와 모모리 uuid 가져오기
   // 토큰이 없다면 로그인 시키기 위해 랜딩 페이지로 리다이렉트
-  const [{ uuid }, { user_id, momory_uuid }] = await Promise.all([params, validateToken()]);
-
+  const {uuid} = await params;
+  // 토큰 검증 및 액세스 토큰 만료의 경우 리프레쉬 토큰으로 액세스 토큰 재발급까지 처리
+  const tokenData = await validateToken({ momory_uuid: uuid });
+  const { user_id, momory_uuid } = tokenData as {
+    user_id: number;
+    momory_uuid: string | undefined;
+  }
   // 모모리랑 메모리 데이터 가져오기
   const [readMomoryResult, readMemoryResult] = await Promise.all([
     readMomory({ momory_uuid: uuid }),
@@ -23,17 +28,12 @@ export default async function MomoryPage({
   // 데이터 파싱
   const { data: readMomoryData, error: readMomoryError } = readMomoryResult;
   const { data: readMemoryData, error: readMemoryError } = readMemoryResult;
- 
-  if (readMomoryData && readMomoryData.length === 0) {
-    return <div>존재하지 않는 모모리입니다.</div>;
-  }
-
-  // 서버 에러 발생 시 에러 메시지 출력
+  
+  // 서버 에러 발생 시 에러 메시지 출력(잘못된 모모리 uuid)
   if (readMomoryError || readMemoryError || readMomoryData === null) {
-    return <div>서버에러입니다. 다시 시도해주세요</div>;
+    return <div>서버에러 또는 없는 모모리입니다. 다시 시도해주세요</div>;
   }
   const momory_user_id = readMomoryData[0].user_id;
-
   return (
     <PageLayout verticalSpacing="gap-y-[5.6vw] xs:gap-y-[2.688rem]">
       {momory_user_id !== user_id ? (

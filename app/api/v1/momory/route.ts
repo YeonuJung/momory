@@ -2,17 +2,6 @@ import { createMomory } from "@/backend/queries/momory";
 import { hashPassword } from "@/libs/bcrypt";
 import { signAccessToken } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";
-// (모모리 읽어오는 GET 요청 핸들러)
-// 서버컴포넌트에서는 굳이 api를 통할 필요가 없기 때문에 보류
-// export async function GET(request: NextRequest) {
-//     const middlewareData = JSON.parse(request.headers.get('x-middleware-data') as string)
-//     const {momory_uuid} = middlewareData;
-//     const {data, error} = await readMomory({momory_uuid})
-//     if(error){
-//       return NextResponse.json({error: error.message}, {status: 500})
-//     }
-//     return NextResponse.json(data?.[0])
-//    }
 
 // 모모리 생성하는 POST 요청 핸들러
 export async function POST(request: NextRequest) {
@@ -22,16 +11,8 @@ export async function POST(request: NextRequest) {
   const middlewareData = JSON.parse(
     request.headers.get("x-middleware-data") as string,
   );
-  const { user_id, momory_uuid: isMomoryExist, AccessTokenExp } = middlewareData;
-  // 모모리가 이미 존재하는 경우 에러 메시지를 반환
-  // 사실상 모모리가 존재하면 이 페이지로 들어올 수 없지만 보안을 위해 추가
-  if(isMomoryExist){
-    return NextResponse.json({
-      error: "이미 모모리가 존재합니다.",
-      message: "모모리 생성 실패",
-    }, {status: 400
-    })
-  }
+  const { user_id, AccessTokenExp } = middlewareData;
+ 
 
   const now = Math.floor(Date.now() / 1000);
   const maxAge = Math.max(AccessTokenExp - now, 0);

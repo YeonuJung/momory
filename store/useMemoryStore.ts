@@ -1,3 +1,4 @@
+"use client"
 import { create } from "zustand/react";
 import { devtools } from "zustand/middleware";
 import { MemoryState } from "@/types/store";

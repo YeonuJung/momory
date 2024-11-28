@@ -1,7 +1,7 @@
 import axios from "axios"
 
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_URL,
+  baseURL: 'http://localhost:3000',
   withCredentials: true,
 });
 
@@ -11,6 +11,7 @@ api.interceptors.response.use(
   (response) => response,
   // 응답 에러 시(토큰 만료 케이스만 처리)
   async (error) => {
+  
     const originalRequest = error.config;
     // access_token 만료 시
     if (error.response?.status === 401 && error.response?.data.error === "access_token expired") {
@@ -25,7 +26,7 @@ api.interceptors.response.use(
         catch (refreshError) {
         console.log(refreshError)
         alert("다시 로그인해주세요.");
-        window.location.href = "/";
+        window.location.href = "/?auth_error=unauthorized";
       }
     }
     // access_token 만료 이외의 모든 에러 발생 시 각 지점으로 전파

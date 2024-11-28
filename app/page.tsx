@@ -26,13 +26,10 @@ export default async function HomePage() {
     const verifiedAccessToken = await verifyAccessToken(access_token.value);
     // 액세스 토큰이 유효하다면
     if (verifiedAccessToken.ok && verifiedAccessToken.payload) {
-      // 유저 아이디를 가져와서 모모리 체크(verify가 성공했으므로 user_id는 존재함)
-      const { data } = await checkMomory({
-        user_id: verifiedAccessToken.payload.user_id as number,
-      });
+      // 액세스 토큰에서 모모리 uuid를 가져오기 -> 없을 수도 있음
+      const momory_uuid = verifiedAccessToken.payload.momory_uuid as string | undefined;
       // 모모리가 존재한다면 해당 모모리로 리다이렉트
-      if (data && data.length > 0) {
-        const momory_uuid = data[0].uuid;
+      if (momory_uuid) {
         return redirect(`/momory/${momory_uuid}`);
       }
       // 모모리가 존재하지 않는다면 모모리 생성 페이지로 리다이렉트
