@@ -11,11 +11,11 @@ import HeroSection from "./_components/sections/HeroSection";
 import SocialSection from "./_components/sections/SocialSection";
 import SocialLoginButtonConatiner from "./_components/containers/SocialLoginButtonConatiner";
 import { redirect } from "next/navigation";
-import { checkMomory } from "@/backend/queries/momory";
 import { cookies } from "next/headers";
 import { verifyAccessToken } from "@/libs/jwt";
 
-export default async function HomePage() {
+export default async function HomePage({searchParams}: {searchParams: { [key: string]: string | string[] | undefined }}) {
+  const redirect_uri = searchParams.redirect_uri as string | undefined; 
   // ValidateToken 유틸은 토큰이 없는 경우 랜딩페이지로 리다이렉트 시키기 때문에
   // 여기서는 사용하면 무한 리다이렉트가 발생할 수 있어서 직접 쿠키에서 파싱
   const cookieStore = cookies();
@@ -24,11 +24,18 @@ export default async function HomePage() {
   if(access_token){
     // 액세스 토큰을 검증
     const verifiedAccessToken = await verifyAccessToken(access_token.value);
-    // 액세스 토큰이 유효하다면
+    // 액세스 토큰이 유효하다면 2가지 케이스로 나눔
+    // 리다이렉트 uri가 존재한다면 해당 uri로 리다이렉트
+    // 리다이렉트 uri가 존재하지 않는다면 모모리 존재 확인 후 모모리로 이동 또는 생성페이지로 이동
     if (verifiedAccessToken.ok && verifiedAccessToken.payload) {
       // 액세스 토큰에서 모모리 uuid를 가져오기 -> 없을 수도 있음
       const momory_uuid = verifiedAccessToken.payload.momory_uuid as string | undefined;
-      // 모모리가 존재한다면 해당 모모리로 리다이렉트
+      // 리다이렉트 uri가 존재한다면 해당 uri로 리다이렉트
+      if(redirect_uri){
+        return redirect(redirect_uri);
+      }
+      // 리다이렉트 uri가 없는 경우
+      // 모모리가 존재한다면 해당 모모리로, 없으면 생성 페이지로 리다이렉트
       if (momory_uuid) {
         return redirect(`/momory/${momory_uuid}`);
       }
@@ -70,17 +77,17 @@ export default async function HomePage() {
         <SocialLoginText>소셜 로그인</SocialLoginText>
         <SocialLoginButtonConatiner>
           <SocialLoginButton
-            href="/api/v1/auth/kakao"
+            href={redirect_uri? `/api/v1/auth/kakao/?redirect_uri=${redirect_uri}` : `/api/v1/auth/kakao`}
             src="/image/kakao.svg"
             alt="카카오 소셜로그인 버튼"
           />
           <SocialLoginButton
-            href="/api/v1/auth/naver"
+            href={redirect_uri? `/api/v1/auth/naver/?redirect_uri=${redirect_uri}` : `/api/v1/auth/naver`}
             src="/image/naver.svg"
             alt="네이버 소셜로그인 버튼"
           />
           <SocialLoginButton
-            href="/api/v1/auth/google"
+            href={redirect_uri? `/api/v1/auth/google/?redirect_uri=${redirect_uri}` : `/api/v1/auth/google`}
             src="/image/google.svg"
             alt="구글 소셜로그인 버튼"
           />

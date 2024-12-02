@@ -1,11 +1,11 @@
 export const PAGES_WITH_FINISHBUTTON = [
   "create_password",
   "enter_password",
-  "create_nicknameAndmessage",
+  "upload_memory_credential",
 ];
 export const PAGES_WITHOUT_FINISHBUTTON = [
   "create_nickname",
-  "upload_photo",
+  "upload_memory_photo",
   "select_filter",
 ];
 export const ROTATION_ANGLES = [

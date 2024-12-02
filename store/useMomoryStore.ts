@@ -1,10 +1,9 @@
 "use client"
 import { create } from "zustand/react";
-import { devtools } from "zustand/middleware";
 import { MomoryState, MomoryStateSchema } from "@/types/store";
 
 export const useMomoryStore = create<MomoryState>()(
-  devtools((set, get) => ({
+  (set, get) => ({
     momoryPassword: ["", "", "", ""],
     momoryNickname: "",
     currentAction: "create_nickname",
@@ -39,7 +38,7 @@ export const useMomoryStore = create<MomoryState>()(
         case "enter_password":
           set({ currentAction });
           return true;
-        case "view_momory_after_password":
+        case "verify":
           const validatePasswordResult2 =
             MomoryStateSchema.shape.momoryPassword.safeParse(momoryPassword);
           if (!validatePasswordResult2.success) {
@@ -59,5 +58,6 @@ export const useMomoryStore = create<MomoryState>()(
         momoryNickname: "",
         currentAction: action,
       }),
-  })),
-);
+    resetMomoryPassword: () => set({ momoryPassword: ["", "", "", ""] }),
+  }))
+

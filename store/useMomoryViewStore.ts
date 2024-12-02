@@ -7,7 +7,6 @@ import {
 import { create } from "zustand/react";
 
 export const useMomoryViewStore = create<MomoryViewState>((set) => ({
-  cursor: undefined,
   isModalOpen: false,
   modalData: {
     memoryId: undefined,
@@ -20,7 +19,6 @@ export const useMomoryViewStore = create<MomoryViewState>((set) => ({
     memory_momory_uuid: undefined,
     momory_uuid: undefined,
   },
-  setCursor: (cursor: number | null | undefined) => set({ cursor }),
   openModal: (props: OpenModalProps) => {
     const validateOpenModalProps = OpenModalPropsSchema.safeParse(props);
     if (!validateOpenModalProps.success) {

@@ -8,7 +8,6 @@ export default function NicknameInput({momoryNickname, setMomoryNickname}: Nickn
     if(value.length > 4) return;
     setMomoryNickname(value.slice(0, 4));
   };
-  console.log(momoryNickname)
   return (
     <div className="flex items-center justify-center">
       <input

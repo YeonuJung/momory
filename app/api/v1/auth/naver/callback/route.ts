@@ -7,6 +7,11 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   // 인가코드를 받아옴
   const code = request.nextUrl.searchParams.get("code");
+  // state가 있으면 리다이렉트 uri를 받아오기
+  const momory_redirect_uri = request.nextUrl.searchParams.get(
+    "state",
+  ) as string;
+  console.log(momory_redirect_uri);
   if (!code) {
     return redirectWithError(request, "auth", "naver_auth");
   }
@@ -24,7 +29,7 @@ export async function GET(request: NextRequest) {
         client_id: process.env.NAVER_CLIENT_ID as string,
         client_secret: process.env.NAVER_CLIENT_SECRET as string,
         code: code,
-        state: "test",
+        state: momory_redirect_uri,
       }),
     },
   );
@@ -69,17 +74,25 @@ export async function GET(request: NextRequest) {
     }
     // 엑세스 토큰과 리프레시 토큰을 발급
     // 모모리가 있으면 모모리 uuid를 같이 발급
-    const [accessToken, refreshToken] = await Promise.all([
-      signAccessToken({ user_id, momory_uuid: isMomoryExist?.[0].uuid }),
-      signRefreshToken({ user_id, momory_uuid: isMomoryExist?.[0].uuid }),
-    ]);
-    // 모모리가 있으면 모모리 페이지로 리다이렉트, 없으면 모모리 생성 페이지로 리다이렉트
-    const redirectUrl =
+    const momory_uuid =
       isMomoryExist && isMomoryExist.length > 0
-        ? `/momory/${isMomoryExist[0].uuid}`
-        : "/create-momory";
-    console.log(redirectUrl)
-    const response = NextResponse.redirect(new URL(redirectUrl, request.url));
+        ? isMomoryExist[0].uuid
+        : undefined;
+    const [accessToken, refreshToken] = await Promise.all([
+      signAccessToken({ user_id, momory_uuid }),
+      signRefreshToken({ user_id, momory_uuid }),
+    ]);
+
+    // 리다이렉트 uri가 있으면 해당 uri 모모리로 리다이렉트 없으면 아래 주석
+    // 모모리가 있으면 모모리 페이지로 리다이렉트, 없으면 모모리 생성 페이지로 리다이렉트
+    const redirect_uri =
+      momory_redirect_uri !== "state"
+        ? momory_redirect_uri
+        : isMomoryExist && isMomoryExist.length > 0
+          ? `/momory/${isMomoryExist[0].uuid}`
+          : "/create-momory";
+
+    const response = NextResponse.redirect(new URL(redirect_uri, request.url));
 
     response.cookies.set("access_token", accessToken, {
       httpOnly: true,
@@ -115,10 +128,10 @@ export async function GET(request: NextRequest) {
     signAccessToken({ user_id: insertData?.[0].id }),
     signRefreshToken({ user_id: insertData?.[0].id }),
   ]);
+  const redirect_uri =
+    momory_redirect_uri !== "state" ? momory_redirect_uri : "/create-momory";
 
-  const response = NextResponse.redirect(
-    new URL("/create-momory", request.url),
-  );
+  const response = NextResponse.redirect(new URL(redirect_uri, request.url));
 
   response.cookies.set("access_token", accessToken, {
     httpOnly: true,

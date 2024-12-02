@@ -9,6 +9,7 @@ export async function validateToken({ momory_uuid }: ValidateTokenProps = {}) {
   const cookieStore = cookies();
   const access_token = cookieStore.get("access_token");
   const refresh_token = cookieStore.get("refresh_token");
+ 
   // 로그인이 되어있지 않다면 랜딩 페이지로 리다이렉트
   if (!access_token) {
     // 모모리 uuid가 존재하는 경우 로그인 시키고 다시 접근하려 했던 모모리 페이지로 리다이렉트
@@ -33,6 +34,7 @@ export async function validateToken({ momory_uuid }: ValidateTokenProps = {}) {
       headers: {
         cookie: `refresh_token=${refresh_token.value}`,
       },
+      cache: "no-store"
     });
     // 리프레쉬 토큰이 유효하지 않을 때 랜딩 페이지로 리다이렉트
     if (response.status === 401) {
@@ -47,6 +49,7 @@ export async function validateToken({ momory_uuid }: ValidateTokenProps = {}) {
       
     }
     // 새로운 액세스 토큰이 유효한지 확인
+    // 페이로드에 있는 값이 필요하기 때문에 굳이 verifyAccessToken을 사용
     const newVerifiedAccessToken = await verifyAccessToken(
       data.access_token,
     );

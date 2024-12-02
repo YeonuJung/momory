@@ -51,12 +51,12 @@ export const uploadAndCreateMemory = async ({
   message: string;
 }) => {
   // 1. 이미지 업로드
-  // 파일 경로 방식: 20210901/uuid/현재시간-파일이름
+  // 파일 경로 방식: 20210901/uuid/현재시간 (수파베이스는 파일이름에 한글 지원하지 않음)
   // 날짜별로 구분, uuid로 구분, 현재시간으로 혹시나 겹칠 수 있는 파일이름 구분
   // 업데이트 불가, 삭제 후 재업로드 해도 경로가 바뀌기 때문에 캐시를 길게 잡음
   const now = new Date();
   const formattedDate = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}`;
-  const fileName = `${formattedDate}/${momory_uuid}/${now.getTime()}-${photo.name}`;
+  const fileName = `${formattedDate}/${momory_uuid}/${now.getTime()}.${photo.name.split(".").pop()}`;
   const { data: imageData, error: uploadError } = await supabase.storage
     .from("memories")
     .upload(fileName, photo, {

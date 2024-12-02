@@ -6,7 +6,7 @@ interface NavigationArrowProps {
     direction: "left" | "right";
 }
 export default function NavigationArrow({src, alt, direction}: NavigationArrowProps) {
-
+  const classNameByDirection = direction === "left" ? "left-[2.67vw] xs:left-[1.282rem]" : "right-[2.67vw] xs:right-[1.282rem]";
   return (
     <>
       <img
@@ -14,7 +14,7 @@ export default function NavigationArrow({src, alt, direction}: NavigationArrowPr
         alt={`${alt}`}
         width="13"
         height="19"
-        className={`absolute ${direction}-[2.67vw] w-[3.47vw] cursor-pointer xs:${direction}-[1.282rem] xs:w-[1.3rem]`}
+        className={`absolute ${classNameByDirection} w-[3.47vw] cursor-pointer  xs:w-[1.3rem]`}
       ></img>
     </>
   )

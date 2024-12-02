@@ -7,9 +7,15 @@ interface MomoryImageProps {
   memoryData: Memory[] | null;
   userId: number;
   uuid: string;
+  memoryPublicUrlArray: string[];
 }
 
-export default function MomoryImage({ memoryData, userId, uuid }: MomoryImageProps) {
+export default function MomoryImage({
+  memoryData,
+  userId,
+  uuid,
+  memoryPublicUrlArray,
+}: MomoryImageProps) {
   const openModal = useMomoryViewStore((state) => state.openModal);
   return (
     <div className="flex flex-wrap content-center items-center justify-center gap-x-[5.6vw] gap-y-[4.75vw] xs:gap-x-[2.688rem] xs:gap-y-[2.28rem]">
@@ -25,7 +31,7 @@ export default function MomoryImage({ memoryData, userId, uuid }: MomoryImagePro
                 filter: currentMemory.filter,
                 memoryId: currentMemory.id,
                 nickname: currentMemory.nickname,
-                imagePath: currentMemory.image_path,
+                imagePath: memoryPublicUrlArray[idx],
                 message: currentMemory.message,
                 memory_user_id: currentMemory.user_id,
                 logined_user_id: userId,
@@ -34,9 +40,18 @@ export default function MomoryImage({ memoryData, userId, uuid }: MomoryImagePro
               });
             }}
           >
-            <div
-              className={`${currentMemory?.filter ? currentMemory?.filter : "none"} h-[25.52vw] w-[18.75vw] xs:h-[11.9rem] xs:w-[9rem]`}
-            ></div>
+            {memoryPublicUrlArray[idx] ? (
+              <img
+                alt={"메모리"}
+                src={memoryPublicUrlArray[idx]}
+                className={`${currentMemory?.filter ? currentMemory?.filter : "none"} h-[25.52vw] w-[18.75vw] xs:h-[11.9rem] xs:w-[9rem] object-cover bg-neutral-300`}
+              ></img>
+            ) : (
+              <div
+                className={`${currentMemory?.filter ? currentMemory?.filter : "none"} h-[25.52vw] w-[18.75vw] xs:h-[11.9rem] xs:w-[9rem]`}
+              ></div>
+            )}
+
             <div className="h-[5.83vw] w-full pl-[2.08vw] align-top font-nanum-Jung text-[3.75vw] font-medium tracking-wide text-[#252525] xs:h-[2.8rem] xs:pl-[1rem] xs:text-[1.8rem]">
               {currentMemory?.nickname
                 ? `@${currentMemory?.nickname}`

@@ -8,10 +8,11 @@ export default function ImageDetail() {
     <div className="flex h-[97.92vw] w-[61.7vw] flex-col items-center justify-center bg-white p-[1.35rem] shadow-frame xs:h-[47rem] xs:w-[29.614rem]">
       <div className={`flex items-center justify-center ${modalData.filter}`}>
         <Image
-          src="/image/임시사진.png"
+          src={modalData.imagePath as string}
           alt="디테일 이미지"
           width={265.9}
           height={352.45}
+          className="h-[73.42vw] w-[55.4vw] xs:h-[35.24rem] xs:w-[26.59rem] object-cover "
         />
       </div>
       <Image

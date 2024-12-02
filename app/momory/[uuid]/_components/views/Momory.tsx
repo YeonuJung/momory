@@ -1,21 +1,23 @@
 import React from "react";
 import HeaderSection from "../sections/HeaderSection";
-import DecoratedHeader from "./DecoratedHeader";
+import DecoratedHeader from "../DecoratedHeader";
 import { Button, ButtonWithCaption } from "@/components/common/Button/Button";
 import ButtonContainer from "@/components/common/Button/ButtonContainer";
 import ContentSection from "../sections/ContentSection";
-import HeaderTitle from "./HeaderTitle";
-import MemoryModal from "./MemoryModal";
-import MomoryImage from "./MomoryImage";
-import NavigationArrow from "./NavigationArrow";
-import PageDots from "./PageDots";
+import HeaderTitle from "../HeaderTitle";
+import MemoryModal from "../MemoryModal";
+import MomoryImage from "../MomoryImage";
+import NavigationArrow from "../NavigationArrow";
+import PageDots from "../PageDots";
 import { MomoryProps } from "@/types/general";
 
 export default function Momory({
   readMomoryData,
   readMemoryData,
+  memoryPublicUrlArray,
   user_id,
   uuid,
+  momory_uuid,
   isOwner,
   hasMomory,
 }: MomoryProps) {
@@ -29,16 +31,17 @@ export default function Momory({
         </DecoratedHeader>
       </HeaderSection>
       <ContentSection>
-        <MomoryImage memoryData={readMemoryData} userId={user_id} uuid={uuid} />
+        <MomoryImage memoryData={readMemoryData} userId={user_id} uuid={uuid} memoryPublicUrlArray={memoryPublicUrlArray} />
         <PageDots />
       </ContentSection>
       <ButtonContainer>
         {isOwner ? (
-          <Button action={"share_momory"}>내 모모리 공유하기</Button>
+          <Button action={"share_momory"} momory_uuid={momory_uuid}>내 모모리 공유하기</Button>
         ) : (
           <ButtonWithCaption
             caption={"*하나만 남길 수 있어요"}
             action="leave_memory"
+            uuid={uuid}
           >
             사진 남기기
           </ButtonWithCaption>
@@ -46,7 +49,7 @@ export default function Momory({
         {isOwner ? (
           <Button action={"save_momory"}>모모리 간직하기</Button>
         ) : hasMomory ? (
-          <Button action="go_to_my_momory">내 모모리로 가기</Button>
+          <Button action="go_to_my_momory" momory_uuid={momory_uuid}>내 모모리로 가기</Button>
         ) : (
           <Button action="create_momory">내 모모리 만들기</Button>
         )}

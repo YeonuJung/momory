@@ -34,6 +34,9 @@ export default async function MomoryPage({
     return <div>서버에러 또는 없는 모모리입니다. 다시 시도해주세요</div>;
   }
   const momory_user_id = readMomoryData[0].user_id;
+  const memoryPublicUrlArray = readMemoryData.map((memories) => {
+    return `${process.env.SUPABASE_PUBLIC_URL}/${memories.image_path}`
+  })
   return (
     <PageLayout verticalSpacing="gap-y-[5.6vw] xs:gap-y-[2.688rem]">
       {momory_user_id !== user_id ? (
@@ -42,8 +45,10 @@ export default async function MomoryPage({
             <Momory
               readMemoryData={readMemoryData}
               readMomoryData={readMomoryData}
+              memoryPublicUrlArray={memoryPublicUrlArray}
               user_id={user_id}
               uuid={uuid}
+              momory_uuid={momory_uuid}
               isOwner={false}
               hasMomory={momory_uuid? true : false}
             />
@@ -56,8 +61,10 @@ export default async function MomoryPage({
             <Momory
               readMemoryData={readMemoryData}
               readMomoryData={readMomoryData}
+              memoryPublicUrlArray={memoryPublicUrlArray}
               user_id={user_id}
               uuid={uuid}
+              momory_uuid={momory_uuid}
               isOwner={true}
               hasMomory={momory_uuid? true : false}
             />

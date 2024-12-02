@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({error: error.message }, { status: 500 });
   }
   // 성공 시 데이터, 카운트, 다음 커서, 이전 커서 반환
-  return NextResponse.json({ data, count, nextCursor, prevCursor });
+  return NextResponse.json({ data, count, nextCursor, prevCursor }, { status: 200 });
 }
 
 // 메모리 생성하는 POST 요청 핸들러
@@ -34,8 +34,8 @@ export async function POST(request: NextRequest) {
   const formValues = { 
     photo: formData.get("file") as File,
     momory_uuid: formData.get("momory_uuid") as string,
-    nickname: formData.get("nickname") as string,
     filter: formData.get("filter") as string,
+    nickname: formData.get("nickname") as string,
     message: formData.get("message") as string,
  };
   // 미들웨어에서 넘겨준 페이로드 값을 가져옴
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({error: error.message}, {status: 500})
   }
   // 성공 시 데이터 반환
-  return NextResponse.json(data?.[0])
+  return NextResponse.json(data?.[0], {status: 201})
 }
 
 // 메모리 삭제하는 DELETE 요청 핸들러
@@ -64,5 +64,5 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
   // 성공 시 성공했다는 문자열이 담긴 객체 데이터 반환
-  return NextResponse.json(data?.[0]);
+  return NextResponse.json(data?.[0], { status: 200 });
 }

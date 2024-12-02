@@ -1,4 +1,3 @@
-// import Header from "@/components/common/Header";
 import InputLabel from "@/components/common/Input/InputLabel";
 import EnterMomoryPasswordInput from "../EnterMomoryPasswordInput";
 import EnterMomoryPasswordHeader from "../EnterMomoryPasswordHeader";

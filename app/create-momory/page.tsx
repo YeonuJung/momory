@@ -15,6 +15,7 @@ export default async function CreateMomoryPage() {
   // 모모리가 존재한다면 해당 모모리로 리다이렉트
   if (momory_uuid) {
     redirect(`/momory/${momory_uuid}`);
+    
   }
   // 모모리가 존재하지 않는다면 모모리 생성 페이지 렌더링
   return (

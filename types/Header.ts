@@ -14,8 +14,8 @@ interface EnterPasswordHeaderProps {
     handleSubmit: () => void;
 }
 
-interface UploadPhotoHeaderProps {
-    page: "upload_photo";
+interface UploadMemoryPhotoHeaderProps {
+    page: "upload_memory_photo";
     handleNext: () => void;
     handlePrev: () => void;
 }
@@ -26,9 +26,9 @@ interface SelectFilterHeaderProps {
     handlePrev: () => void;
 }
 
-interface CreateNicknameAndMessageHeaderProps {
-    page: "create_nicknameAndmessage";
+interface UploadMemoryCredentialHeaderProps {
+    page: "upload_memory_credential";
     handleSubmit: () => void;
     handlePrev: () => void;
   };
-export type HeaderProps = CreateNicknameHeaderProps | CreatePasswordHeaderProps | EnterPasswordHeaderProps | UploadPhotoHeaderProps | SelectFilterHeaderProps | CreateNicknameAndMessageHeaderProps;
+export type HeaderProps = CreateNicknameHeaderProps | CreatePasswordHeaderProps | EnterPasswordHeaderProps | UploadMemoryPhotoHeaderProps | SelectFilterHeaderProps | UploadMemoryCredentialHeaderProps;

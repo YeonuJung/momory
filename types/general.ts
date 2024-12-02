@@ -20,8 +20,10 @@ export interface MomoryProps {
         user_id: number;
       }[]
     | null;
+  memoryPublicUrlArray: string[];
   user_id: number;
   uuid: string;
+  momory_uuid: string | undefined;
   isOwner: boolean;
   hasMomory: boolean;
 }
