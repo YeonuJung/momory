@@ -9,8 +9,8 @@ export default function Header(props: HeaderProps) {
     <header className="absolute top-[6.67vw] flex w-full items-center justify-between px-[5.83vw] xs:top-[3.2rem] xs:px-[2.8rem]">
       {
         <Image
-          src="/image/arrow-left.svg"
-          width={13}
+          src="/image/arrow-left.png"
+          width={34.08}
           height={19}
           alt="왼쪽 화살표"
           className={`h-[4.62vw] w-[7.1vw] cursor-pointer xs:h-[1.9rem] xs:w-[3.408rem] ${"handlePrev" in props ? "" : "opacity-50 cursor-not-allowed"}`}
@@ -33,8 +33,8 @@ export default function Header(props: HeaderProps) {
         </span>
       ) : (
         <Image
-          src="/image/arrow-right.svg"
-          width={13}
+          src="/image/arrow-right.png"
+          width={34.08}
           height={19}
           alt="오른쪽 화살표"
           className="h-[4.62vw] w-[7.1vw] cursor-pointer xs:h-[1.9rem] xs:w-[3.408rem]"

@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import Image from "next/image";
 interface NavigationArrowProps {
   src: string;
   alt: string;
@@ -30,7 +30,7 @@ export default function NavigationArrowWithPagination({
     (direction === "left" && currentPage <= 1);
 
   const imageClassName =
-    "w-[3.47vw] xs:w-[1.3rem]" +
+    "w-[3.47vw] xs:w-[1.3rem] h-auto" +
     (isDisabled ? " opacity-30" : " cursor-pointer");
 
   // 이전, 다음 페이지로 이동할 때 페이지 번호 조정
@@ -40,23 +40,23 @@ export default function NavigationArrowWithPagination({
  
   if (isDisabled) {
     return (
-      <img
+      <Image
         src={src}
         alt={alt}
-        width="13"
-        height="19"
-        className={`${classNameByDirection} w-[3.47vw] opacity-30 xs:w-[1.3rem]`}
+        width={13}
+        height={18.28}
+        className={`${classNameByDirection} w-[3.47vw] opacity-30 xs:w-[1.3rem] h-auto`}
       />
     );
   }
 
   return (
     <Link href={href} className={classNameByDirection}>
-      <img
+      <Image
         src={src}
         alt={alt}
-        width="13"
-        height="19"
+        width={13}
+        height={18.28}
         className={imageClassName}
       />
     </Link>

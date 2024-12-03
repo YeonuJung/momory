@@ -51,8 +51,8 @@ export default async function HomePage({searchParams}: {searchParams: { [key: st
       <HeroSection>
         <Image
           src="/image/배경 일러스트.png"
-          width={339}
-          height={521}
+          width={434}
+          height={667}
           alt="배경 일러스트"
           priority={true}
           className="absolute z-20 h-auto w-[90.4vw] xs:w-[43.4rem]"
@@ -65,30 +65,30 @@ export default async function HomePage({searchParams}: {searchParams: { [key: st
             올 한 해 따뜻했던 기억들, 이곳에 채워보세요
           </SerivceGuide>
         </ServiceGuideContainer>
-        <img
+        <Image
           alt="로고 주변 일러스트"
-          src="/image/로고 주변 일러스트.svg"
-          width="304"
-          height="181"
-          className="absolute top-[1.68rem] h-auto w-[81vw] xs:w-[38.88rem]"
-        ></img>
+          src="/image/로고 주변 일러스트.png"
+          width={304}
+          height={181}
+          className="absolute top-[1.68rem] h-auto w-[81vw] xs:w-[30.4rem]"
+        ></Image>
       </HeroSection>
       <SocialSection>
         <SocialLoginText>소셜 로그인</SocialLoginText>
         <SocialLoginButtonConatiner>
           <SocialLoginButton
             href={redirect_uri? `/api/v1/auth/kakao/?redirect_uri=${redirect_uri}` : `/api/v1/auth/kakao`}
-            src="/image/kakao.svg"
+            src="/image/kakao.png"
             alt="카카오 소셜로그인 버튼"
           />
           <SocialLoginButton
             href={redirect_uri? `/api/v1/auth/naver/?redirect_uri=${redirect_uri}` : `/api/v1/auth/naver`}
-            src="/image/naver.svg"
+            src="/image/naver.png"
             alt="네이버 소셜로그인 버튼"
           />
           <SocialLoginButton
             href={redirect_uri? `/api/v1/auth/google/?redirect_uri=${redirect_uri}` : `/api/v1/auth/google`}
-            src="/image/google.svg"
+            src="/image/google.png"
             alt="구글 소셜로그인 버튼"
           />
         </SocialLoginButtonConatiner>

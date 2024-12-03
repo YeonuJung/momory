@@ -60,7 +60,7 @@ export default async function Momory({
       </ButtonContainer>
       <NavigationArrowWithPagination
         direction="left"
-        src="/image/arrow-left.svg"
+        src="/image/arrow-left.png"
         alt="왼쪽 화살표"
         momoryUuid={uuid}
         currentPage={currentPage}
@@ -68,7 +68,7 @@ export default async function Momory({
       />
       <NavigationArrowWithPagination
         direction="right"
-        src="/image/arrow-right.svg"
+        src="/image/arrow-right.png"
         alt="오른쪽 화살표"
         momoryUuid={uuid}
         currentPage={currentPage}

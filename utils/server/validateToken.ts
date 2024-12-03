@@ -29,7 +29,7 @@ export async function validateToken({ momory_uuid }: ValidateTokenProps = {}) {
       
     }
     // 리프레쉬 토큰이 있을 경우 리프레쉬 토큰으로 액세스 토큰 재발급
-    const response = await fetch("http://localhost:3000/api/v1/refresh", {
+    const response = await fetch("https://momory.kr/api/v1/refresh", {
       method: "GET",
       headers: {
         cookie: `refresh_token=${refresh_token.value}`,
