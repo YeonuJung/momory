@@ -1,29 +1,24 @@
 "use client";
 import { api } from "@/libs/axios";
 import { useMomoryStore } from "@/store/useMomoryStore";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { revalidatePage } from "../server/revalidatePage";
 import { useMemoryStore } from "@/store/useMemoryStore";
 import { useMomoryViewStore } from "@/store/useMomoryViewStore";
-type Action =
-  | "go_to_my_momory"
-  | "create_momory"
-  | "share_momory"
-  | "save_momory"
-  | "delete_memory"
-  | "save_memory"
-  | "leave_memory";
+import { ActionParams} from "@/types/general";
 
-export function resolveAction(
-  action: Action,
-  router: AppRouterInstance,
-  memoryId?: number,
-  image_path?: string,
-  uuid?: string,
-  momory_uuid?: string,
-) {
+export function resolveAction({
+  action,
+  router,
+  memoryId,
+  image_path,
+  uuid,
+  momory_uuid,
+  hasPostedMemory
+}: ActionParams) {
   const actions = {
-    go_to_my_momory: () => router.push(`/momory/${momory_uuid}`),
+    go_to_my_momory: () => {
+      if(!momory_uuid) return
+      router.push(`/momory/${momory_uuid}`)},
     create_momory: () => {
       useMomoryStore.getState().reset("create_nickname");
       router.push("/create-momory");
@@ -45,22 +40,26 @@ export function resolveAction(
       };
       handleShare();
     },
-    save_momory: () => console.log("모모리 간직하기"),
     delete_memory: async () => {
       const response = await api.delete(`api/v1/memory`, {
         data: { memory_id: memoryId, image_path },
       });
       if (response.status === 200) {
         useMomoryStore.getState().resetMomoryPassword();
+        useMemoryStore.getState().resetAll();
         revalidatePage(`/momory/${uuid}`);
         useMomoryViewStore.getState().closeModal();
         alert("성공적으로 삭제되었습니다.");
       }
     },
-    save_memory: () => {
-     
+    close_memory: () => {
+      useMomoryViewStore.getState().closeModal();
     },
     leave_memory: () => {
+      if (hasPostedMemory) {
+        alert("사진은 한장만 업로드 가능합니다.");
+        return;
+      }
       useMemoryStore.getState().resetAll();
       router.push(`/momory/${uuid}/upload-memory`);
     },

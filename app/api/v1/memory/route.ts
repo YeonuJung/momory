@@ -1,31 +1,5 @@
-import { deleteMemory, readMemory, uploadAndCreateMemory } from "@/backend/queries/memory";
+import { deleteMemory, uploadAndCreateMemory } from "@/backend/queries/memory";
 import { NextRequest, NextResponse } from "next/server";
-
-// 메모리 읽어오는 GET 요청 핸들러
-export async function GET(request: NextRequest) {
-  // 요청본문에서 momory_uuid, cursor를 가져옴
-  const { momory_uuid, cursor } = await request.json();
-  // 메모리 읽기 쿼리 호출
-  // 커서가 없을 경우 첫 페이지를 가져옴
-  if(!cursor){
-    const {data: firstData, error: firstError, count, nextCursor} = await readMemory({momory_uuid})
-    if(firstError){
-      return NextResponse.json({error: firstError.message}, {status: 500})
-    }
-    return NextResponse.json({data: firstData, count, nextCursor})
-  }
-  // 커서가 있을 경우 해당 커서 페이지를 가져옴
-  const { data, error, count, nextCursor, prevCursor } = await readMemory({
-    momory_uuid,
-    cursor,
-  });
-  // 에러 발생 시 에러 메시지 및 500 상태코드 반환
-  if (error) {
-    return NextResponse.json({error: error.message }, { status: 500 });
-  }
-  // 성공 시 데이터, 카운트, 다음 커서, 이전 커서 반환
-  return NextResponse.json({ data, count, nextCursor, prevCursor }, { status: 200 });
-}
 
 // 메모리 생성하는 POST 요청 핸들러
 export async function POST(request: NextRequest) {

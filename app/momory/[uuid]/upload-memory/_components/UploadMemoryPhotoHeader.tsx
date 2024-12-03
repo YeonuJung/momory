@@ -41,7 +41,7 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
         alert("메모리 업로드에 실패했습니다. 다시 시도해주세요");
         return;
       }
-      // 서버액션으로 revalidatePath 호출(클라이언트 사이드 라우트 캐쉬 초기화화)
+      // 서버액션으로 revalidatePath 호출(클라이언트 사이드 라우트 캐쉬 초기화)
       revalidatePage(`/momory/${momory_uuid}`);
       // 성공시 값 리셋
       reset("enter_password");

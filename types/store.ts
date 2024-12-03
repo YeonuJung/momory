@@ -44,6 +44,7 @@ export const OpenModalPropsSchema = z.object({
   logined_user_id: z.number().optional(),
   memory_momory_uuid: z.string().optional(),
   momory_uuid: z.string().optional(),
+  user_momory_uuid: z.string().optional(),
 });
 export const MomoryViewStateSchema = z.object({
   isModalOpen: z.boolean(),

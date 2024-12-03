@@ -1,11 +1,5 @@
+import { CheckUserByEmailParams } from "@/types/query";
 import { supabase } from "../../libs/supabase";
-
-
-
-export interface CheckUserByEmailParams {
-  email: string;
-  social_type: "google" | "kakao" | "naver";
-}
 
 export const checkUserByEmail = async ({
   email,

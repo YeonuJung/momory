@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   MomoryViewState,
   OpenModalProps,
@@ -18,20 +18,21 @@ export const useMomoryViewStore = create<MomoryViewState>((set) => ({
     logined_user_id: undefined,
     memory_momory_uuid: undefined,
     momory_uuid: undefined,
+    user_momory_uuid: undefined,
   },
   openModal: (props: OpenModalProps) => {
     const validateOpenModalProps = OpenModalPropsSchema.safeParse(props);
     if (!validateOpenModalProps.success) {
       return;
     }
-    const isMomoryOwner = props.memory_momory_uuid === props.momory_uuid;
+    const isMomoryOwner = props.user_momory_uuid === props.momory_uuid;
     const isMemoryOwner = props.memory_user_id === props.logined_user_id;
-   
-    if(!isMomoryOwner || !isMemoryOwner){
-        alert("이 메모리에 대한 접근 권한이 없습니다")
-        return;
+    if (isMomoryOwner || isMemoryOwner) {
+      set({ isModalOpen: true, modalData: props });
+    } else {
+      alert("이 메모리에 대한 접근 권한이 없습니다");
+      return;
     }
-    set({ isModalOpen: true, modalData: props });
   },
   closeModal: () => set({ isModalOpen: false }),
 }));

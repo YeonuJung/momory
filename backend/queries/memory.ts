@@ -1,39 +1,53 @@
 import { supabase } from "@/libs/supabase";
+import { GetMemoryParams, CheckUserMemoryExistsParams, UploadAndCreateMemoryParams, DeleteMemoryParams } from "@/types/query";
 
 // 모모리에 남겨진 메모리를 가져오는 쿼리
-// 1. 메모리 테이블에서 해당 모모리의 uuid를 가진 메모리를 모두 가져온다.
-// 2. 커서 기반으로 가져온다. (맨 처음 서버사이드 에서 내려줄 때는 커서없이 첫페이지 고정으로)
-// 3. 뿐만 아니라 커서가 없는 경우 첫 페이지라는 것을 알 수 있다.
-interface GetMemoryParams {
-  momory_uuid: string;
-  cursor?: string;
-}
-export const readMemory = async ({ momory_uuid, cursor }: GetMemoryParams) => {
-  let query = supabase
+
+export const readMemory = async ({
+  momory_uuid,
+  currentPage,
+}: GetMemoryParams) => {
+  const ITEMS_PER_PAGE = 9;
+
+  const start = (currentPage - 1) * ITEMS_PER_PAGE;
+  const end = currentPage * ITEMS_PER_PAGE;
+
+  const query = supabase
     .from("memory")
     .select("*", { count: "exact" })
     .eq("momory_uuid", momory_uuid)
     .order("id", { ascending: true })
-    .limit(9);
-  const isFirstPage = !cursor;
-  if (cursor) {
-    query = query.gt("id", cursor);
-  }
+    .range(start, end - 1)
 
   const { data, error, count } = await query;
 
   if (error) {
-    return { data: null, error };
+    return { data: null, error, count: 0 };
   }
 
   if (data && data.length === 0) {
     return { data, error: null, count: 0 };
   }
-  const prevCursor = !isFirstPage ? data?.[0].id : null;
-  const nextCursor = data?.[data.length - 1]?.id;
 
-  return { data, error, count, nextCursor, prevCursor };
+  return { data, error, count};
 };
+
+export const checkUserMemoryExists = async ({
+  momory_uuid,
+  user_id,
+}: CheckUserMemoryExistsParams) => {
+  const { count, error } = await supabase
+    .from("memory")
+    .select("*", { count: "exact", head: true })
+    .eq("momory_uuid", momory_uuid)
+    .eq("user_id", user_id);
+
+    if (error) {
+      return { exists: false, error };
+    }
+  
+    return { exists: count ? count > 0 : false, error: null };
+  };
 
 export const uploadAndCreateMemory = async ({
   photo,
@@ -42,14 +56,7 @@ export const uploadAndCreateMemory = async ({
   nickname,
   filter,
   message,
-}: {
-  photo: File;
-  momory_uuid: string;
-  user_id: number;
-  nickname: string;
-  filter: string;
-  message: string;
-}) => {
+}: UploadAndCreateMemoryParams) => {
   // 1. 이미지 업로드
   // 파일 경로 방식: 20210901/uuid/현재시간 (수파베이스는 파일이름에 한글 지원하지 않음)
   // 날짜별로 구분, uuid로 구분, 현재시간으로 혹시나 겹칠 수 있는 파일이름 구분
@@ -96,10 +103,7 @@ export const uploadAndCreateMemory = async ({
 export const deleteMemory = async ({
   memory_id,
   image_path,
-}: {
-  memory_id: number;
-  image_path: string;
-}) => {
+}: DeleteMemoryParams) => {
   const { error } = await supabase.from("memory").delete().eq("id", memory_id);
   if (error) {
     return { data: null, error };
@@ -111,7 +115,7 @@ export const deleteMemory = async ({
   const { error: storageError } = await supabase.storage
     .from("memories")
     .remove([image_path]);
-    console.log(storageError);
-  
+  console.log(storageError);
+
   return { data: ["Successfully Deleted"], error };
 };

@@ -8,6 +8,7 @@ interface MomoryImageProps {
   userId: number;
   uuid: string;
   memoryPublicUrlArray: string[];
+  momory_uuid: string| undefined
 }
 
 export default function MomoryImage({
@@ -15,6 +16,7 @@ export default function MomoryImage({
   userId,
   uuid,
   memoryPublicUrlArray,
+  momory_uuid
 }: MomoryImageProps) {
   const openModal = useMomoryViewStore((state) => state.openModal);
   return (
@@ -37,6 +39,7 @@ export default function MomoryImage({
                 logined_user_id: userId,
                 memory_momory_uuid: currentMemory.momory_uuid,
                 momory_uuid: uuid,
+                user_momory_uuid: momory_uuid
               });
             }}
           >
