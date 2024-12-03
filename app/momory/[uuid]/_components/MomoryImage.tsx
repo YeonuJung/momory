@@ -2,7 +2,7 @@
 import { ILLUSTRATIONS, ROTATION_ANGLES } from "@/constants/page";
 import { useMomoryViewStore } from "@/store/useMomoryViewStore";
 import { Memory } from "@/types/model";
-
+import Image from "next/image";
 interface MomoryImageProps {
   memoryData: Memory[] | null;
   userId: number;
@@ -44,11 +44,13 @@ export default function MomoryImage({
             }}
           >
             {memoryPublicUrlArray[idx] ? (
-              <img
+              <Image
+                width={90}
+                height={119}
                 alt={"메모리"}
                 src={memoryPublicUrlArray[idx]}
                 className={`${currentMemory?.filter ? currentMemory?.filter : "none"} h-[25.52vw] w-[18.75vw] xs:h-[11.9rem] xs:w-[9rem] object-cover bg-neutral-300`}
-              ></img>
+              ></Image>
             ) : (
               <div
                 className={`${currentMemory?.filter ? currentMemory?.filter : "none"} h-[25.52vw] w-[18.75vw] xs:h-[11.9rem] xs:w-[9rem]`}
@@ -62,7 +64,9 @@ export default function MomoryImage({
             </div>
             {ILLUSTRATIONS[idx].map((illust, i) => {
               return (
-                <img
+                <Image
+                 width={illust.width}
+                 height={illust.height}
                   key={i}
                   src={illust.path}
                   className={`absolute ${illust.position}`}

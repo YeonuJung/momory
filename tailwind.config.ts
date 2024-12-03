@@ -78,7 +78,6 @@ const config: Config = {
       backgroundImage: {
         "title-illustration": "url('/image/타이틀 주변.png')",
         "polaroid-frame": "url('/image/frame.png')",
-        "polaroid-filter": "url('/image/filter.png')",
       },
       boxShadow: {
         "frame": "0px 1.5px 3px 0px #252525"
