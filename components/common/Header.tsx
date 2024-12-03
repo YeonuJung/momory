@@ -14,7 +14,7 @@ export default function Header(props: HeaderProps) {
             width={14.12}
             height={21.19}
             alt="왼쪽 화살표"
-            className={`h-[4.62vw] w-[2.94vw] cursor-pointer xs:h-[2.219rem] xs:w-[14.12rem] ${"handlePrev" in props ? "" : "cursor-not-allowed opacity-50"}`}
+            className={`h-[4.62vw] w-[2.94vw] cursor-pointer xs:h-[2.219rem] xs:w-[1.412rem] ${"handlePrev" in props ? "" : "cursor-not-allowed opacity-50"}`}
             onClick={"handlePrev" in props ? props.handlePrev : undefined}
           />
         </div>
@@ -40,7 +40,7 @@ export default function Header(props: HeaderProps) {
             width={14.12}
             height={21.19}
             alt="오른쪽 화살표"
-            className="h-[4.62vw] w-[2.94vw] cursor-pointer xs:h-[2.219rem] xs:w-[14.12rem]"
+            className="h-[4.62vw] w-[2.94vw] cursor-pointer xs:h-[2.219rem] xs:w-[1.412rem]"
             onClick={"handleNext" in props ? props.handleNext : undefined}
           ></Image>
         </div>
