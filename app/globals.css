@@ -5,20 +5,23 @@
 @layer base {
   html {
     font-size: 10px;
-
   }
-  ,
+
   body {
     font-size: 1rem;
+  }
+}
 
-  },
-  /* globals.css */
 .scroll-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .scroll-hide::-webkit-scrollbar {
-  display: none;            /* Chrome, Safari, Opera */
+  display: none; /* Chrome, Safari, Opera */
 }
+
+.safe-screen-height {
+  min-height: 100vh;
+  min-height: 100svh;
 }
