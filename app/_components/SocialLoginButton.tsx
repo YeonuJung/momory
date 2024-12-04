@@ -11,9 +11,9 @@ export default function SocialLoginButton({href, src, alt}: SocialLoginButtonPro
     <Image
       alt={`${alt}`}
       src={`${src}`}
-      width={59}
-      height={59}
-      className="h-auto w-[12.3vw] xs:w-[5.904rem]"
+      width={53.1}
+      height={53.1}
+      className="h-auto w-[12.3vw] xs:w-[5.31rem]"
     ></Image>
   </Link>
   )

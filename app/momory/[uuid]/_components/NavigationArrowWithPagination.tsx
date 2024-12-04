@@ -17,23 +17,20 @@ export default function NavigationArrowWithPagination({
   currentPage,
   totalCount,
 }: NavigationArrowProps) {
-  // 테일윈드 특성상 클래스네임을 동적으로 할당하기 보다는 통째로 할당하는 게 런타임시 안정적
   const classNameByDirection =
     direction === "left"
-      ? "absolute left-[2.67vw] xs:left-[1.282rem]"
-      : "absolute right-[2.67vw] xs:right-[1.282rem]";
+      ? "absolute left-[2.67vw] xs:left-[1.15rem]"
+      : "absolute right-[2.67vw] xs:right-[1.15rem]";
   const safeTotalCount = totalCount ?? 0;
   const totalPages = Math.ceil(safeTotalCount / 9);
-  // 커서가 없는 경우 화살표 비활성화
   const isDisabled =
     (direction === "right" && currentPage >= totalPages) || 
     (direction === "left" && currentPage <= 1);
 
   const imageClassName =
-    "w-[3.47vw] xs:w-[1.3rem] h-auto" +
+    "w-[3.47vw] xs:w-[1.17rem] h-auto" +
     (isDisabled ? " opacity-30" : " cursor-pointer");
 
-  // 이전, 다음 페이지로 이동할 때 페이지 번호 조정
   const updatedPage = direction === "right" ? currentPage + 1 : currentPage - 1;
 
   const href = `/momory/${momoryUuid}?page=${updatedPage}`
@@ -43,9 +40,9 @@ export default function NavigationArrowWithPagination({
       <Image
         src={src}
         alt={alt}
-        width={13}
-        height={18.28}
-        className={`${classNameByDirection} w-[3.47vw] opacity-30 xs:w-[1.3rem] h-auto`}
+        width={11.7}
+        height={16.45}
+        className={`${classNameByDirection} w-[3.47vw] opacity-30 xs:w-[1.17rem] h-auto`}
       />
     );
   }
@@ -55,8 +52,8 @@ export default function NavigationArrowWithPagination({
       <Image
         src={src}
         alt={alt}
-        width={13}
-        height={18.28}
+        width={11.7}
+        height={16.45}
         className={imageClassName}
       />
     </Link>

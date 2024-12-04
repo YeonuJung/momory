@@ -3,7 +3,7 @@ import PageLayout from "@/components/layout/PageLayout";
 export default function page() {
   return (
     <PageLayout>
-      <div className="w-full px-4 py-8 xs:px-6 xs:py-10">
+      <div className="w-full px-4 py-8 xs:px-[5.4rem] xs:py-9">
         <div className="space-y-10 font-pretendard text-white">
           <h1 className="mb-12 text-center text-4xl font-bold">
             개인정보처리방침
@@ -15,8 +15,8 @@ export default function page() {
               1. 개인정보의 처리 목적
             </h2>
             <p className="mb-6 text-lg text-white/90">
-              Momory(&apos;서비스&apos;)은(는) 다음의 목적을 위하여 개인정보를 처리하고
-              있으며, 다음의 목적 이외의 용도로는 이용하지 않습니다.
+              Momory(&apos;서비스&apos;)은(는) 다음의 목적을 위하여 개인정보를
+              처리하고 있으며, 다음의 목적 이외의 용도로는 이용하지 않습니다.
             </p>
             <ul className="list-disc space-y-3 pl-6 text-lg text-white/90 marker:text-sky">
               <li>회원 가입 및 관리</li>

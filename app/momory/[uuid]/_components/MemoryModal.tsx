@@ -14,7 +14,7 @@ const MemoryModal = () => {
   return (
     <>
       {isModalOpen && (
-        <ModalContainer verticalSpacing="gap-y-[2rem]">
+        <ModalContainer verticalSpacing="gap-y-[1.8rem]">
           <ImageDetail />
           <ButtonContainer>
             <Button

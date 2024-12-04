@@ -37,7 +37,7 @@ export default function FourDigitPassword({momoryPassword, setMomoryPassword}: F
   };
 
   return (
-    <div className="flex items-center justify-center gap-x-[3vw] xs:gap-x-[1.423rem]">
+    <div className="flex items-center justify-center gap-x-[3vw] xs:gap-x-[1.28rem]">
       {momoryPassword.map((digit, index) => {
         return (
           <input
@@ -49,7 +49,7 @@ export default function FourDigitPassword({momoryPassword, setMomoryPassword}: F
             ref={inputRefs[index]}
             onKeyDown={(e) => handleKeyDown(index, e)}
             onChange={(e) => handleChange(index, e.target.value)}
-            className="h-[15.83vw] w-[15.83vw] rounded-[11px] text-center font-pretendard text-[6.5vw] outline outline-2 outline-sky focus:outline-[3px] xs:h-[7.6rem] xs:w-[7.6rem] xs:text-[3.12rem]"
+            className="h-[15.83vw] w-[15.83vw] rounded-[11px] text-center font-pretendard text-[6.5vw] outline outline-2 outline-sky focus:outline-[3px] xs:h-[6.84rem] xs:w-[6.84rem] xs:text-[2.81rem]"
           />
         );
       })}

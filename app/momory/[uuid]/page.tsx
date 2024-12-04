@@ -61,7 +61,7 @@ if (!readMomoryData || readMomoryData.length === 0) {
     : [];
  
   return (
-    <PageLayout verticalSpacing="gap-y-[5.6vw] xs:gap-y-[2.688rem]">
+    <PageLayout verticalSpacing="gap-y-[5.6vw] xs:gap-y-[2.42rem]">
       {momory_user_id !== user_id ? (
         <MomoryContainer
           Momory={

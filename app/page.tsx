@@ -46,53 +46,53 @@ export default async function HomePage({searchParams}: {searchParams: { [key: st
   
   // 액세스 토큰이 없다면 페이지에 머무르도록 해서 로그인 시킴
   return (
-    <PageLayout verticalSpacing="gap-y-[6.9vw] xs:gap-y-[3.312rem]">
-      <PolaroidDecoration />
-      <HeroSection>
-        <Image
-          src="/image/배경 일러스트.png"
-          width={434}
-          height={667}
-          alt="배경 일러스트"
-          priority={true}
-          className="absolute z-20 h-auto w-[90.4vw] xs:w-[43.4rem]"
-        ></Image>
-        <MainLogoContainer>
-          <MainLogo />
-        </MainLogoContainer>
-        <ServiceGuideContainer>
-          <SerivceGuide>
-            올 한 해 따뜻했던 기억들, 이곳에 채워보세요
-          </SerivceGuide>
-        </ServiceGuideContainer>
-        <Image
-          alt="로고 주변 일러스트"
-          src="/image/로고 주변 일러스트.png"
-          width={304}
-          height={181}
-          className="absolute top-[1.68rem] h-auto w-[81vw] xs:w-[30.4rem]"
-        ></Image>
-      </HeroSection>
-      <SocialSection>
-        <SocialLoginText>소셜 로그인</SocialLoginText>
-        <SocialLoginButtonConatiner>
-          <SocialLoginButton
-            href={redirect_uri? `/api/v1/auth/kakao/?redirect_uri=${redirect_uri}` : `/api/v1/auth/kakao`}
-            src="/image/kakao.png"
-            alt="카카오 소셜로그인 버튼"
-          />
-          <SocialLoginButton
-            href={redirect_uri? `/api/v1/auth/naver/?redirect_uri=${redirect_uri}` : `/api/v1/auth/naver`}
-            src="/image/naver.png"
-            alt="네이버 소셜로그인 버튼"
-          />
-          <SocialLoginButton
-            href={redirect_uri? `/api/v1/auth/google/?redirect_uri=${redirect_uri}` : `/api/v1/auth/google`}
-            src="/image/google.png"
-            alt="구글 소셜로그인 버튼"
-          />
-        </SocialLoginButtonConatiner>
-      </SocialSection>
-    </PageLayout>
+    <PageLayout verticalSpacing="gap-y-[6.9vw] xs:gap-y-[2.98rem]">
+     <PolaroidDecoration />
+     <HeroSection>
+       <Image
+         src="/image/배경 일러스트.png"
+         width={390.6}
+         height={597.6}
+         alt="배경 일러스트"
+         priority={true}
+         className="absolute z-20 h-auto w-[90.4vw] xs:w-[39.06rem]"
+       ></Image>
+       <MainLogoContainer>
+         <MainLogo />
+       </MainLogoContainer>
+       <ServiceGuideContainer>
+         <SerivceGuide>
+           올 한 해 따뜻했던 기억들, 이곳에 채워보세요
+         </SerivceGuide>
+       </ServiceGuideContainer>
+       <Image
+         alt="로고 주변 일러스트"
+         src="/image/로고 주변 일러스트.png"
+         width={273.6}
+         height={162.9}
+         className="absolute top-[1.521rem] h-auto w-[81vw] xs:w-[27.36rem]"
+       ></Image>
+     </HeroSection>
+     <SocialSection>
+       <SocialLoginText>소셜 로그인</SocialLoginText>
+       <SocialLoginButtonConatiner>
+         <SocialLoginButton
+           href={redirect_uri? `/api/v1/auth/kakao/?redirect_uri=${redirect_uri}` : `/api/v1/auth/kakao`}
+           src="/image/kakao.png"
+           alt="카카오 소셜로그인 버튼"
+         />
+         <SocialLoginButton
+           href={redirect_uri? `/api/v1/auth/naver/?redirect_uri=${redirect_uri}` : `/api/v1/auth/naver`}
+           src="/image/naver.png"
+           alt="네이버 소셜로그인 버튼"
+         />
+         <SocialLoginButton
+           href={redirect_uri? `/api/v1/auth/google/?redirect_uri=${redirect_uri}` : `/api/v1/auth/google`}
+           src="/image/google.png"
+           alt="구글 소셜로그인 버튼"
+         />
+       </SocialLoginButtonConatiner>
+     </SocialSection>
+   </PageLayout>
   );
 }

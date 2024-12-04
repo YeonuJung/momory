@@ -5,7 +5,7 @@ import PageLayout from "@/components/layout/PageLayout";
 
 export default function EnterMomoryPassword() {
   return (
-    <PageLayout verticalSpacing="gap-y-[5.6vw] xs:gap-y-[2.688rem]">
+    <PageLayout verticalSpacing="gap-y-[5.6vw] xs:gap-y-[2.42rem]">
       <EnterMomoryPasswordHeader/>
       <InputLabel>모모리 비밀번호를 입력해주세요</InputLabel>
       <EnterMomoryPasswordInput/>
