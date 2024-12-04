@@ -29,10 +29,10 @@ export default function UploadMemoryPhotoInput() {
     }
   };
   return (
-    <div className="relative flex h-[63.7vh] w-[76.3vw] justify-center bg-white shadow-frame xs:h-[54.2rem] xs:w-[36.622rem]">
+    <div className="relative flex h-[125.46vw] w-[76.3vw] justify-center bg-white shadow-frame xs:h-[54.2rem] xs:w-[36.622rem]">
       <label
         htmlFor="photo-upload"
-        className="absolute top-[3.71vw] flex h-[51.33vh] w-[68.45vw] cursor-pointer items-center justify-center border-[2.5px] border-sky xs:top-[1.779rem] xs:h-[43.632rem] xs:w-[32.855rem]"
+        className="absolute top-[3.71vw] flex h-[101vw] w-[68.45vw] cursor-pointer items-center justify-center border-[2.5px] border-sky xs:top-[1.779rem] xs:h-[43.632rem] xs:w-[32.855rem]"
       >
         <input
           id="photo-upload"

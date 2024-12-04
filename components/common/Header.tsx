@@ -20,7 +20,7 @@ export default function Header(props: HeaderProps) {
         </div>
       }
       <Image
-        src="/image/상단메인로고.svg"
+        src="/image/상단메인로고.png"
         width={130}
         height={64}
         alt="상단 메인로고"

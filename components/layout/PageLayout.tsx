@@ -10,7 +10,7 @@ export default function PageLayout({
 }: PageLayoutProps) {
   return (
     <div
-      className={`relative flex min-h-screen w-full max-w-[48rem] flex-col justify-center ${verticalSpacing} bg-ruby shortLandscape:min-h-[85rem]`}
+      className={`relative flex min-h-screen w-full max-w-[43.2rem] flex-col justify-center ${verticalSpacing} bg-ruby shortLandscape:min-h-[76rem]`}
     >
       {children}
     </div>

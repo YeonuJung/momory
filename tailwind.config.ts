@@ -70,9 +70,9 @@ const config: Config = {
       },
       screens: {
         // xs -> 디바이스 가로
-        xs: '480px',
+        xs: '432px',
         shortLandscape: {
-          raw: '(orientation: landscape) and (max-height: 850px)',
+          raw: '(orientation: landscape) and (max-width: 765px)',
         }
       },
       backgroundImage: {
