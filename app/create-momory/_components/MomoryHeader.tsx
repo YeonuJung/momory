@@ -27,7 +27,7 @@ export default function MomoryHeader({ page }: MomoryHeaderProps) {
     });
     // api 요청 성공시 redirectUrl로 이동(모모리로 이동)
     if(response.data.success){
-      window.location.replace(response.data.redirectUrl)
+      router.push(response.data.redirectUrl)
     }
     if(response.data.error){
       alert("모모리 생성에 실패했습니다. 다시 시도해주세요!")
