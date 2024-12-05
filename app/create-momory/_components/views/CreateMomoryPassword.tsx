@@ -2,6 +2,7 @@ import InputLabel from "@/components/common/Input/InputLabel";
 import MomoryHeader from "../MomoryHeader";
 import MomoryPasswordInput from "../MomoryPasswordInput";
 
+
 export default function CreateMomoryPassword() {
   return (
     <>
