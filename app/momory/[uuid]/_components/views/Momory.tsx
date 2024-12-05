@@ -22,6 +22,7 @@ export default async function Momory({
   totalCount,
   user_id,
   hasPostedMemory,
+  isAuthenticated,
 
 }: MomoryProps) {
   return (
@@ -46,6 +47,7 @@ export default async function Momory({
             action="leave_memory"
             uuid={uuid}
             hasPostedMemory={hasPostedMemory}
+            isAuthenticated={isAuthenticated}
           >
             사진 남기기
           </ButtonWithCaption>

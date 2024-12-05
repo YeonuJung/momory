@@ -27,6 +27,7 @@ export interface MomoryProps {
   totalCount: number | null;
   user_id: number;
   hasPostedMemory: boolean;
+  isAuthenticated?: string
 }
 
 type Action =
@@ -48,6 +49,7 @@ export type ActionParams = {
   image_path?: string;
   uuid?: string;
   momory_uuid?: string;
+  isAuthenticated?: string
 };
 export interface ButtonProps {
   children: React.ReactNode;
@@ -66,4 +68,5 @@ export interface ButtonProps {
 export interface ButtonWithCaptionProps extends ButtonProps {
   caption: string;
   hasPostedMemory: boolean;
+  isAuthenticated?: string;
 }

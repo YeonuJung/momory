@@ -4,7 +4,7 @@ import { useMomoryStore } from "@/store/useMomoryStore";
 import { revalidatePage } from "../server/revalidatePage";
 import { useMemoryStore } from "@/store/useMemoryStore";
 import { useMomoryViewStore } from "@/store/useMomoryViewStore";
-import { ActionParams} from "@/types/general";
+import { ActionParams } from "@/types/general";
 
 export function resolveAction({
   action,
@@ -13,12 +13,14 @@ export function resolveAction({
   image_path,
   uuid,
   momory_uuid,
-  hasPostedMemory
+  hasPostedMemory,
+  isAuthenticated,
 }: ActionParams) {
   const actions = {
     go_to_my_momory: () => {
-      if(!momory_uuid) return
-      router.push(`/momory/${momory_uuid}`)},
+      if (!momory_uuid) return;
+      router.push(`/momory/${momory_uuid}`);
+    },
     create_momory: () => {
       useMomoryStore.getState().reset("create_nickname");
       router.push("/create-momory");
@@ -61,7 +63,10 @@ export function resolveAction({
         return;
       }
       useMemoryStore.getState().resetAll();
-      router.push(`/momory/${uuid}/upload-memory`);
+
+      router.push(
+        `/momory/${uuid}/upload-memory${isAuthenticated ? "?authenticated=true" : ""}`,
+      );
     },
   };
 

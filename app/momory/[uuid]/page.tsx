@@ -10,7 +10,7 @@ export default async function MomoryPage({
   params, searchParams
 }: {
   params: Promise<{ uuid: string }>, 
-  searchParams: { page?: string }
+  searchParams: { page?: string, authenticated?: string }
 }) {
   // 동적 라우트 파라미터로 받은 uuid를 가져옴
   const {uuid} = await params;
@@ -26,7 +26,7 @@ export default async function MomoryPage({
   }
 
   // 페이지네이션을 위한 쿼리스트링 파싱
-  const {page = "1"} = searchParams;
+  const {page = "1", authenticated} = searchParams;
   // 현재 페이지
   const currentPage = parseInt(page, 10);
   
@@ -77,6 +77,7 @@ if (!readMomoryData || readMomoryData.length === 0) {
               totalCount={count}
               user_id={user_id}
               hasPostedMemory={hasPostedMemory}
+              isAuthenticated={authenticated}
             />
           }
           EnterMomoryPassword={<EnterMomoryPassword />}

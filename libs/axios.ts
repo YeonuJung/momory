@@ -1,7 +1,10 @@
-import axios from "axios"
+import axios from "axios";
 
 export const api = axios.create({
-  baseURL: 'https://www.momory.kr',
+  baseURL:
+    process.env.NODE_ENV === "production"
+      ? "https://www.momory.kr"
+      : "http://localhost:3000",
   withCredentials: true,
 });
 
@@ -11,10 +14,12 @@ api.interceptors.response.use(
   (response) => response,
   // 응답 에러 시(토큰 만료 케이스만 처리)
   async (error) => {
-  
     const originalRequest = error.config;
     // access_token 만료 시
-    if (error.response?.status === 401 && error.response?.data.error === "access_token expired") {
+    if (
+      error.response?.status === 401 &&
+      error.response?.data.error === "access_token expired"
+    ) {
       try {
         // refresh_token으로 access_token 재발급
         const refreshResponse = await api.get("/api/v1/refresh");
@@ -22,14 +27,14 @@ api.interceptors.response.use(
         if (refreshResponse.status === 200) {
           return api(originalRequest);
         }
-      } // access_token 재발급 실패 시 
-        catch (refreshError) {
-        console.log(refreshError)
+      } catch (refreshError) {
+        // access_token 재발급 실패 시
+        console.log(refreshError);
         alert("다시 로그인해주세요.");
         window.location.href = "/?auth_error=unauthorized";
       }
     }
     // access_token 만료 이외의 모든 에러 발생 시 각 지점으로 전파
     return Promise.reject(error);
-  }
-);  
+  },
+);

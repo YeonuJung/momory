@@ -41,7 +41,8 @@ export function ButtonWithCaption({
   caption,   
   action,   
   uuid,   
-  hasPostedMemory 
+  hasPostedMemory, 
+  isAuthenticated
 }: ButtonWithCaptionProps) {   
   const router = useRouter();   
   return (     
@@ -56,7 +57,8 @@ export function ButtonWithCaption({
           memoryId: undefined,           
           image_path: undefined,           
           momory_uuid: undefined,           
-          hasPostedMemory         
+          hasPostedMemory,  
+          isAuthenticated       
         })()       
       }     
     >       

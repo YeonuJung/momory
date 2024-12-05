@@ -1,5 +1,6 @@
 import localFont from "next/font/local"
 import './globals.css'
+import { Toaster } from "react-hot-toast"
 
 
 const pretendard = localFont({
@@ -33,6 +34,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cssgram/0.1.10/cssgram.min.css"></link>
       </head>
       <body className="min-h-screen flex flex-col items-center bg-white">
+        <Toaster position="top-center" containerStyle={{top: 30}}/>
         {children}
       </body>
     </html>

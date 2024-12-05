@@ -2,7 +2,7 @@
 import Header from "@/components/common/Header";
 import { api } from "@/libs/axios";
 import { useMomoryStore } from "@/store/useMomoryStore";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export default function EnterMomoryPasswordHeader() {
   const params = useParams();
@@ -10,6 +10,7 @@ export default function EnterMomoryPasswordHeader() {
   const setCurrentAction = useMomoryStore((state) => state.setCurrentAction);
   const reset = useMomoryStore((state) => state.reset);
   const resetMomoryPassword = useMomoryStore((state) => state.resetMomoryPassword);
+  const router = useRouter();
   // 비밀번호 제출시 비밀번호 검증
   const handleSubmit = async () => {
     if (!setCurrentAction("verify")) {
@@ -36,6 +37,7 @@ export default function EnterMomoryPasswordHeader() {
     // 검증 성공시 모모리 페이지로 렌더링
     resetMomoryPassword()
     setCurrentAction("view_momory");
+    router.replace(`${window.location.pathname}?authenticated=true`)
   };
 
   return (
