@@ -1,6 +1,7 @@
 import { verifyAccessToken } from "@/libs/jwt";
 import { cookies } from "next/headers";
 import { redirectToLogin } from "./redirectToLogin";
+import { redirect } from "next/navigation";
 
 interface ValidateTokenProps {
   momory_uuid?: string;
@@ -14,7 +15,8 @@ export async function validateToken({ momory_uuid }: ValidateTokenProps = {}) {
   if (!access_token) {
     // 모모리 uuid가 존재하는 경우 로그인 시키고 다시 접근하려 했던 모모리 페이지로 리다이렉트
     // 이는 또한 모모리에 초대받은 유저를 위한 처리
-    return redirectToLogin(momory_uuid);
+    // return redirectToLogin(momory_uuid);
+    return redirect('/?!accessTokenProblem')
     
   }
   const verifiedAccessToken = await verifyAccessToken(access_token.value);
@@ -66,7 +68,8 @@ export async function validateToken({ momory_uuid }: ValidateTokenProps = {}) {
   }
   // 액세스 토큰이 유효하지 않다면 랜딩 페이지로 리다이렉트
   if (!verifiedAccessToken.ok) {
-   return redirectToLogin(momory_uuid);
+    return redirect('/?accessTokenNotOk')
+  //  return redirectToLogin(momory_uuid);
   }
   // 액세스 토큰이 유효하다면 유저 아이디와 모모리 uuid를 가져와서 리턴
   // verify가 성공했으므로 user_id는 무조건 존재함
