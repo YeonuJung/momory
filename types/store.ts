@@ -8,7 +8,7 @@ export const MomoryStateSchema = z.object({
     .string()
     .trim()
     .min(1, { message: "닉네임을 입력해주세요" })
-    .max(4, { message: "닉네임은 4글자 이내로 입력해주세요" }),
+    .max(5, { message: "닉네임은 5글자 이내로 입력해주세요" }),
   currentAction: z.string(),
   setMomoryPassword: z
     .function()
@@ -35,8 +35,8 @@ export const OpenModalPropsSchema = z.object({
   nickname: z
     .string()
     .min(1, { message: "닉네임을 입력해주세요" })
-    .max(4, { message: "닉네임은 4글자 이내로 입력해주세요" })
-    .max(4, { message: "닉네임은 4글자 이내로 입력해주세요" })
+    .max(5, { message: "닉네임은 5글자 이내로 입력해주세요" })
+    .max(5, { message: "닉네임은 5글자 이내로 입력해주세요" })
     .optional(),
   imagePath: z.string().optional(),
   filter: z.string().optional(),
@@ -61,7 +61,7 @@ export const MemoryStateSchema = z.object({
       .instanceof(File, { message: "사진을 업로드해주세요" })
       .refine((file) => {
         return (
-          file.size <= 1024 * 1024 * 10, "10MB 이하의 사진을 업로드해주세요"
+          file.size <= 1024 * 1024 * 20, "20MB 이하의 사진을 업로드해주세요"
         );
       })
       .optional()
@@ -80,7 +80,7 @@ export const MemoryStateSchema = z.object({
     memoryNickname: z
       .string()
       .min(1, { message: "닉네임을 입력해주세요" })
-      .max(4, { message: "닉네임은 4글자 이내로 입력해주세요" }),
+      .max(5, { message: "닉네임은 5글자 이내로 입력해주세요" }),
     memoryMessage: z
       .string()
       .min(1, { message: "메시지를 입력해주세요" })

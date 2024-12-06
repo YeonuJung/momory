@@ -116,6 +116,9 @@ const config: Config = {
         shortLandscape: {
           raw: "(orientation: landscape) and (max-width: 765px)",
         },
+        short: {
+          raw: "(max-height: 710px)"
+        }
       },
       backgroundImage: {
         "title-illustration": "url('/image/타이틀 주변.png')",

@@ -20,11 +20,10 @@ export default function SelectMemoryFilter() {
   return (
     <div className="mt-[20.83vw] flex flex-col items-center justify-center gap-y-[5.63vw] xs:mt-[9rem] xs:gap-y-[2.43rem]">
       <div className="relative flex h-[125.46vw] w-[76.3vw] justify-center bg-white shadow-frame xs:h-[48.78rem] xs:w-[32.96rem]">
-        <img
-          alt="메모리"
-          src={memoryPhotoPreviewUrl}
-          className={`absolute top-[3.71vw] flex h-[101vw] w-[68.45vw] items-center justify-center border-[2.5px] border-sky object-cover xs:top-[1.6rem] xs:h-[39.27rem] xs:w-[29.57rem] ${memoryFilter}`}
-        ></img>
+        <div
+          style={{backgroundImage: `url(${memoryPhotoPreviewUrl})`}}
+          className={`absolute top-[3.71vw] flex h-[101vw] w-[68.45vw] items-center justify-center border-[2.5px] border-sky bg-center bg-cover bg-white xs:top-[1.6rem] xs:h-[39.27rem] xs:w-[29.57rem] ${memoryFilter}`}
+        ></div>
       </div>
       <div
         ref={ref}
@@ -39,7 +38,7 @@ export default function SelectMemoryFilter() {
             >
               <div
                 style={{backgroundImage: `url(${memoryPhotoPreviewUrl})`}}
-                className={`${filter.class} h-[16.88vw] w-[16.88vw] rounded-[11px] border-[2px] border-sky bg-cetner bg-cover xs:h-[7.29rem] xs:w-[7.29rem]`}
+                className={`${filter.class} h-[16.88vw] w-[16.88vw] rounded-[11px] border-[2px] border-sky bg-cover xs:h-[7.29rem] xs:w-[7.29rem] bg-white overflow-hidden`}
                 onClick={() => setMemoryFilter(filter.class)}
               ></div>
               <span>{filter.filter}</span>

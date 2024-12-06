@@ -8,9 +8,9 @@ export default function MainLogo() {
             src="/image/메인로고.png"
             width={239.79}
             height={63.7}
-            className="absolute left-1/2 top-0 h-auto w-[53.3vw] -translate-x-1/2 xs:w-[23.03rem]"
+            className="z-20 absolute left-1/2 top-0 h-auto w-[53.3vw] -translate-x-1/2 xs:w-[23.03rem]"
           />
-          <h1 className="xs:tracking=[0.022rem] -rotate-[0.98] text-center align-text-top font-nanum-Hana text-[16.2vw] font-normal leading-[17.8vw] tracking-[0.05vw] text-sky xs:text-[7rem] xs:leading-[7.69rem]">
+          <h1 className="xs:tracking=[0.022rem] -rotate-[0.98] text-center align-text-top font-nanum-Hana text-[16.2vw] font-normal leading-[17.8vw] tracking-[0.05vw] text-sky xs:text-[7rem] xs:leading-[7.69rem] z-20">
             Momory
           </h1>
     </>

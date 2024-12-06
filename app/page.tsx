@@ -76,7 +76,7 @@ export default async function HomePage({
           src="/image/로고 주변 일러스트.png"
           width={273.6}
           height={162.9}
-          className="absolute top-[1.521rem] h-auto w-[81vw] xs:w-[27.36rem]"
+          className="absolute top-[1.521rem] h-auto w-[81vw] xs:w-[27.36rem] z-20"
         ></Image>
       </HeroSection>
       <SocialSection>
