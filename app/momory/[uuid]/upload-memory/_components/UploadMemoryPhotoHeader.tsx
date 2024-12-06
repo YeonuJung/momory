@@ -46,7 +46,7 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
       // 성공시 값 리셋
       reset("enter_password");
       // 다시 모모리 페이지로 router.push시키기
-      router.push(`/momory/${momory_uuid}`);
+      router.push(`/momory/${momory_uuid}?authenticated=true`);
     }
   };
   // 이전버튼 클릭시 현재 페이지에 맞게 이전 페이지로 이동
