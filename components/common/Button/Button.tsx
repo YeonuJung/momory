@@ -11,6 +11,7 @@ export function Button({
   image_path,   
   uuid,   
   momory_uuid, 
+  nickname,
 }: ButtonProps) {   
   const router = useRouter();   
   return (     
@@ -25,7 +26,8 @@ export function Button({
           image_path,           
           uuid,           
           momory_uuid,           
-          hasPostedMemory: undefined         
+          hasPostedMemory: undefined,
+          nickname      
         })()       
       }     
     >       

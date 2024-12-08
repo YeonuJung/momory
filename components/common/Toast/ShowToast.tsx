@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 interface ShowToastProps {
   message: string;
   type?: "success" | "error";
-  icon?: string;
+  icon?: string
   position?:
     | "top-left"
     | "top-center"
@@ -30,10 +30,11 @@ export default function ShowToast({
         icon: icon,
         duration: 4000,
         style: {
-            height: "55px",
-            fontSize: "1.2rem",
+            height: "65px",
+            fontSize: "1.5rem",
             fontWeight: "bold",
             color: "gray",
+            textAlign: "center",
         },
       });
     } else {

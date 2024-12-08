@@ -1,4 +1,9 @@
 import Image from "next/image";
+import backgroundIllust from "@/public/image/배경 일러스트.png";
+import logoAroundIllust from "@/public/image/로고 주변 일러스트.png";
+import kakaoLogo from "@/public/image/kakao.png";
+import naverLogo from "@/public/image/naver.png";
+import googleLogo from "@/public/image/google.png";
 import PageLayout from "@/components/layout/PageLayout";
 import PolaroidDecoration from "./_components/PolaroidDecoration";
 import SocialLoginText from "./_components/SocialLoginText";
@@ -58,7 +63,7 @@ export default async function HomePage({
       <PolaroidDecoration />
       <HeroSection>
         <Image
-          src="/image/배경 일러스트.png"
+          src={backgroundIllust}
           width={390.6}
           height={597.6}
           alt="배경 일러스트"
@@ -73,7 +78,7 @@ export default async function HomePage({
         </ServiceGuideContainer>
         <Image
           alt="로고 주변 일러스트"
-          src="/image/로고 주변 일러스트.png"
+          src={logoAroundIllust}
           width={273.6}
           height={162.9}
           className="absolute top-[1.521rem] h-auto w-[81vw] xs:w-[27.36rem] z-20"
@@ -88,7 +93,7 @@ export default async function HomePage({
                 ? `/api/v1/auth/kakao/?redirect_uri=${redirect_uri}`
                 : `/api/v1/auth/kakao`
             }
-            src="/image/kakao.png"
+            src={kakaoLogo}
             alt="카카오 소셜로그인 버튼"
           />
           <SocialLoginButton
@@ -97,7 +102,7 @@ export default async function HomePage({
                 ? `/api/v1/auth/naver/?redirect_uri=${redirect_uri}`
                 : `/api/v1/auth/naver`
             }
-            src="/image/naver.png"
+            src={naverLogo}
             alt="네이버 소셜로그인 버튼"
           />
           <SocialLoginButton
@@ -106,7 +111,7 @@ export default async function HomePage({
                 ? `/api/v1/auth/google/?redirect_uri=${redirect_uri}`
                 : `/api/v1/auth/google`
             }
-            src="/image/google.png"
+            src={googleLogo}
             alt="구글 소셜로그인 버튼"
           />
         </SocialLoginButtonConatiner>

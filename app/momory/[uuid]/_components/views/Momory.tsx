@@ -30,7 +30,7 @@ export default async function Momory({
       <HeaderSection>
         <DecoratedHeader>
           {readMomoryData && readMomoryData.length > 0 ? (
-            <HeaderTitle nickname={readMomoryData?.[0].nickname} />
+            <HeaderTitle nickname={readMomoryData[0].nickname} />
           ) : null}
         </DecoratedHeader>
       </HeaderSection>
@@ -40,7 +40,7 @@ export default async function Momory({
       </ContentSection>
       <ButtonContainer>
         {isOwner ? (
-          <Button action={"share_momory"} momory_uuid={momory_uuid}>내 모모리 공유하기</Button>
+          <Button nickname={readMomoryData[0].nickname} action={"share_momory"} momory_uuid={momory_uuid}>내 모모리 공유하기</Button>
         ) : !hasPostedMemory? (
           <ButtonWithCaption
             caption={"*하나만 남길 수 있어요"}

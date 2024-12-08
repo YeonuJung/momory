@@ -115,7 +115,7 @@ export default function RootLayout({
         ></link>
       </head>
       <body className="flex min-h-screen flex-col items-center bg-white">
-        <Toaster position="top-center" containerStyle={{ top: 30 }} />
+        <Toaster position="top-center" containerStyle={{ top: 100 }} />
         {children}
       </body>
     </html>

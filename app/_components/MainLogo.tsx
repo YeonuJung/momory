@@ -1,11 +1,11 @@
 import Image from "next/image"
-
+import mainLogo from "@/public/image/메인로고.png"
 export default function MainLogo() {
   return (
     <>
       <Image
             alt="메인로고"
-            src="/image/메인로고.png"
+            src={mainLogo}
             width={239.79}
             height={63.7}
             className="z-20 absolute left-1/2 top-0 h-auto w-[53.3vw] -translate-x-1/2 xs:w-[23.03rem]"

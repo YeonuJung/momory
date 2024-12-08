@@ -50,6 +50,7 @@ export type ActionParams = {
   uuid?: string;
   momory_uuid?: string;
   isAuthenticated?: string
+  nickname?: string
 };
 export interface ButtonProps {
   children: React.ReactNode;
@@ -60,6 +61,7 @@ export interface ButtonProps {
     | "delete_memory"
     | "close_memory"
     | "go_to_my_momory";
+  nickname?: string;
   memoryId?: number;
   image_path?: string;
   uuid?: string;
