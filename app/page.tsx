@@ -18,7 +18,7 @@ import SocialLoginButtonConatiner from "./_components/containers/SocialLoginButt
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { verifyAccessToken } from "@/libs/jwt";
-import ShowRedirectToast from "@/components/common/Toast/ShowRedirectToast";
+import ShowAuthToast from "@/components/common/Toast/ShowAuthToast";
 
 export default async function HomePage({
   searchParams,
@@ -59,7 +59,7 @@ export default async function HomePage({
   // 액세스 토큰이 없다면 페이지에 머무르도록 해서 로그인 시킴
   return (
     <PageLayout verticalSpacing="gap-y-[6.9vw] xs:gap-y-[2.98rem]">
-      <ShowRedirectToast redirect_uri={redirect_uri}/>
+      <ShowAuthToast redirect_uri={redirect_uri}/>
       <PolaroidDecoration />
       <HeroSection>
         <Image

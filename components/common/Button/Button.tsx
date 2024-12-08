@@ -17,7 +17,7 @@ export function Button({
   return (     
     <button       
       type="button"       
-      className="h-[17.7vw] flex-1 rounded-[8.59px] border-2 border-sky text-white xs:h-[7.65rem]"       
+      className="h-[17.7vw] flex-1 rounded-[8.59px] border-2 border-sky text-white xs:h-[7.65rem] active:scale-90"       
       onClick={() =>         
         resolveAction({           
           action,           
@@ -50,7 +50,7 @@ export function ButtonWithCaption({
   return (     
     <button       
       type="button"       
-      className="flex h-[17.7vw] flex-1 flex-col items-center justify-center gap-y-[1vw] rounded-[8.59px] border-2 border-sky text-white xs:h-[7.65rem] xs:gap-y-[0.43rem]"       
+      className="flex h-[17.7vw] flex-1 flex-col items-center justify-center gap-y-[1vw] rounded-[8.59px] border-2 border-sky text-white xs:h-[7.65rem] xs:gap-y-[0.43rem] active:scale-90"       
       onClick={() =>         
         resolveAction({           
           action,           

@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
   const momory_redirect_uri = request.nextUrl.searchParams.get("state");
 
   if (!code) {
-    return redirectWithError(request, "auth", "kakao_auth");
+    return redirectWithError(request, "auth", "google_auth");
   }
   // 구글 서버에 인가코드를 보내서 토큰을 받아오는 과정
   const googleTokenResponse = await fetch(

@@ -1,6 +1,7 @@
 "use client"
 import { create } from "zustand/react";
 import { MomoryState, MomoryStateSchema } from "@/types/store";
+import toast from "react-hot-toast";
 
 export const useMomoryStore = create<MomoryState>()(
   (set, get) => ({
@@ -17,7 +18,16 @@ export const useMomoryStore = create<MomoryState>()(
           const validateNicknameResult =
             MomoryStateSchema.shape.momoryNickname.safeParse(momoryNickname);
           if (!validateNicknameResult.success) {
-            alert(validateNicknameResult.error.errors[0].message);
+            toast.error(validateNicknameResult.error.errors[0].message, {
+              duration: 2000,
+              style: {
+                  height: "65px",
+                  fontSize: "1.5rem",
+                  fontWeight: "bold",
+                  color: "gray",
+                  textAlign: "center",
+              },
+            });
             return false;
           }
           set({ currentAction });
@@ -31,7 +41,16 @@ export const useMomoryStore = create<MomoryState>()(
           const validatePasswordResult =
             MomoryStateSchema.shape.momoryPassword.safeParse(momoryPassword);
           if (!validatePasswordResult.success) {
-            alert(validatePasswordResult.error.errors[0].message);
+            toast.error(validatePasswordResult.error.errors[0].message, {
+              duration: 2000,
+              style: {
+                  height: "65px",
+                  fontSize: "1.5rem",
+                  fontWeight: "bold",
+                  color: "gray",
+                  textAlign: "center",
+              },
+            });
             return false;
           }
           return true;
@@ -42,7 +61,15 @@ export const useMomoryStore = create<MomoryState>()(
           const validatePasswordResult2 =
             MomoryStateSchema.shape.momoryPassword.safeParse(momoryPassword);
           if (!validatePasswordResult2.success) {
-            alert(validatePasswordResult2.error.errors[0].message);
+            toast.error(validatePasswordResult2.error.errors[0].message, {
+              duration: 2000,
+              style: {
+                  height: "65px",
+                  fontSize: "1.5rem",
+                  fontWeight: "bold",
+                  color: "gray",
+                  textAlign: "center",
+            }})
             return false;
           }
           return true;

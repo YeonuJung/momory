@@ -2,6 +2,7 @@
 
 import { useMemoryStore } from "@/store/useMemoryStore";
 import { ChangeEvent } from "react";
+import toast from "react-hot-toast";
 
 export default function UploadMemoryPhotoInput() {
   const setMemoryPhoto = useMemoryStore((state) => state.setMemoryPhoto);
@@ -24,7 +25,16 @@ export default function UploadMemoryPhotoInput() {
       reader.readAsDataURL(file);
 
       reader.onerror = () => {
-        alert("파일을 불러오는데 실패했습니다.");
+        toast.error("파일을 불러오는데 실패했습니다🥲", {
+          style: {
+            height: "65px",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+            color: "gray",
+            textAlign: "center",
+          },
+          duration: 2000,
+        });
       };
     }
   };

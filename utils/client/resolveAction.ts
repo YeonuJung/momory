@@ -84,11 +84,11 @@ export function resolveAction({
             setTimeout(() => {
               useMomoryViewStore.getState().closeModal();
             }, 2000);
-            return "성공적으로 삭제되었습니다."; // 성공 메시지
+            return "성공적으로 삭제되었습니다😘"; // 성공 메시지
           },
           error: () => {
             // 실패 시 메시지
-            return `삭제 실패`;
+            return `삭제에 실패했습니다🥲`;
           },
         },
       );

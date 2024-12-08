@@ -17,7 +17,7 @@ export default function Header(props: HeaderProps) {
            width={12.7}
            height={20}
            alt="왼쪽 화살표"
-           className={`h-[4.62vw] w-[2.94vw] cursor-pointer xs:h-[2rem] xs:w-[1.27rem] ${"handlePrev" in props ? "" : "cursor-not-allowed opacity-50"}`}
+           className={`h-[4.62vw] w-[2.94vw] cursor-pointer xs:h-[2rem] xs:w-[1.27rem] ${"handlePrev" in props ? "" : "cursor-not-allowed opacity-50"} active:scale-125`}
            onClick={"handlePrev" in props ? props.handlePrev : undefined}
          />
        </div>
@@ -31,7 +31,7 @@ export default function Header(props: HeaderProps) {
      />
      {PAGES_WITH_FINISHBUTTON.includes(page) ? (
        <span
-         className="cursor-pointer font-nanum-Jung text-[6.67vw] font-normal text-sky xs:text-[2.88rem]"
+         className="cursor-pointer font-nanum-Jung text-[6.67vw] font-normal text-sky xs:text-[2.88rem] active:scale-125"
          onClick={"handleSubmit" in props ? props.handleSubmit : undefined}
        >
          완료
@@ -43,7 +43,7 @@ export default function Header(props: HeaderProps) {
            width={12.7}
            height={20}
            alt="오른쪽 화살표"
-           className="h-[4.62vw] w-[2.94vw] cursor-pointer xs:h-[2rem] xs:w-[1.27rem]"
+           className="h-[4.62vw] w-[2.94vw] cursor-pointer xs:h-[2rem] xs:w-[1.27rem] transition-colors active:scale-125"
            onClick={"handleNext" in props ? props.handleNext : undefined}
          />
        </div>

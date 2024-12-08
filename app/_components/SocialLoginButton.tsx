@@ -12,7 +12,7 @@ export default function SocialLoginButton({href, src, alt}: SocialLoginButtonPro
       src={src}
       width={53.1}
       height={53.1}
-      className="h-auto w-[12.3vw] xs:w-[5.31rem]"
+      className="h-auto w-[12.3vw] xs:w-[5.31rem] active:scale-110"
     ></Image>
   </a>
   )

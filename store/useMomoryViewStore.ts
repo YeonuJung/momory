@@ -4,6 +4,7 @@ import {
   OpenModalProps,
   OpenModalPropsSchema,
 } from "@/types/store";
+import toast from "react-hot-toast";
 import { create } from "zustand/react";
 
 export const useMomoryViewStore = create<MomoryViewState>((set) => ({
@@ -30,7 +31,15 @@ export const useMomoryViewStore = create<MomoryViewState>((set) => ({
     if (isMomoryOwner || isMemoryOwner) {
       set({ isModalOpen: true, modalData: props });
     } else {
-      alert("이 메모리에 대한 접근 권한이 없습니다");
+      toast.error("이 사진에 대한 접근 권한이 없습니다🥲", {
+        style: {
+          height: "65px",
+          fontSize: "1.5rem",
+          fontWeight: "bold",
+          color: "gray",
+          textAlign: "center",
+        }, duration: 2000
+      });
       return;
     }
   },

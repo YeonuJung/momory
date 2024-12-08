@@ -99,6 +99,7 @@ const config: Config = {
     extend: {
       colors: {
         ruby: "#A92525", // 메인 빨강색
+        ruby2: "#8A1C1C", // 터치 빨강색
         sky: "#75D8FF", // 메인 하늘색
         black: "#252525", // 메인 검정색
         dialog: "#3A0B0B", // 모달 배경색
@@ -127,6 +128,7 @@ const config: Config = {
       boxShadow: {
         frame: "0px 1.5px 3px 0px #252525",
       },
+    
     },
   },
   plugins: [],

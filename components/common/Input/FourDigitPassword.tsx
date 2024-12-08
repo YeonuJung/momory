@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 interface FourDigitPasswordProps {
   momoryPassword: string[];
@@ -18,23 +18,16 @@ export default function FourDigitPassword({
     useRef<HTMLInputElement>(null),
   ];
 
-  // 화면에 보여줄 마스킹된 값을 별도로 관리
-  const [maskedValues, setMaskedValues] = useState(['', '', '', '']);
-
+  const getMaskedValue = (value: string) => (value ? "●" : "");
   const handleChange = (index: number, value: string) => {
     // 숫자만 입력 가능하도록
     if (!/^\d*$/.test(value)) return;
 
     const newPassword = [...momoryPassword];
-    const newMaskedValues = [...maskedValues];
 
     // 실제 값 설정
     newPassword[index] = value;
-    // 마스킹된 값 설정
-    newMaskedValues[index] = value ? '●' : '';
-
     setMomoryPassword(newPassword);
-    setMaskedValues(newMaskedValues);
 
     // 값이 입력되면 다음 input으로 focus
     if (value && index < 3) {
@@ -54,14 +47,14 @@ export default function FourDigitPassword({
 
   return (
     <div className="flex items-center justify-center gap-x-[3vw] xs:gap-x-[1.28rem]">
-      {maskedValues.map((digit, index) => (
+      {momoryPassword.map((digit, index) => (
         <input
           key={index}
           type="text"
           inputMode="numeric"
           pattern="[0-9]*"
           maxLength={1}
-          value={digit}
+          value={getMaskedValue(digit)}
           ref={inputRefs[index]}
           onKeyDown={(e) => handleKeyDown(index, e)}
           onChange={(e) => handleChange(index, e.target.value)}

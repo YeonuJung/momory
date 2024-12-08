@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export const api = axios.create({
   baseURL:
@@ -30,7 +31,16 @@ api.interceptors.response.use(
       } catch (refreshError) {
         // access_token 재발급 실패 시
         console.log(refreshError);
-        alert("다시 로그인해주세요.");
+        toast.error("다시 로그인해주세요😌", {
+          style: {
+            height: "65px",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+            color: "gray",
+            textAlign: "center",
+          },
+          duration: 2000
+        })
         window.location.href = "/?auth_error=unauthorized";
       }
     }

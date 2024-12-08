@@ -1,6 +1,7 @@
 "use client";
 import { create } from "zustand/react";
 import { MemoryState, MemoryStateSchema } from "@/types/store";
+import toast from "react-hot-toast";
 
 export const useMemoryStore = create<MemoryState>()((set, get) => ({
   memoryPhoto: { photo: undefined, previewUrl: "" },
@@ -29,7 +30,16 @@ export const useMemoryStore = create<MemoryState>()((set, get) => ({
         const validateUploadPhotoResult =
           MemoryStateSchema.shape.memoryPhoto.safeParse(memoryPhoto);
         if (!validateUploadPhotoResult.success) {
-          alert(validateUploadPhotoResult.error.errors[0].message);
+          toast.error(validateUploadPhotoResult.error.errors[0].message, {
+            style: {
+              height: "65px",
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+              color: "gray",
+              textAlign: "center",
+          },
+          duration: 2000
+        })
           return false;
         }
         set({ currentAction });
@@ -41,7 +51,16 @@ export const useMemoryStore = create<MemoryState>()((set, get) => ({
         const validateSelectFilterResult =
           MemoryStateSchema.shape.memoryFilter.safeParse(memoryFilter);
         if (!validateSelectFilterResult.success) {
-          alert(validateSelectFilterResult.error.errors[0].message);
+          toast.error(validateSelectFilterResult.error.errors[0].message, {
+            style: {
+              height: "65px",
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+              color: "gray",
+              textAlign: "center",
+          },
+          duration: 2000
+          })
           return false;
         }
         set({ currentAction });
@@ -50,7 +69,16 @@ export const useMemoryStore = create<MemoryState>()((set, get) => ({
         const validateUploadMemoryCredentialResult =
           MemoryStateSchema.shape.memoryCredential.safeParse(memoryCredential);
         if (!validateUploadMemoryCredentialResult.success) {
-          alert(validateUploadMemoryCredentialResult.error.errors[0].message);
+          toast.error(validateUploadMemoryCredentialResult.error.errors[0].message, {
+            style: {
+              height: "65px",
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+              color: "gray",
+              textAlign: "center",
+          },
+          duration: 2000
+          })
           return false;
         }
         return true;

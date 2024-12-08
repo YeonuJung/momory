@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 interface ShowToastProps {
   message: string;
   type?: "success" | "error";
-  icon?: string
+  icon?: string;
   position?:
     | "top-left"
     | "top-center"
@@ -15,11 +15,7 @@ interface ShowToastProps {
     | "bottom-right";
 }
 
-export default function ShowToast({
-  message,
-  type,
-  icon,
-}: ShowToastProps) {
+export default function ShowToast({ message, type, icon }: ShowToastProps) {
   useEffect(() => {
     if (type === "success") {
       toast.success(message, {
@@ -30,16 +26,23 @@ export default function ShowToast({
         icon: icon,
         duration: 4000,
         style: {
-            height: "65px",
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            color: "gray",
-            textAlign: "center",
+          height: "65px",
+          fontSize: "1.5rem",
+          fontWeight: "bold",
+          color: "gray",
+          textAlign: "center",
         },
       });
     } else {
       toast.error(message, {
-        icon: icon,
+        style: {
+          height: "65px",
+          fontSize: "1.5rem",
+          fontWeight: "bold",
+          color: "gray",
+          textAlign: "center",
+        },
+        duration: 4000,
       });
     }
   }, [message, type, icon]);

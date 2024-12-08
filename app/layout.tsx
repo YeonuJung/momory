@@ -87,7 +87,8 @@ const pretendard = localFont({
 const nanumHaNaSonGeurSsi = localFont({
   src: "../public/fonts/NanumHaNaSonGeurSsi.woff2",
   variable: "--font-nanum-Hana",
-  display: "block",
+  display: "swap",
+  preload: true,
   weight: "400",
 });
 

@@ -19,8 +19,8 @@ export default function NavigationArrowWithPagination({
 }: NavigationArrowProps) {
   const classNameByDirection =
     direction === "left"
-      ? "absolute left-[2.67vw] xs:left-[1.15rem]"
-      : "absolute right-[2.67vw] xs:right-[1.15rem]";
+      ? "absolute left-[2.67vw] xs:left-[1.15rem] active:scale-125"
+      : "absolute right-[2.67vw] xs:right-[1.15rem] active:scale-125";
   const safeTotalCount = totalCount ?? 0;
   const totalPages = Math.ceil(safeTotalCount / 9);
   const isDisabled =
