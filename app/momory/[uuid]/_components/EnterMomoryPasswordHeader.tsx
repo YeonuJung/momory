@@ -69,7 +69,7 @@ export default function EnterMomoryPasswordHeader() {
       }
     );
   }, [setCurrentAction, router, reset, resetMomoryPassword, uuid]);
-  const handleSubmit = useDebounce(handleSubmitCallback, 300);
+  const handleSubmit = useDebounce(handleSubmitCallback, 500);
   return (
     <>
       <Header page={"enter_password"} handleSubmit={handleSubmit} />

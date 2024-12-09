@@ -49,7 +49,7 @@ export default function MomoryHeader({ page }: MomoryHeaderProps) {
     }
   }, [setCurrentAction, router, reset]);
   // 디바운스 훅 사용, 불필요한 api 요청 방지
-  const handleSubmit = useDebounce(handleSubmitCallback, 300);
+  const handleSubmit = useDebounce(handleSubmitCallback, 500);
   // 이전페이지로 가는건 검증필요 없음
   const handlePrev = () => {
     reset("create_nickname")
