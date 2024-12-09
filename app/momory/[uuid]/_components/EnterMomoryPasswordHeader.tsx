@@ -46,6 +46,9 @@ export default function EnterMomoryPasswordHeader() {
           if (err.response?.status === 500) {
             return `비밀번호 확인 중 오류가 발생했습니다.\n다시 시도해주세요😌`;
           }
+          if(err.response?.status === 429){
+            return "보안을 위해 비밀번호 입력이 제한됩니다\n 잠시후 다시 시도해주세요🥲";
+          }
           // success handler에서 던진 에러
           if (err.message === "비밀번호 불일치") {
             reset("enter_password");

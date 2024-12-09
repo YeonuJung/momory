@@ -1,10 +1,39 @@
 import { verifyAccessToken } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
+// rate limit 정보를 저장할 Map 객체
+const ratelimit = new Map();
+// 30분을 밀리세컨즈로 변환, 30분 동안 5번 이상 요청이 오면 429 리
+const WINDOW_MS = 30 * 60 * 1000; 
 // api 요청시 토큰 검증 미들웨어
 export async function middleware(request: NextRequest) {
   const access_token = request.cookies.get("access_token");
   const pathname = request.nextUrl.pathname;
+
+   
+  // Rate limit 체크 (비밀번호 검증 API에만 적용)
+  if (pathname.startsWith('/api/v1/momory/verify-password')) {
+    // 요청자의 IP 주소 가져오기
+    const ip = request.headers.get('x-forwarded-for');
+    // uuid랑 합쳐서 key로 만들기
+    const body = await request.json();
+    // (모모리마다 비밀번호 검증 요청이 다르기 때문에 uuid를 키로 사용)
+    const key = `${ip}-${body.uuid}`;
+    // 현재 시간(밀리초)
+    const now = Date.now();
+     // IP에 대한 rate limit 정보 조회
+    const userLimit = ratelimit.get(key);
+    // rate limit 정보가 없거나 마지막 요청으로부터 30분이 지난 경우
+    if (!userLimit || now - userLimit.timestamp > WINDOW_MS) {
+      ratelimit.set(key, { timestamp: now, count: 1 });
+    } else if (userLimit.count >= 5) {
+      return NextResponse.json({ error: '너무 많은 요청' }, { status: 429 });
+    } else {
+      userLimit.count++;
+    }
+  }
+
+
   // 모모리 또는 메모리 관련 api 경로일 때
   if (
     pathname.startsWith("/api/v1/memory") ||
