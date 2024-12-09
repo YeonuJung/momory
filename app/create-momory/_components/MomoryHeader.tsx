@@ -31,6 +31,7 @@ export default function MomoryHeader({ page }: MomoryHeaderProps) {
     });
     // api 요청 성공시 모모리로 이동
     if(response.data.success){
+      alert(`redirecting to: ${response.data.redirectUrl}`);
       router.push(response.data.redirectUrl);
     }
     if(response.data.error){
