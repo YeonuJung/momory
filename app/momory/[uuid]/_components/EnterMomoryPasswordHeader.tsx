@@ -1,8 +1,10 @@
 "use client";
 import Header from "@/components/common/Header";
+import { useDebounce } from "@/hooks/useDebounce";
 import { api } from "@/libs/axios";
 import { useMomoryStore } from "@/store/useMomoryStore";
 import { useParams, useRouter } from "next/navigation";
+import { useCallback } from "react";
 import toast from "react-hot-toast";
 
 export default function EnterMomoryPasswordHeader() {
@@ -13,7 +15,7 @@ export default function EnterMomoryPasswordHeader() {
   const resetMomoryPassword = useMomoryStore((state) => state.resetMomoryPassword);
   const router = useRouter();
   // 비밀번호 제출시 비밀번호 검증
-  const handleSubmit = async () => {
+  const handleSubmitCallback = useCallback(async () => {
     if (!setCurrentAction("verify")) {
       return;
     }
@@ -63,8 +65,8 @@ export default function EnterMomoryPasswordHeader() {
         duration: 2000,
       }
     );
-  };
-
+  }, [setCurrentAction, router, reset, resetMomoryPassword, uuid]);
+  const handleSubmit = useDebounce(handleSubmitCallback, 300);
   return (
     <>
       <Header page={"enter_password"} handleSubmit={handleSubmit} />

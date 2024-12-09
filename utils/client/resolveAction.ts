@@ -6,7 +6,7 @@ import { useMemoryStore } from "@/store/useMemoryStore";
 import { useMomoryViewStore } from "@/store/useMomoryViewStore";
 import { ActionParams } from "@/types/general";
 import toast from "react-hot-toast";
-
+// 버튼 클릭시 실행되는 액션들을 정의
 export function resolveAction({
   action,
   router,

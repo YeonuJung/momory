@@ -1,11 +1,13 @@
 "use client";
 
 import Header from "@/components/common/Header";
+import { useDebounce } from "@/hooks/useDebounce";
 import { api } from "@/libs/axios";
 import { useMemoryStore } from "@/store/useMemoryStore";
 import { useMomoryStore } from "@/store/useMomoryStore";
 import { revalidatePage } from "@/utils/server/revalidatePage";
 import { useParams, useRouter } from "next/navigation";
+import { useCallback } from "react";
 import toast from "react-hot-toast";
 
 interface UploadMemoryHeaderProps {
@@ -20,7 +22,7 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
   const router = useRouter();
   const momory_uuid = useParams().uuid;
 
-  const handleSubmit = async () => {
+  const handleSubmitCallback = useCallback(async () => {
     if (!setCurrentAction("submit")) return;
     const { memoryPhoto, memoryFilter, memoryCredential } =
       useMemoryStore.getState();
@@ -68,7 +70,8 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
         duration: 2000
       },
     );
-  };
+  }, [setCurrentAction, router, reset, momory_uuid]);
+  const handleSubmit = useDebounce(handleSubmitCallback, 300);
   // 이전버튼 클릭시 현재 페이지에 맞게 이전 페이지로 이동
   // 동시에 현재 페이지에 맞게 상태 초기화
   const handlePrev = () => {
