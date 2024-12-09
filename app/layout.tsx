@@ -115,7 +115,7 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/cssgram/0.1.10/cssgram.min.css"
         ></link>
       </head>
-      <body className="flex min-h-screen flex-col items-center bg-white">
+      <body className="flex h-dvh flex-col items-center bg-white">
         <Toaster position="top-center" containerStyle={{ top: 100 }} />
         {children}
       </body>

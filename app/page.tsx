@@ -19,6 +19,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { verifyAccessToken } from "@/libs/jwt";
 import ShowAuthToast from "@/components/common/Toast/ShowAuthToast";
+import Link from "next/link";
 
 export default async function HomePage({
   searchParams,
@@ -59,7 +60,7 @@ export default async function HomePage({
   // 액세스 토큰이 없다면 페이지에 머무르도록 해서 로그인 시킴
   return (
     <PageLayout verticalSpacing="gap-y-[6.9vw] xs:gap-y-[2.98rem]">
-      <ShowAuthToast redirect_uri={redirect_uri}/>
+      <ShowAuthToast redirect_uri={redirect_uri} />
       <PolaroidDecoration />
       <HeroSection>
         <Image
@@ -81,7 +82,7 @@ export default async function HomePage({
           src={logoAroundIllust}
           width={273.6}
           height={162.9}
-          className="absolute top-[1.521rem] h-auto w-[81vw] xs:w-[27.36rem] z-20"
+          className="absolute top-[1.521rem] z-20 h-auto w-[81vw] xs:w-[27.36rem]"
         ></Image>
       </HeroSection>
       <SocialSection>
@@ -116,6 +117,14 @@ export default async function HomePage({
           />
         </SocialLoginButtonConatiner>
       </SocialSection>
+      <div className="text-center z-20">
+        <Link
+          href="/privacy-policy"
+          className="text-xs text-white/70 hover:text-white/90"
+        >
+          개인정보처리방침
+        </Link>
+      </div>
     </PageLayout>
   );
 }

@@ -38,7 +38,7 @@ export default function page() {
               ② 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.
             </p>
             <ul className="list-disc space-y-3 pl-6 text-lg text-white/90 marker:text-sky">
-              <li>회원 가입 정보: 회원 탈퇴 시까지</li>
+              <li>회원 가입 정보: 서비스 종료 시까지</li>
               <li>서비스 이용 기록: 서비스 종료 시까지</li>
             </ul>
           </section>

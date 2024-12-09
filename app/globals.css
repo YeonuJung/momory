@@ -21,11 +21,6 @@
   display: none; /* Chrome, Safari, Opera */
 }
 
-.safe-screen-height {
-  min-height: 100vh;
-  min-height: 100svh;
-}
-
 .loader {
   animation: rotate 1s infinite;
   height: 50px;
