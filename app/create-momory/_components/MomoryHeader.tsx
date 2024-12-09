@@ -13,15 +13,15 @@ interface MomoryHeaderProps {
 export default function MomoryHeader({ page }: MomoryHeaderProps) {
   const setCurrentAction = useMomoryStore((state) => state.setCurrentAction);
   const reset = useMomoryStore((state) => state.reset);
-  const router = useRouter();
+  const router = useRouter()
   // 다음 페이지로 갈 때 닉네임 검증 필요(모든 검증은 store에서 실시)
   const handleNext = () => {
-    if (!setCurrentAction("create_password")) return;
+    if(!setCurrentAction("create_password")) return;
   };
   // 제출할 때 비밀번호 검증
   // 검증실패 시 api 요청 안보내도록  return
   const handleSubmitCallback = useCallback(async () => {
-    if (!setCurrentAction("submit")) return;
+    if(!setCurrentAction("submit")) return;
     const { momoryNickname, momoryPassword } = useMomoryStore.getState();
     const combinedPassword = momoryPassword.join("");
 
@@ -30,21 +30,19 @@ export default function MomoryHeader({ page }: MomoryHeaderProps) {
       momoryPassword: combinedPassword,
     });
     // api 요청 성공시 모모리로 이동
-    if (response.data.success) {
-      setTimeout(() => {
-        window.location.href = response.data.redirectUrl;
-      }, 200);
+    if(response.data.success){
+      window.location.href = response.data.redirectUrl;
     }
-    if (response.data.error) {
+    if(response.data.error){
       toast.error("모모리 생성에 실패했습니다. 다시 시도해주세요😌", {
         duration: 2000,
         style: {
-          height: "65px",
-          fontSize: "1.5rem",
-          fontWeight: "bold",
-          color: "gray",
-          textAlign: "center",
-        },
+            height: "65px",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+            color: "gray",
+            textAlign: "center",
+        }
       });
       reset("create_nickname");
       router.push("/create-momory");
@@ -54,12 +52,15 @@ export default function MomoryHeader({ page }: MomoryHeaderProps) {
   const handleSubmit = useDebounce(handleSubmitCallback, 300);
   // 이전페이지로 가는건 검증필요 없음
   const handlePrev = () => {
-    reset("create_nickname");
+    reset("create_nickname")
   };
   return (
     <>
       {page === "create_nickname" ? (
-        <Header page={page} handleNext={handleNext} />
+        <Header
+          page={page}
+          handleNext={handleNext}
+        />
       ) : (
         <Header
           page={page}
