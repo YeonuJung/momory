@@ -31,8 +31,7 @@ export default function MomoryHeader({ page }: MomoryHeaderProps) {
     });
     // api 요청 성공시 모모리로 이동
     if(response.data.success){
-      alert(`redirecting to: ${response.data.redirectUrl}`);
-      router.push(response.data.redirectUrl);
+      window.location.href = response.data.redirectUrl;
     }
     if(response.data.error){
       toast.error("모모리 생성에 실패했습니다. 다시 시도해주세요😌", {
