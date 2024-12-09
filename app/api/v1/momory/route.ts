@@ -11,11 +11,10 @@ export async function POST(request: NextRequest) {
   const middlewareData = JSON.parse(
     request.headers.get("x-middleware-data") as string,
   );
-  const { user_id, AccessTokenExp } = middlewareData;
- 
+  const { user_id, exp } = middlewareData;
 
   const now = Math.floor(Date.now() / 1000);
-  const maxAge = Math.max(AccessTokenExp - now, 0);
+  const maxAge = Math.max(exp - now, 0);
   // 본문에서 받은 비밀번호 해쉬화 및 모모리 생성 쿼리 호출
   const hashedPassword = await hashPassword(momoryPassword);
   const { data, error } = await createMomory({
