@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
     // 리다이렉트 uri가 있으면 해당 uri 모모리로 리다이렉트 없으면 아래 주석
     // 모모리가 있으면 모모리 페이지로 리다이렉트, 없으면 모모리 생성 페이지로 리다이렉트
     const redirect_uri = momory_redirect_uri
-      ? momory_redirect_uri
+      ? decodeURIComponent(momory_redirect_uri)
       : isMomoryExist && isMomoryExist.length > 0
         ? `/momory/${isMomoryExist[0].uuid}`
         : "/create-momory";
@@ -127,7 +127,7 @@ export async function GET(request: NextRequest) {
     signRefreshToken({ user_id: insertData?.[0].id }),
   ]);
   const redirect_uri = momory_redirect_uri
-    ? momory_redirect_uri
+    ? decodeURIComponent(momory_redirect_uri)
     : "/create-momory";
   const response = NextResponse.redirect(new URL(redirect_uri, request.url));
 

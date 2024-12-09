@@ -8,8 +8,9 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const redirect_uri = searchParams.get("redirect_uri");
   if (redirect_uri) {
+    const encoded_redirect_uri = encodeURIComponent(redirect_uri);
     return NextResponse.redirect(
-      `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_REDIRECT_URI}&state=${redirect_uri}`,
+      `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_REDIRECT_URI}&state=${encoded_redirect_uri}`,
     );
   }
   return NextResponse.redirect(

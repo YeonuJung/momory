@@ -8,8 +8,9 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const redirect_uri = searchParams.get("redirect_uri");
   if(redirect_uri){
+    const encoded_redirect_uri = encodeURIComponent(redirect_uri);
     return NextResponse.redirect(
-      `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&state=${redirect_uri}`,
+      `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&state=${encoded_redirect_uri}`,
     );
   }
   return NextResponse.redirect(

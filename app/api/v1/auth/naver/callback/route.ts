@@ -11,7 +11,6 @@ export async function GET(request: NextRequest) {
   const momory_redirect_uri = request.nextUrl.searchParams.get(
     "state",
   ) as string;
-  const decoded_redirect_uri = decodeURIComponent(momory_redirect_uri);
   if (!code) {
     return redirectWithError(request, "auth", "naver_auth");
   }
@@ -87,7 +86,7 @@ export async function GET(request: NextRequest) {
     // 모모리가 있으면 모모리 페이지로 리다이렉트, 없으면 모모리 생성 페이지로 리다이렉트
     const redirect_uri =
       momory_redirect_uri !== "state"
-        ? decoded_redirect_uri
+        ? decodeURIComponent(momory_redirect_uri)
         : isMomoryExist && isMomoryExist.length > 0
           ? `/momory/${isMomoryExist[0].uuid}`
           : "/create-momory";
@@ -129,7 +128,7 @@ export async function GET(request: NextRequest) {
     signRefreshToken({ user_id: insertData?.[0].id }),
   ]);
   const redirect_uri =
-    momory_redirect_uri !== "state" ? decoded_redirect_uri : "/create-momory";
+    momory_redirect_uri !== "state" ? decodeURIComponent(momory_redirect_uri) : "/create-momory";
 
   const response = NextResponse.redirect(new URL(redirect_uri, request.url));
 
