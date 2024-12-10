@@ -53,15 +53,15 @@ export default async function MomoryPage({
   }
 // 존재하지 않는 모모리일 때
 if (!readMomoryData || readMomoryData.length === 0) {
-  alert(
-    `readMomoryData: ${readMomoryData}
-    readMomoryError: ${readMomoryError}
-    readMemoryData: ${readMemoryData}
-    readMemoryError: ${readMemoryError}
-    checkMemoryError: ${checkMemoryError}
-    user_id: ${user_id}
-    momory_uuid: ${momory_uuid}`
-    );
+  console.debug('Debug data:', {  // 또는 console.info 사용
+    readMomoryData,
+    readMomoryError,
+    readMemoryData,
+    readMemoryError,
+    checkMemoryError,
+    user_id,
+    momory_uuid
+  });
   return <div>존재하지 않는 모모리입니다.</div>;
 }
   const momory_user_id = readMomoryData[0]?.user_id;
