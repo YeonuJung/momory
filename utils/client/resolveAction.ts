@@ -46,7 +46,7 @@ export function resolveAction({
           setTimeout(() => {
             navigator.share({
               title: "모모리로 정리하는 올해의 추억",
-              text: `${nickname}님이 공유한 추억을 확인해보세요`,
+              text: `${nickname}님이 모모리에 추억을 남겨보세요`,
               url: window.location.href,
             });
           }, 1500);

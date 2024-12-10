@@ -36,6 +36,12 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
     formData.append("nickname", memoryCredential.memoryNickname);
     formData.append("message", memoryCredential.memoryMessage);
 
+    alert(`Submitting memory with:
+      Momory UUID: ${momory_uuid}
+      Filter: ${memoryFilter}
+      Nickname: ${memoryCredential.memoryNickname}
+      Message: ${memoryCredential.memoryMessage}`);
+
     toast.promise(
       api.post("/api/v1/memory", formData, {
         headers: {
@@ -45,6 +51,8 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
       {
         loading: "사진을 업로드하고 있어요...",
         success: (response) => {
+          alert(`Response status: ${response.status}
+            Response data: ${JSON.stringify(response.data)}`);
           if (response.status !== 201) {
             throw new Error("업로드 실패");
           }
@@ -55,7 +63,9 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
           }, 2000);
           return "사진이 성공적으로 저장되었어요😘";
         },
-        error: () => {
+        error: (error) => {
+          alert(`Error occurred: ${error.message}
+            Error response: ${JSON.stringify(error.response?.data)}`);
           return "사진 업로드에 실패했어요. 다시 시도해주세요😌";
         },
       },
