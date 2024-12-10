@@ -108,14 +108,16 @@ export const deleteMemory = async ({
   if (error) {
     return { data: null, error };
   }
+
+  const imagePath = image_path.split('/memories/')[1];
   // 2. 스토리지에서 해당 이미지 삭제
   // 만약 실패하더라도 이미 메모리 테이블에서는 제거된 상태이기 때문에 따로 처리해주어야 함.
   // 그래서 에러가 발생해도 data는 성공적으로 반환하고, 에러처리용 테이블에 에러내용 삽입.
   // 스토리지 이미지 삭제는 cronjob 같은 거 이용해서 구현하면 유저입장에서는 처리가 빠르다고 느낄 수 있을 듯.
-  const { error: storageError } = await supabase.storage
+  const {error: storageError } = await supabase.storage
     .from("memories")
-    .remove([image_path]);
-  console.log(storageError);
+    .remove([imagePath])
+  console.log(storageError)
 
   return { data: ["Successfully Deleted"], error };
 };
