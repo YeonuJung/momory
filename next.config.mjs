@@ -4,6 +4,9 @@ const nextConfig = {
   images: {
     domains: ["cbxhntfxtfvfqfqqprof.supabase.co"],
   },
+  bodyParser: {
+    sizeLimit: "10mb",
+  }
 };
 
 export default nextConfig;
