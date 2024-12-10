@@ -6,7 +6,6 @@ import { useMemoryStore } from "@/store/useMemoryStore";
 import { useMomoryViewStore } from "@/store/useMomoryViewStore";
 import { ActionParams } from "@/types/general";
 import toast from "react-hot-toast";
-import { decryptPassword } from "@/libs/crypto";
 // 버튼 클릭시 실행되는 액션들을 정의
 export function resolveAction({
   action,
@@ -29,34 +28,38 @@ export function resolveAction({
       useMomoryStore.getState().reset("create_nickname");
       router.push("/create-momory");
     },
-    share_momory: () => {
-      const handleShare = () => {
-        if (navigator.share) {
-          const decryptedPassword = decryptPassword(password as string)
-          navigator.share({
-            title: "모모리로 정리하는 올해의 추억",
-            text: `${nickname}님의 모모리에 소중한 추억을 남겨보세요! 😘\n ${nickname}님의 모모리 비밀번호: ${decryptedPassword} `,
-            url: window.location.href,
-          });
-        } else {
-          navigator.clipboard.writeText(window.location.href);
-          toast(
-            "링크가 복사되었습니다. 공유시 모모리 설정시 설정했던 비밀번호를 함께 전달해주세요.",
-            {
-              icon: "😘",
-              style: {
-                height: "65px",
-                fontSize: "1.5rem",
-                fontWeight: "bold",
-                color: "gray",
-                textAlign: "center",
-              },
-              duration: 4000,
+    share_momory: async () => {
+      // 서버에서 비밀번호를 복호화
+      const response = await api.post("/api/v1/momory/decrypt-password", {
+        momoryPassword: password,
+      });
+      // 복호화된 비밀번호
+      const decryptedPassword = response.data.data;
+
+      if (navigator.share) {
+        // 비밀번호와 모모리 공유
+        navigator.share({
+          title: "모모리로 정리하는 올해의 추억",
+          text: `${nickname}님의 모모리에 소중한 추억을 남겨보세요! 😘\n ${nickname}님의 모모리 비밀번호: ${decryptedPassword} `,
+          url: window.location.href,
+        });
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        toast(
+          "링크가 복사되었습니다. 공유시 모모리 설정시 설정했던 비밀번호를 함께 전달해주세요.",
+          {
+            icon: "😘",
+            style: {
+              height: "65px",
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+              color: "gray",
+              textAlign: "center",
             },
-          );
-        }
-      };
-      handleShare();
+            duration: 4000,
+          },
+        );
+      }
     },
     delete_memory: async () => {
       toast.promise(
