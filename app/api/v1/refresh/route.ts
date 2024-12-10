@@ -1,3 +1,4 @@
+import { checkMomory } from "@/backend/queries/momory";
 import { signAccessToken, verifyRefreshToken } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -43,13 +44,18 @@ export async function GET(request: NextRequest) {
     decoded.payload &&
     decoded.payload.exp 
   ) {
+    const { data: isMomoryExist } = await checkMomory({ 
+      user_id: decoded.payload.user_id as number 
+    });
+    // 현재 실제 모모리 uuid가 가져오기
+    const current_momory_uuid = isMomoryExist && isMomoryExist.length > 0
+    ? isMomoryExist[0].uuid
+    : undefined;
     // 액세스 토큰 재발급
     const new_access_token = await signAccessToken({
       user_id: decoded.payload.user_id as number,
-      momory_uuid: decoded.payload.momory_uuid? decoded.payload.momory_uuid as string : undefined,
+      momory_uuid: current_momory_uuid
     });
-    const now = Math.floor(Date.now() / 1000);
-    const maxAge = Math.max(decoded.payload.exp - now, 0);
     const response = NextResponse.json(
       {
         message: "access_token refreshed successfully",
@@ -62,7 +68,7 @@ export async function GET(request: NextRequest) {
       sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
       path: "/",
-      maxAge: maxAge,
+      maxAge: 60 * 60 * 24 * 30 + 60 * 60,
     });
     return response;
   }
