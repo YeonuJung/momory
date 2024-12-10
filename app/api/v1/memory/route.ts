@@ -1,6 +1,12 @@
 import { deleteMemory, uploadAndCreateMemory } from "@/backend/queries/memory";
 import { NextRequest, NextResponse } from "next/server";
 
+export const config = {
+  api: {
+    bodyParser: false,
+    sizeLimit: '10mb'
+  }
+};
 // 메모리 생성하는 POST 요청 핸들러
 export async function POST(request: NextRequest) {
   // 요청본문에서 파일, momory_uuid, nickname, filter, message를 가져옴
