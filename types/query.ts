@@ -25,7 +25,7 @@ export interface DeleteMemoryParams {
 export interface CreateMomoryParams {
   user_id: number;
   momoryNickname: string;
-  hashedPassword: string;
+  encryptedPassword: string;
 }
 
 export interface CheckMomoryParams {

@@ -1,5 +1,5 @@
 import { readMomory } from "@/backend/queries/momory";
-import { comparePassword} from "@/libs/bcrypt";
+import { comparePassword } from "@/libs/crypto";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest){
@@ -13,6 +13,6 @@ export async function POST(request: NextRequest){
     if (!momoryPasswordFromDB) {
         return NextResponse.json({error: "Password not found", message: "모모리 불러오기 실패"}, {status: 500});
     }
-    const isPasswordCorrect = await comparePassword(combinedPassword, momoryPasswordFromDB)
+    const isPasswordCorrect = comparePassword(combinedPassword, momoryPasswordFromDB)
     return NextResponse.json({success: isPasswordCorrect}, {status: 200})
 }

@@ -6,6 +6,7 @@ import { useMemoryStore } from "@/store/useMemoryStore";
 import { useMomoryViewStore } from "@/store/useMomoryViewStore";
 import { ActionParams } from "@/types/general";
 import toast from "react-hot-toast";
+import { decryptPassword } from "@/libs/crypto";
 // 버튼 클릭시 실행되는 액션들을 정의
 export function resolveAction({
   action,
@@ -17,6 +18,7 @@ export function resolveAction({
   hasPostedMemory,
   isAuthenticated,
   nickname,
+  password,
 }: ActionParams) {
   const actions = {
     go_to_my_momory: () => {
@@ -30,26 +32,12 @@ export function resolveAction({
     share_momory: () => {
       const handleShare = () => {
         if (navigator.share) {
-          // 먼저 토스트를 보여줌
-          toast("모모리 비밀번호 네자리를 함께 공유해주세요!", {
-            icon: "😘",
-            duration: 1500,
-            style: {
-              height: "65px",
-              fontSize: "1.5rem",
-              fontWeight: "bold",
-              color: "gray",
-              textAlign: "center",
-            },
+          const decryptedPassword = decryptPassword(password as string)
+          navigator.share({
+            title: "모모리로 정리하는 올해의 추억",
+            text: `${nickname}님의 모모리에 소중한 추억을 남겨보세요! 😘\n ${nickname}님의 모모리 비밀번호: ${decryptedPassword} `,
+            url: window.location.href,
           });
-          // 토스트가 사라진 후 share API 실행
-          setTimeout(() => {
-            navigator.share({
-              title: "모모리로 정리하는 올해의 추억",
-              text: `${nickname}님의 모모리에 함께한 소중한 추억을 남겨보세요! 😘 `,
-              url: window.location.href,
-            });
-          }, 1500);
         } else {
           navigator.clipboard.writeText(window.location.href);
           toast(
@@ -100,7 +88,6 @@ export function resolveAction({
             textAlign: "center",
           },
         },
-        
       );
     },
     close_memory: () => {

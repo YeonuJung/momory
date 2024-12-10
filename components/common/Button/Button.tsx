@@ -12,6 +12,7 @@ export function Button({
   uuid,   
   momory_uuid, 
   nickname,
+  password
 }: ButtonProps) {   
   const router = useRouter();   
   return (     
@@ -27,7 +28,8 @@ export function Button({
           uuid,           
           momory_uuid,           
           hasPostedMemory: undefined,
-          nickname      
+          nickname ,
+          password     
         })()       
       }     
     >       

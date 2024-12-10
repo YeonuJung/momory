@@ -50,6 +50,7 @@ export default function MomoryImage({
                 height={107.1}
                 alt={"메모리"}
                 src={memoryPublicUrlArray[idx]}
+                unoptimized={true}
                 className={`${currentMemory?.filter ? currentMemory.filter : "none"} h-[25.52vw] w-[18.75vw] xs:h-[10.71rem] xs:w-[8.1rem] object-cover bg-neutral-300`}
               ></Image>
             ) : (

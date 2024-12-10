@@ -1,5 +1,5 @@
 import { createMomory } from "@/backend/queries/momory";
-import { hashPassword } from "@/libs/bcrypt";
+import { encryptPassword } from "@/libs/crypto";
 import { signAccessToken } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -14,11 +14,11 @@ export async function POST(request: NextRequest) {
   const { user_id} = middlewareData;
  
   // 본문에서 받은 비밀번호 해쉬화 및 모모리 생성 쿼리 호출
-  const hashedPassword = await hashPassword(momoryPassword);
+  const encryptedPassword =  encryptPassword(momoryPassword);
   const { data, error } = await createMomory({
     user_id,
     momoryNickname,
-    hashedPassword,
+    encryptedPassword,
   });
   // 에러 발생 시 에러 메시지를 반환하고 이를 클라이언트에서 받아서 리다이렉트
   if (error) {

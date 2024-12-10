@@ -9,11 +9,12 @@ const ImageDetail = () => {
   return (
     <div className="flex h-[97.92vw] w-[61.7vw] flex-col items-center justify-center bg-white p-[1.214rem] shadow-frame xs:h-[42.3rem] xs:w-[26.65rem]">
       <div className={`flex items-center justify-center ${modalData.filter}`}>
-        <img
+        <Image
           src={modalData.imagePath as string}
           alt="디테일 이미지"
-          width="239.3"
-          height="317.2"
+          width={239.3}
+          height={317.2}
+          unoptimized={true}
           className="h-[73.42vw] w-[55.4vw] xs:h-[31.72rem] xs:w-[23.93rem] object-cover"
         />
       </div>

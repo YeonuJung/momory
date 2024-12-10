@@ -23,7 +23,6 @@ export default async function Momory({
   user_id,
   hasPostedMemory,
   isAuthenticated,
-
 }: MomoryProps) {
   return (
     <>
@@ -40,7 +39,7 @@ export default async function Momory({
       </ContentSection>
       <ButtonContainer>
         {isOwner ? (
-          <Button nickname={readMomoryData[0].nickname} action={"share_momory"} momory_uuid={momory_uuid}>내 모모리 공유하기</Button>
+          <Button password={readMomoryData[0].password} nickname={readMomoryData[0].nickname} action={"share_momory"} momory_uuid={momory_uuid}>내 모모리 공유하기</Button>
         ) : !hasPostedMemory? (
           <ButtonWithCaption
             caption={"*하나만 남길 수 있어요"}

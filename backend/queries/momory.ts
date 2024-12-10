@@ -2,10 +2,10 @@ import { CheckMomoryParams, CreateMomoryParams, ReadMomoryParams } from "@/types
 import { supabase } from "../../libs/supabase";
 
 // 모모리를 생성하는 쿼리
-export const createMomory = async ({user_id, momoryNickname, hashedPassword}: CreateMomoryParams) => {
+export const createMomory = async ({user_id, momoryNickname, encryptedPassword}: CreateMomoryParams) => {
   const { data, error } = await supabase
     .from("momory")
-    .insert([{user_id: user_id, password: hashedPassword, nickname: momoryNickname}])
+    .insert([{user_id: user_id, password: encryptedPassword, nickname: momoryNickname}])
     .select();
 
   return {data, error};

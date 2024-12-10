@@ -49,8 +49,9 @@ export type ActionParams = {
   image_path?: string;
   uuid?: string;
   momory_uuid?: string;
-  isAuthenticated?: string
-  nickname?: string
+  isAuthenticated?: string;
+  nickname?: string;
+  password?: string;
 };
 export interface ButtonProps {
   children: React.ReactNode;
@@ -66,6 +67,7 @@ export interface ButtonProps {
   image_path?: string;
   uuid?: string;
   momory_uuid?: string;
+  password?: string;
 }
 export interface ButtonWithCaptionProps extends ButtonProps {
   caption: string;
