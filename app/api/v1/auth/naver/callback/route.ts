@@ -4,6 +4,21 @@ import { api } from "@/libs/axios";
 import { signAccessToken, signRefreshToken } from "@/libs/jwt";
 import { redirectWithError } from "@/utils/server/redirectWithError";
 import { NextRequest, NextResponse } from "next/server";
+
+// 재시도 로직을 위한 helper 함수
+async function fetchWithRetry(url: string, data: any, retries: number = 2, timeout: number = 10000) {
+  try {
+    const response = await api.post(url, data, { headers: { "Content-type": "application/x-www-form-urlencoded;charset=utf-8" }, timeout });
+    return response;
+  } catch (e) {
+    if (retries > 0) {
+      return fetchWithRetry(url, data, retries - 1, timeout);
+    } else {
+      return { status: 500, data: { error: e, message: "재시도 요청 실패" } };
+    }
+  }
+}
+
 // 사용자가 네이버 로그인 요청후 네이버 서버에서 인가코드를 보내주는 곳
 export async function GET(request: NextRequest) {
   // 인가코드를 받아옴
@@ -17,7 +32,7 @@ export async function GET(request: NextRequest) {
   }
 
   // 네이버 서버에 인가코드를 보내서 토큰을 받아오는 과정
-  const naverTokenResponse = await api.post(
+  const naverTokenResponse = await fetchWithRetry(
     `https://nid.naver.com/oauth2.0/token`,
     new URLSearchParams({
       grant_type: "authorization_code",
@@ -26,14 +41,10 @@ export async function GET(request: NextRequest) {
       code: code,
       state: momory_redirect_uri,
     }),
-    {
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-      },
-      timeout: 10000,
-    },
+    2, // 재시도 횟수
+    10000 // 타임아웃 설정
   );
-  if (!naverTokenResponse.data || !naverTokenResponse.data.access_token) {
+  if (!naverTokenResponse.data || !naverTokenResponse.data.access_token || naverTokenResponse.status !== 200) {
     return redirectWithError(request, "auth", "naver_auth");
   }
   // 네이버 서버에서 받아온 액세스토큰을 추출
