@@ -18,12 +18,15 @@ export async function POST(request: NextRequest) {
   );
   const { user_id } = middlewareData;
   // 이미지 업로드 및 메모리 생성 쿼리 호출
+  console.debug('Debug formValues:', {formValues})
   const {data, error} = await uploadAndCreateMemory({photo: formValues.photo, momory_uuid: formValues.momory_uuid, user_id, nickname: formValues.nickname, filter: formValues.filter, message: formValues.message})
   // 에러 발생 시 에러 메시지 및 500 상태코드 반환
   if(error){
+    console.debug('Debug error:', {error})
     return NextResponse.json({error: error.message}, {status: 500})
   }
   // 성공 시 데이터 반환
+  console.debug('Debug data:', {data})
   return NextResponse.json(data?.[0], {status: 201})
 }
 
