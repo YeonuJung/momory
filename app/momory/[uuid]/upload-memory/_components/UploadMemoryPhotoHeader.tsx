@@ -46,8 +46,8 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
       {
         loading: "사진을 업로드하고 있어요...",
         success: (response) => {
+          console.log("API Response:", response);
           if (response.status !== 201) {
-            console.error("Unexpected status:", response.status);
             throw new Error("업로드 실패");
           }
           reset("enter_password");
@@ -58,14 +58,16 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
           return "사진이 성공적으로 저장되었어요😘";
         },
         error: (error) => {
-          console.error("Upload error triggered:", error); // 추가
-          console.error("Detailed error info:", {
-            status: error.response?.status,
-            data: error.response?.data,
-            message: error.message,
-            momory_uuid,
-            headers: error.response?.headers,
-          });
+          console.error("Error occurred during API call:", error);
+          try {
+            console.error("Detailed error:", {
+              status: error.response?.status || "Unknown",
+              data: error.response?.data || "No data",
+              message: error.message || "No message",
+            });
+          } catch (e) {
+            console.error("Error while logging the error:", e);
+          }
           return "사진 업로드에 실패했어요. 다시 시도해주세요😌";
         },
       },
