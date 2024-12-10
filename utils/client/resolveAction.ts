@@ -46,7 +46,7 @@ export function resolveAction({
           setTimeout(() => {
             navigator.share({
               title: "모모리로 정리하는 올해의 추억",
-              text: `${nickname}님이 모모리에 추억을 남겨보세요`,
+              text: `${nickname}님의 모모리에 함께한 소중한 추억을 남겨보세요! 😘 `,
               url: window.location.href,
             });
           }, 1500);
@@ -83,7 +83,7 @@ export function resolveAction({
             revalidatePage(`/momory/${uuid}`);
             setTimeout(() => {
               useMomoryViewStore.getState().closeModal();
-            }, 2000);
+            }, 1000);
             return "성공적으로 삭제되었습니다😘"; // 성공 메시지
           },
           error: () => {
@@ -91,6 +91,16 @@ export function resolveAction({
             return `삭제에 실패했습니다🥲`;
           },
         },
+        {
+          style: {
+            height: "65px",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+            color: "gray",
+            textAlign: "center",
+          },
+        },
+        
       );
     },
     close_memory: () => {

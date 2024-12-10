@@ -63,7 +63,7 @@ export const uploadAndCreateMemory = async ({
   // 업데이트 불가, 삭제 후 재업로드 해도 경로가 바뀌기 때문에 캐시를 길게 잡음
   const now = new Date();
   const formattedDate = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}`;
-  const fileName = `${formattedDate}/${momory_uuid}/${now.getTime()}.${photo.name.split(".").pop()}`;
+  const fileName = `${formattedDate}/${momory_uuid}/${now.getTime()}.webp`;
   const { data: imageData, error: uploadError } = await supabase.storage
     .from("memories")
     .upload(fileName, photo, {

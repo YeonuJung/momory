@@ -66,7 +66,6 @@ export async function middleware(request: NextRequest) {
       JSON.stringify({
         user_id: decoded.payload?.user_id,
         momory_uuid: decoded.payload?.momory_uuid,
-        exp: decoded.payload?.exp,
       }),
     );
     return response;

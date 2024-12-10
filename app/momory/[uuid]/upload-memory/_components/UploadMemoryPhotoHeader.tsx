@@ -5,6 +5,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { api } from "@/libs/axios";
 import { useMemoryStore } from "@/store/useMemoryStore";
 import { useMomoryStore } from "@/store/useMomoryStore";
+import { compressImage } from "@/utils/client/compressImage";
 import { revalidatePage } from "@/utils/server/revalidatePage";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback } from "react";
@@ -29,8 +30,8 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
     const formData = new FormData();
 
     if (!memoryPhoto.photo) return;
-
-    formData.append("file", memoryPhoto.photo);
+    const compressdFile = await compressImage(memoryPhoto.photo);
+    formData.append("file", compressdFile);
     formData.append("momory_uuid", momory_uuid as string);
     formData.append("filter", memoryFilter);
     formData.append("nickname", memoryCredential.memoryNickname);
@@ -52,15 +53,10 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
           setTimeout(() => {
             revalidatePage(`/momory/${momory_uuid}`);
             router.push(`/momory/${momory_uuid}?authenticated=true`);
-          }, 2000);
+          }, 1000);
           return "사진이 성공적으로 저장되었어요😘";
         },
-        error: (error) => {
-          alert(`에러 상세:
-            상태: ${error?.response?.status}
-            메시지: ${error?.response?.data?.error}
-            타입: ${error?.name}
-            `);
+        error: () => {
           return "사진 업로드에 실패했어요. 다시 시도해주세요😌";
         },
       },
@@ -72,7 +68,6 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
           color: "gray",
           textAlign: "center",
         },
-        duration: 2000
       },
     );
   }, [setCurrentAction, router, reset, momory_uuid]);

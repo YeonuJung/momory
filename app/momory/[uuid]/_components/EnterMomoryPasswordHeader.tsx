@@ -65,7 +65,7 @@ export default function EnterMomoryPasswordHeader() {
           color: "gray",
           textAlign: "center",
         },
-        duration: 2000,
+        duration: 1000,
       }
     );
   }, [setCurrentAction, router, reset, resetMomoryPassword, uuid]);

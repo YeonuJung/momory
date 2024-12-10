@@ -11,10 +11,8 @@ export async function POST(request: NextRequest) {
   const middlewareData = JSON.parse(
     request.headers.get("x-middleware-data") as string,
   );
-  const { user_id, exp } = middlewareData;
-
-  const now = Math.floor(Date.now() / 1000);
-  const maxAge = Math.max(exp - now, 0);
+  const { user_id} = middlewareData;
+ 
   // 본문에서 받은 비밀번호 해쉬화 및 모모리 생성 쿼리 호출
   const hashedPassword = await hashPassword(momoryPassword);
   const { data, error } = await createMomory({
@@ -47,7 +45,7 @@ export async function POST(request: NextRequest) {
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: maxAge,
+    maxAge: 60 * 60 * 24 * 30 + 60 * 60,
   });
   return response;
 }

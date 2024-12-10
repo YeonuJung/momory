@@ -23,7 +23,7 @@ export default function CreateMomoryContainer({ CreateMomoryNickname, CreateMomo
 
   if (isChanging) {
     return (
-      <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+      <div className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         <span className="loader absoulte"></span>
       </div>
     );
