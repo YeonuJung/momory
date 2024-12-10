@@ -1,5 +1,6 @@
 import { checkMomory } from "@/backend/queries/momory";
 import { checkUserByEmail, createUser } from "@/backend/queries/user";
+import { api } from "@/libs/axios";
 import { signAccessToken, signRefreshToken } from "@/libs/jwt";
 import { redirectWithError } from "@/utils/server/redirectWithError";
 import { NextRequest, NextResponse } from "next/server";
@@ -16,41 +17,41 @@ export async function GET(request: NextRequest) {
   }
 
   // 네이버 서버에 인가코드를 보내서 토큰을 받아오는 과정
-  const naverTokenResponse = await fetch(
+  const naverTokenResponse = await api.post(
     `https://nid.naver.com/oauth2.0/token`,
+    new URLSearchParams({
+      grant_type: "authorization_code",
+      client_id: process.env.NAVER_CLIENT_ID as string,
+      client_secret: process.env.NAVER_CLIENT_SECRET as string,
+      code: code,
+      state: momory_redirect_uri,
+    }),
     {
-      method: "POST",
       headers: {
         "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
       },
-      body: new URLSearchParams({
-        grant_type: "authorization_code",
-        client_id: process.env.NAVER_CLIENT_ID as string,
-        client_secret: process.env.NAVER_CLIENT_SECRET as string,
-        code: code,
-        state: momory_redirect_uri,
-      }),
+      timeout: 10000,
     },
   );
-  if (!naverTokenResponse.ok) {
+  if (!naverTokenResponse.data || !naverTokenResponse.data.access_token) {
     return redirectWithError(request, "auth", "naver_auth");
   }
   // 네이버 서버에서 받아온 액세스토큰을 추출
-  const { access_token } = await naverTokenResponse.json();
+  const { access_token } = naverTokenResponse.data;
 
   // 네이버 서버에 액세스 토큰을 보내서 사용자 정보를 받아오는 과정
-  const userEmailResponse = await fetch("https://openapi.naver.com/v1/nid/me", {
+  const userEmailResponse = await api("https://openapi.naver.com/v1/nid/me", {
     headers: {
       Authorization: `Bearer ${access_token}`,
     },
   });
-  if (!userEmailResponse.ok) {
+  if (!userEmailResponse.data || !userEmailResponse.data.response) {
     return redirectWithError(request, "auth", "naver_auth");
   }
   // 유저 이메일 추출
   const {
     response: { email },
-  } = await userEmailResponse.json();
+  } = userEmailResponse.data;
 
   // 기존에 가입된 유저인지 확인(이메일과 소셜타입으로 구분)
   const { data: isUserExists, error: isUserExistsError } =
@@ -128,7 +129,9 @@ export async function GET(request: NextRequest) {
     signRefreshToken({ user_id: insertData?.[0].id }),
   ]);
   const redirect_uri =
-    momory_redirect_uri !== "state" ? decodeURIComponent(momory_redirect_uri) : "/create-momory";
+    momory_redirect_uri !== "state"
+      ? decodeURIComponent(momory_redirect_uri)
+      : "/create-momory";
 
   const response = NextResponse.redirect(new URL(redirect_uri, request.url));
 

@@ -1,5 +1,6 @@
 import { checkMomory } from "@/backend/queries/momory";
 import { checkUserByEmail, createUser } from "@/backend/queries/user";
+import { api } from "@/libs/axios";
 import { signAccessToken, signRefreshToken } from "@/libs/jwt";
 import { redirectWithError } from "@/utils/server/redirectWithError";
 import { NextRequest, NextResponse } from "next/server";
@@ -14,41 +15,42 @@ export async function GET(request: NextRequest) {
     return redirectWithError(request, "auth", "kakao_auth");
   }
   // 카카오 서버에 인가코드를 보내서 토큰을 받아오는 과정
-  const kakaoTokenResponse = await fetch(
+  const kakaoTokenResponse = await api.post(
     `https://kauth.kakao.com/oauth/token`,
+    new URLSearchParams({
+      grant_type: "authorization_code", 
+      client_id: process.env.KAKAO_REST_API_KEY as string,
+      redirect_uri: process.env.KAKAO_REDIRECT_URI as string,  
+      code: code,
+    }),
     {
-      method: "POST",
       headers: {
         "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
       },
-      body: new URLSearchParams({
-        grant_type: "authorization_code",
-        client_id: process.env.KAKAO_REST_API_KEY as string,
-        redirect_uri: process.env.KAKAO_REDIRECT_URI as string,
-        code: code,
-      }),
-    },
-  );
-  if (!kakaoTokenResponse.ok) {
+      timeout: 10000
+    }
+   );
+   if (!kakaoTokenResponse.data || !kakaoTokenResponse.data.access_token) {
     return redirectWithError(request, "auth", "kakao_auth");
-  }
+   }
   // 카카오 서버에서 받아온 액세스토큰을 추출
-  const { access_token } = await kakaoTokenResponse.json();
+  const { access_token } = kakaoTokenResponse.data
 
   // 카카오 서버에 액세스 토큰을 보내서 사용자 정보를 받아오는 과정
-  const userEmailResponse = await fetch("https://kapi.kakao.com/v2/user/me", {
+  const userEmailResponse = await api.get("https://kapi.kakao.com/v2/user/me", {
     headers: {
       "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
       Authorization: `Bearer ${access_token}`,
-    },
-  });
-  if (!userEmailResponse.ok) {
+    }
+   });
+   
+   if (!userEmailResponse.data || !userEmailResponse.data.kakao_account) {
     return redirectWithError(request, "auth", "kakao_auth");
-  }
+   }
   // 유저 이메일 추출
   const {
     kakao_account: { email },
-  } = await userEmailResponse.json();
+  } = userEmailResponse.data;
 
   // 기존에 가입된 유저인지 확인(이메일과 소셜타입으로 구분)
   const { data: isUserExists, error: isUserExistsError } =
