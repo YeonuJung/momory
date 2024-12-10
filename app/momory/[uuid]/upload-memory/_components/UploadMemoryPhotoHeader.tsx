@@ -57,8 +57,16 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
           return "사진이 성공적으로 저장되었어요😘";
         },
         error: (error) => {
-          alert(`Error occurred during API call: ${error}`);
-       
+          alert(`
+            에러 발생:
+            코드: ${error.code}
+            이름: ${error.name}
+            메시지: ${error.message}
+            세부 정보: ${error.details}
+            힌트: ${error.hint}
+            스택 트레이스: ${error.stack}
+          `);
+
           return "사진 업로드에 실패했어요. 다시 시도해주세요😌";
         },
       },
