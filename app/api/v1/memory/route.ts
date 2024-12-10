@@ -38,5 +38,5 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
   // 성공 시 성공했다는 문자열이 담긴 객체 데이터 반환
-  return NextResponse.json(data?.[0], { status: 200 });
+  return NextResponse.json(data, { status: 200 });
 }

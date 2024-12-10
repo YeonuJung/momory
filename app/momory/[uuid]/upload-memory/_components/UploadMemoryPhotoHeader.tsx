@@ -47,7 +47,7 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
         loading: "사진을 업로드하고 있어요...",
         success: (response) => {
           if (response.status !== 201) {
-            console.debug("Response status is not 201:", response);
+            alert(`Response status is not 201: ${response}`);
             throw new Error("업로드 실패");
           }
           reset("enter_password");
@@ -58,15 +58,14 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
           return "사진이 성공적으로 저장되었어요😘";
         },
         error: (error) => {
-          console.error("Error occurred during API call:", error);
+          alert(`Error occurred during API call: ${error}`);
           try {
-            console.debug("Detailed error:", {
-              status: error.response?.status || "Unknown",
-              data: error.response?.data || "No data",
-              message: error.message || "No message",
-            });
+            alert(`Detailed error: 
+              Status: ${error.response?.status || "Unknown"}
+              Data: ${error.response?.data || "No data"}
+              Message: ${error.message || "No message"}`);
           } catch (e) {
-            console.debug("Error while logging the error:", e);
+            alert(`Error while logging the error: ${e}`);
           }
           return "사진 업로드에 실패했어요. 다시 시도해주세요😌";
         },
