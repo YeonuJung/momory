@@ -108,7 +108,6 @@ const config: Config = {
       },
       fontFamily: {
         pretendard: ["var(--font-pretendard)"],
-        "nanum-Hana": ["var(--font-nanum-Hana)"],
         "nanum-Jung": ["var(--font-nanum-Jung)"],
       },
       screens: {

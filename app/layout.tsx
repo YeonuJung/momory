@@ -84,14 +84,6 @@ const pretendard = localFont({
   display: "block",
 });
 
-const nanumHaNaSonGeurSsi = localFont({
-  src: "../public/fonts/NanumHaNaSonGeurSsi.woff2",
-  variable: "--font-nanum-Hana",
-  display: "swap",
-  preload: true,
-  weight: "400",
-});
-
 const nanumJungHagSaeng = localFont({
   src: "../public/fonts/NanumJungHagSaeng.woff2",
   variable: "--font-nanum-Jung",
@@ -107,7 +99,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${pretendard.variable} ${nanumHaNaSonGeurSsi.variable} ${nanumJungHagSaeng.variable}`}
+      className={`${pretendard.variable} ${nanumJungHagSaeng.variable}`}
     >
       <head>
         <link
@@ -115,7 +107,7 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/cssgram/0.1.10/cssgram.min.css"
         ></link>
       </head>
-      <body className="flex min-h-dvh flex-col items-center bg-white">
+      <body className={`flex min-h-dvh flex-col items-center bg-white`}>
         <Toaster position="top-center" containerStyle={{ top: 100 }} />
         {children}
       </body>

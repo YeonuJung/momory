@@ -20,10 +20,13 @@ export default function MomoryImage({
   momory_uuid,
 }: MomoryImageProps) {
   const openModal = useMomoryViewStore((state) => state.openModal);
+
   return (
     <div className="flex flex-wrap content-center items-center justify-center gap-x-[5.6vw] gap-y-[4.75vw] xs:gap-x-[2.42rem] xs:gap-y-[2.05rem]">
       {ROTATION_ANGLES.map((angle, idx) => {
-        const currentMemory = memoryData?.[idx];
+        const currentMemory = memoryData && idx < memoryData.length ? memoryData[idx] : undefined;
+        const imageUrl = idx < (memoryPublicUrlArray?.length || 0) ? memoryPublicUrlArray[idx] : undefined
+
         return (
           <div
             key={idx}
@@ -36,7 +39,7 @@ export default function MomoryImage({
                 filter: currentMemory.filter,
                 memoryId: currentMemory.id,
                 nickname: currentMemory.nickname,
-                imagePath: memoryPublicUrlArray[idx],
+                imagePath: imageUrl,
                 message: currentMemory.message,
                 memory_user_id: currentMemory.user_id,
                 logined_user_id: userId,
@@ -46,12 +49,12 @@ export default function MomoryImage({
               });
             }}
           >
-            {memoryPublicUrlArray[idx] ? (
+            {imageUrl ? (
               <Image
                 width={81}
                 height={107.1}
                 alt={"메모리"}
-                src={memoryPublicUrlArray[idx]}
+                src={imageUrl}
                 unoptimized={true}
                 className={`${currentMemory?.filter ? currentMemory.filter : "none"} h-[25.52vw] w-[18.75vw] bg-neutral-300 object-cover xs:h-[10.71rem] xs:w-[8.1rem]`}
               ></Image>

@@ -71,7 +71,7 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
       },
     );
   }, [setCurrentAction, router, reset, momory_uuid]);
-  const handleSubmit = useDebounce(handleSubmitCallback, 500);
+  const handleSubmit = useDebounce(handleSubmitCallback, 1000);
   // 이전버튼 클릭시 현재 페이지에 맞게 이전 페이지로 이동
   // 동시에 현재 페이지에 맞게 상태 초기화
   const handlePrev = () => {

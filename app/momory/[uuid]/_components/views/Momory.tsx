@@ -17,6 +17,7 @@ export default async function Momory({
   uuid,
   momory_uuid,
   isOwner,
+  hasNextPage,
   hasMomory,
   currentPage,
   totalCount,
@@ -65,7 +66,7 @@ export default async function Momory({
         alt="왼쪽 화살표"
         momoryUuid={uuid}
         currentPage={currentPage}
-        totalCount={totalCount}
+        hasNextPage={hasNextPage}
       />
       <NavigationArrowWithPagination
         direction="right"
@@ -73,7 +74,7 @@ export default async function Momory({
         alt="오른쪽 화살표"
         momoryUuid={uuid}
         currentPage={currentPage}
-        totalCount={totalCount}
+        hasNextPage={hasNextPage}
       />
       <MemoryModal />
     </>

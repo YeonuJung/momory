@@ -8,28 +8,30 @@ export const readMemory = async ({
   currentPage,
 }: GetMemoryParams) => {
   const ITEMS_PER_PAGE = 9;
-
   const start = (currentPage - 1) * ITEMS_PER_PAGE;
-  const end = currentPage * ITEMS_PER_PAGE;
+  const end = start + (ITEMS_PER_PAGE -1)
 
-  const query = supabase
+  let query = supabase
     .from("memory")
     .select("*", { count: "exact" })
     .eq("momory_uuid", momory_uuid)
     .order("id", { ascending: true })
-    .range(start, end - 1)
+   
+  query = query.range(start, end);
 
   const { data, error, count } = await query;
 
   if (error) {
-    return { data: null, error, count: 0 };
+    return { data: null, error, count: 0, hasNextPage: false };
   }
 
   if (data && data.length === 0) {
-    return { data, error: null, count: 0 };
+    return { data, error: null, count: 0, hasNextPage: false };
   }
 
-  return { data, error, count};
+  const hasNextPage = start + ITEMS_PER_PAGE < (count || 0);
+
+  return { data, error, count, hasNextPage};
 };
 
 export const checkUserMemoryExists = async ({

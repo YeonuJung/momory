@@ -45,8 +45,10 @@ export default async function MomoryPage({
   const { 
     data: readMemoryData, 
     error: readMemoryError,
-    count
+    count,
+    hasNextPage
   } = readMemoryResult;
+
   // 서버 에러일 때
   if (readMomoryError || readMemoryError || checkMemoryError) {
     return <div>서버에러입니다. 다시 시도해주세요</div>;
@@ -74,6 +76,7 @@ if (!readMomoryData || readMomoryData.length === 0) {
               isOwner={false}
               hasMomory={momory_uuid? true : false}
               currentPage={currentPage}
+              hasNextPage={hasNextPage}
               totalCount={count}
               user_id={user_id}
               hasPostedMemory={hasPostedMemory}
@@ -92,6 +95,7 @@ if (!readMomoryData || readMomoryData.length === 0) {
               uuid={uuid}
               momory_uuid={momory_uuid}
               isOwner={true}
+              hasNextPage={hasNextPage}
               hasMomory={momory_uuid? true : false}
               currentPage={parseInt(page)}
               totalCount={count}

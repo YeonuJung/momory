@@ -22,11 +22,8 @@ export const useMomoryViewStore = create<MomoryViewState>((set) => ({
     user_momory_uuid: undefined,
   },
   openModal: (props: OpenModalProps) => {
-    console.log('Received props:', props)
     const validateOpenModalProps = OpenModalPropsSchema.safeParse(props);
-    console.log('Validation result:', validateOpenModalProps); 
     if (!validateOpenModalProps.success) {
-      console.log('Validation failed:', validateOpenModalProps.error); 
       return;
     }
     const isMomoryOwner = props.user_momory_uuid === props.momory_uuid;

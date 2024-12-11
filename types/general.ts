@@ -22,6 +22,7 @@ export interface MomoryProps {
   uuid: string;
   momory_uuid: string | undefined;
   isOwner: boolean;
+  hasNextPage: boolean;
   hasMomory: boolean;
   currentPage: number;
   totalCount: number | null;

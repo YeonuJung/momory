@@ -6,7 +6,7 @@ interface NavigationArrowProps {
   direction: "left" | "right";
   momoryUuid: string;
   currentPage: number;
-  totalCount: number | null;
+  hasNextPage: boolean
 }
 
 export default function NavigationArrowWithPagination({
@@ -15,16 +15,14 @@ export default function NavigationArrowWithPagination({
   direction,
   momoryUuid,
   currentPage,
-  totalCount,
+  hasNextPage,
 }: NavigationArrowProps) {
   const classNameByDirection =
     direction === "left"
       ? "absolute left-[2.67vw] xs:left-[1.15rem] active:scale-125"
       : "absolute right-[2.67vw] xs:right-[1.15rem] active:scale-125";
-  const safeTotalCount = totalCount ?? 0;
-  const totalPages = Math.ceil(safeTotalCount / 9);
   const isDisabled =
-    (direction === "right" && currentPage >= totalPages) || 
+    (direction === "right" && !hasNextPage) || 
     (direction === "left" && currentPage <= 1);
 
   const imageClassName =
