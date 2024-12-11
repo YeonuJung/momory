@@ -30,15 +30,15 @@ export const OpenModalPropsSchema = z.object({
   message: z
     .string()
     .min(1, { message: "메시지를 입력해주세요" })
-    .refine(value => Array.from(value).length <= 50, { 
-      message: "메시지는 50자 이내로 입력해주세요" 
+    .refine(value => Array.from(value).length <= 100, { 
+      message: "메시지가 너무 깁니다" 
     })
     .optional(),
   nickname: z
     .string()
     .min(1, { message: "닉네임을 입력해주세요" })
-    .refine(value => Array.from(value).length <= 5, { 
-      message: "닉네임은 5글자 이내로 입력해주세요" 
+    .refine(value => Array.from(value).length <= 10, { 
+      message: "닉네임이 너무 깁니다" 
     })
     .optional(),
   imagePath: z.string().optional(),

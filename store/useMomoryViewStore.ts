@@ -22,12 +22,17 @@ export const useMomoryViewStore = create<MomoryViewState>((set) => ({
     user_momory_uuid: undefined,
   },
   openModal: (props: OpenModalProps) => {
+    console.log('modal props: ', props)
     const validateOpenModalProps = OpenModalPropsSchema.safeParse(props);
+    console.log('Validation Result:', validateOpenModalProps);
     if (!validateOpenModalProps.success) {
+      console.log('Validation Error:', validateOpenModalProps.error); 
       return;
     }
+    
     const isMomoryOwner = props.user_momory_uuid === props.momory_uuid;
     const isMemoryOwner = props.memory_user_id === props.logined_user_id;
+   
     if (isMomoryOwner || isMemoryOwner) {
       set({ isModalOpen: true, modalData: props });
     } else {
