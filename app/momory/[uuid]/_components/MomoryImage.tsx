@@ -9,7 +9,7 @@ interface MomoryImageProps {
   userId: number;
   uuid: string;
   memoryPublicUrlArray: string[];
-  momory_uuid: string| undefined
+  momory_uuid: string | undefined;
 }
 
 export default function MomoryImage({
@@ -17,7 +17,7 @@ export default function MomoryImage({
   userId,
   uuid,
   memoryPublicUrlArray,
-  momory_uuid
+  momory_uuid,
 }: MomoryImageProps) {
   const openModal = useMomoryViewStore((state) => state.openModal);
   return (
@@ -29,7 +29,9 @@ export default function MomoryImage({
             key={idx}
             className={`relative flex h-[33.46vw] w-[22.5vw] ${angle} cursor-pointer flex-col items-center justify-center bg-polaroid-frame bg-cover bg-center bg-no-repeat xs:h-[14.46rem] xs:w-[9.72rem]`}
             onClick={() => {
-              if (!currentMemory) return;
+              if (!currentMemory) {
+                return;
+              }
               openModal({
                 filter: currentMemory.filter,
                 memoryId: currentMemory.id,
@@ -40,7 +42,7 @@ export default function MomoryImage({
                 logined_user_id: userId,
                 memory_momory_uuid: currentMemory.momory_uuid,
                 momory_uuid: uuid,
-                user_momory_uuid: momory_uuid
+                user_momory_uuid: momory_uuid,
               });
             }}
           >
@@ -51,14 +53,14 @@ export default function MomoryImage({
                 alt={"메모리"}
                 src={memoryPublicUrlArray[idx]}
                 unoptimized={true}
-                className={`${currentMemory?.filter ? currentMemory.filter : "none"} h-[25.52vw] w-[18.75vw] xs:h-[10.71rem] xs:w-[8.1rem] object-cover bg-neutral-300`}
+                className={`${currentMemory?.filter ? currentMemory.filter : "none"} h-[25.52vw] w-[18.75vw] bg-neutral-300 object-cover xs:h-[10.71rem] xs:w-[8.1rem]`}
               ></Image>
             ) : (
               <div
                 className={`${currentMemory?.filter ? currentMemory.filter : "none"} h-[25.52vw] w-[18.75vw] xs:h-[10.71rem] xs:w-[8.1rem]`}
               ></div>
             )}
-            
+
             <div className="h-[5.83vw] w-full pl-[2.08vw] align-top font-nanum-Jung text-[3.75vw] font-medium tracking-wide text-[#252525] xs:h-[2.52rem] xs:pl-[0.9rem] xs:text-[1.62rem]">
               {currentMemory?.nickname
                 ? `@${currentMemory?.nickname}`

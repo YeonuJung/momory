@@ -30,13 +30,16 @@ export const OpenModalPropsSchema = z.object({
   message: z
     .string()
     .min(1, { message: "메시지를 입력해주세요" })
-    .max(50, { message: "메시지는 50자 이내로 입력해주세요" })
+    .refine(value => Array.from(value).length <= 50, { 
+      message: "메시지는 50자 이내로 입력해주세요" 
+    })
     .optional(),
   nickname: z
     .string()
     .min(1, { message: "닉네임을 입력해주세요" })
-    .max(5, { message: "닉네임은 5글자 이내로 입력해주세요" })
-    .max(5, { message: "닉네임은 5글자 이내로 입력해주세요" })
+    .refine(value => Array.from(value).length <= 5, { 
+      message: "닉네임은 5글자 이내로 입력해주세요" 
+    })
     .optional(),
   imagePath: z.string().optional(),
   filter: z.string().optional(),
@@ -80,12 +83,16 @@ export const MemoryStateSchema = z.object({
     memoryNickname: z
       .string()
       .min(1, { message: "닉네임을 입력해주세요" })
-      .max(5, { message: "닉네임은 5글자 이내로 입력해주세요" }),
-    memoryMessage: z
+      .refine(value => Array.from(value).length <= 5, { 
+        message: "닉네임은 5글자 이내로 입력해주세요" 
+      }),
+      memoryMessage: z
       .string()
       .min(1, { message: "메시지를 입력해주세요" })
-      .max(50, { message: "메시지는 50자 이내로 입력해주세요" }),
-  }),
+      .refine(value => Array.from(value).length <= 50, { 
+        message: "메시지는 50자 이내로 입력해주세요" 
+      })
+    }),
   currentAction: z.string(),
   setMemoryPhoto: z.function().args(z.instanceof(File)).returns(z.void()),
   setMemoryPhotoPreviewUrl: z.function().args(z.string()).returns(z.void()),

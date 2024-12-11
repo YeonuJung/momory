@@ -1,12 +1,37 @@
 "use client";
+
+import toast from "react-hot-toast";
+
+
 interface NicknameInputProps {
   momoryNickname: string;
   setMomoryNickname: (momoryNickname: string) => void;
 }
 export default function NicknameInput({momoryNickname, setMomoryNickname}: NicknameInputProps) {
+  let toastId: string | undefined;
+
   const handleNickname = (value: string) => {
-    if(value.length > 5) return;
-    setMomoryNickname(value.slice(0, 5));
+    // 입력된 값이 정규식을 통과하는지 체크
+  const hasOnlyValidChars = /^[\w\sㄱ-ㅎㅏ-ㅣ가-힣]*$/.test(value);
+  if (!hasOnlyValidChars) {
+    if(toastId){
+      toast.dismiss(toastId);
+    }
+    toastId = toast.error("닉네임에는 한글, 영문, 숫자만 입력 가능합니다", {
+      style: {
+        height: "65px",
+        fontSize: "1.5rem",
+        fontWeight: "bold",
+        color: "gray",
+        textAlign: "center",
+      },
+      duration: 2000
+    });
+    return;
+  }
+    const actualLength = Array.from(value).length
+    if(actualLength > 5) return;
+    setMomoryNickname(value);
   };
   return (
     <div className="relative flex items-center justify-center">
