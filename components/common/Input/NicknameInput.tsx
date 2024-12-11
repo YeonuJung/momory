@@ -12,8 +12,8 @@ export default function NicknameInput({momoryNickname, setMomoryNickname}: Nickn
 
   const handleNickname = (value: string) => {
     // 입력된 값이 정규식을 통과하는지 체크
-  const hasOnlyValidChars = /^[\w\sㄱ-ㅎㅏ-ㅣ가-힣]*$/.test(value);
-  if (!hasOnlyValidChars) {
+    const hasOnlyValidChars = /^[a-zA-Z0-9\s가-힣ㄱ-ㅎㅏ-ㅣㆍᆞᆢ]*$/.test(value);
+    if (!hasOnlyValidChars) {
     if(toastId){
       toast.dismiss(toastId);
     }
