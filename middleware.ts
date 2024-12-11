@@ -31,6 +31,7 @@ export async function middleware(request: NextRequest) {
     } else {
       userLimit.count++;
     }
+    return NextResponse.next()
   }
 
 
