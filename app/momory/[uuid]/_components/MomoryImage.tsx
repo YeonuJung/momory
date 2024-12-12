@@ -31,9 +31,7 @@ export default function MomoryImage({
             key={idx}
             className={`relative flex h-[33.46vw] w-[22.5vw] ${angle} cursor-pointer flex-col items-center justify-center bg-polaroid-frame bg-cover bg-center bg-no-repeat xs:h-[14.46rem] xs:w-[9.72rem]`}
             onClick={() => {
-              console.log('Current Memory:', currentMemory);
               if (!currentMemory) {
-                console.log('No current memory data');
                 return;
               }
               openModal({

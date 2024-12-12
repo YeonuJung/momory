@@ -5,22 +5,22 @@ import { useEffect, useState } from "react";
 // 디바운스 훅
 // 의존성 배열에 callback이 들어가니 사용하는 곳에서 useCallback으로 감싸서 사용해야 함
 export function useDebounce(callback: () => void, delay: number) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDebouncing, setIsDebouncing] = useState(false);
 
   useEffect(() => {
-    if (isSubmitting) {
+    if (isDebouncing) {
       const timer = setTimeout(async () => {
         callback();
-        setIsSubmitting(false);
+        setIsDebouncing(false);
       }, delay);
 
       return () => clearTimeout(timer);
     }
-  }, [callback, delay, isSubmitting]);
+  }, [callback, delay, isDebouncing]);
 
   return () => {
-    if (!isSubmitting) {
-      setIsSubmitting(true);
+    if (!isDebouncing) {
+      setIsDebouncing(true);
     }
-  };
+  }
 }

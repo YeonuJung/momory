@@ -4,7 +4,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { api } from "@/libs/axios";
 import { useMomoryStore } from "@/store/useMomoryStore";
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import toast from "react-hot-toast";
 
 interface MomoryHeaderProps {
@@ -13,6 +13,7 @@ interface MomoryHeaderProps {
 export default function MomoryHeader({ page }: MomoryHeaderProps) {
   const setCurrentAction = useMomoryStore((state) => state.setCurrentAction);
   const reset = useMomoryStore((state) => state.reset);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const router = useRouter()
   // 다음 페이지로 갈 때 닉네임 검증 필요(모든 검증은 store에서 실시)
   const handleNext = () => {
@@ -25,28 +26,38 @@ export default function MomoryHeader({ page }: MomoryHeaderProps) {
     const { momoryNickname, momoryPassword } = useMomoryStore.getState();
     const combinedPassword = momoryPassword.join("");
 
-    const response = await api.post("/api/v1/momory", {
+    setIsSubmitting(true);
+    toast.promise( api.post("/api/v1/momory", {
       momoryNickname: momoryNickname,
       momoryPassword: combinedPassword,
-    });
-    // api 요청 성공시 모모리로 이동
-    if(response.data.success){
-        router.push(response.data.redirectUrl)
-    }
-    if(response.data.error){
-      toast.error("모모리 생성에 실패했습니다. 다시 시도해주세요😌", {
-        duration: 2000,
-        style: {
-            height: "65px",
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            color: "gray",
-            textAlign: "center",
+    }), {
+      loading: "모모리를 생성하고 있어요...",
+      success: (response) => {
+        if(response.status !== 201){
+          throw new Error("모모리 생성 실패");
         }
-      });
-      reset("create_nickname");
-      router.push("/create-momory");
-    }
+        setTimeout(() => {
+          setIsSubmitting(false);
+          router.push(response.data.redirectUrl)
+        }, 1000)
+        return "모모리가 성공적으로 생성되었어요😘";
+      },
+      error: () => {
+        setIsSubmitting(false);
+        reset("create_nickname");
+        router.push("/create-momory");
+        return "모모리 생성에 실패했습니다. 다시 시도해주세요😌";
+      }
+    },
+    {
+      style: {
+        height: "65px",
+        fontSize: "1.5rem",
+        fontWeight: "bold",
+        color: "gray",
+        textAlign: "center",
+      },
+    },)        
   }, [setCurrentAction, router, reset]);
   // 디바운스 훅 사용, 불필요한 api 요청 방지
   const handleSubmit = useDebounce(handleSubmitCallback, 500);
@@ -66,6 +77,7 @@ export default function MomoryHeader({ page }: MomoryHeaderProps) {
           page={page}
           handleSubmit={handleSubmit}
           handlePrev={handlePrev}
+          isSubmitting={isSubmitting}
         />
       )}
     </>

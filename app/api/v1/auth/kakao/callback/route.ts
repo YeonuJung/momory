@@ -8,6 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 // 사용자가 카카오 로그인 요청후 카카오 서버에서 인가코드를 보내주는 곳
 export async function GET(request: NextRequest) {
   // 인가코드를 받아옴
+  let access_token
   const code = request.nextUrl.searchParams.get("code")!;
   // state가 있으면 리다이렉트 uri를 받아오기
   const momory_redirect_uri = request.nextUrl.searchParams.get("state");
@@ -15,6 +16,7 @@ export async function GET(request: NextRequest) {
     return redirectWithError(request, "auth", "kakao_auth");
   }
   // 카카오 서버에 인가코드를 보내서 토큰을 받아오는 과정
+  try{
   const kakaoTokenResponse = await api.post(
     `https://kauth.kakao.com/oauth/token`,
     new URLSearchParams({
@@ -29,13 +31,16 @@ export async function GET(request: NextRequest) {
       },
       timeout: 10000
     }
-   );
+   )
    if (!kakaoTokenResponse.data || !kakaoTokenResponse.data.access_token) {
     return redirectWithError(request, "auth", "kakao_auth");
    }
   // 카카오 서버에서 받아온 액세스토큰을 추출
-  const { access_token } = kakaoTokenResponse.data
-
+  access_token = kakaoTokenResponse.data.access_token;
+  } catch (error) {
+    console.error("error: ", error)
+    return redirectWithError(request, "auth", "kakao_auth");
+  }
   // 카카오 서버에 액세스 토큰을 보내서 사용자 정보를 받아오는 과정
   const userEmailResponse = await api.get("https://kapi.kakao.com/v2/user/me", {
     headers: {

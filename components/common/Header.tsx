@@ -27,12 +27,13 @@ export default function Header(props: HeaderProps) {
         className="h-[13.33vw] w-[27.08vw] cursor-pointer xs:h-[5.76rem] xs:w-[11.7rem]"
       />
       {PAGES_WITH_FINISHBUTTON.includes(page) ? (
-        <span
+        <button
+          disabled={"isSubmitting" in props ? props.isSubmitting : undefined}
           className="cursor-pointer font-nanum-Jung text-[6.67vw] font-normal text-sky active:scale-125 xs:text-[2.88rem] whitespace-nowrap"
           onClick={"handleSubmit" in props ? props.handleSubmit : undefined}
         >
           완료
-        </span>
+        </button>
       ) : (
         <div className="flex h-[4.62vw] w-[7.1vw] cursor-pointer items-center justify-center xs:h-[2rem] xs:w-[3.067rem]">
           <span

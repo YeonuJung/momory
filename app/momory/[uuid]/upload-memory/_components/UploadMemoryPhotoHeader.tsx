@@ -8,7 +8,7 @@ import { useMomoryStore } from "@/store/useMomoryStore";
 import { compressImage } from "@/utils/client/compressImage";
 import { revalidatePage } from "@/utils/server/revalidatePage";
 import { useParams, useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import toast from "react-hot-toast";
 
 interface UploadMemoryHeaderProps {
@@ -20,6 +20,7 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
   const resetFilter = useMemoryStore((state) => state.resetFilter);
   const resetCredential = useMemoryStore((state) => state.resetCredential);
   const reset = useMomoryStore((state) => state.reset);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const router = useRouter();
   const momory_uuid = useParams().uuid;
 
@@ -36,7 +37,7 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
     formData.append("filter", memoryFilter);
     formData.append("nickname", memoryCredential.memoryNickname);
     formData.append("message", memoryCredential.memoryMessage);
-
+    setIsSubmitting(true);
     toast.promise(
       api.post("/api/v1/memory", formData, {
         headers: {
@@ -51,12 +52,14 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
           }
           reset("enter_password");
           setTimeout(() => {
+            setIsSubmitting(false);
             revalidatePage(`/momory/${momory_uuid}`);
             router.push(`/momory/${momory_uuid}?authenticated=true`);
           }, 1000);
           return "사진이 성공적으로 저장되었어요😘";
         },
         error: () => {
+          setIsSubmitting(false);
           return "사진 업로드에 실패했어요. 다시 시도해주세요😌";
         },
       },
@@ -107,6 +110,7 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
           page={page}
           handlePrev={handlePrev}
           handleSubmit={handleSubmit}
+          isSubmitting={isSubmitting}
         />
       )}
     </>

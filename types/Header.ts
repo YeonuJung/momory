@@ -7,6 +7,7 @@ interface CreatePasswordHeaderProps{
   page: "create_password";
   handleSubmit: () => void;
   handlePrev: () => void;
+  isSubmitting: boolean;
 }
 
 interface EnterPasswordHeaderProps {
@@ -30,5 +31,6 @@ interface UploadMemoryCredentialHeaderProps {
     page: "upload_memory_credential";
     handleSubmit: () => void;
     handlePrev: () => void;
+    isSubmitting: boolean;
   };
 export type HeaderProps = CreateNicknameHeaderProps | CreatePasswordHeaderProps | EnterPasswordHeaderProps | UploadMemoryPhotoHeaderProps | SelectFilterHeaderProps | UploadMemoryCredentialHeaderProps;
