@@ -36,6 +36,7 @@ export const metadata: Metadata = {
       },
     ],
   },
+  keywords: ["모모리", "기억", "추억", "사진", "기록", "기록하기", "기록장소", "연말", "추억저장", "회고", "감성", "지인과 추억"],
   robots: {
     index: true,
     follow: true,
@@ -98,7 +99,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="ko"
       className={`${pretendard.variable} ${nanumJungHagSaeng.variable}`}
     >
       <head>

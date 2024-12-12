@@ -67,7 +67,7 @@ export default async function HomePage({
           src={backgroundIllust}
           width={390.6}
           height={597.6}
-          alt="배경 일러스트"
+          alt="모모리 배경 일러스트"
           priority={true}
           className="absolute z-20 h-auto w-[90.4vw] xs:w-[39.06rem]"
         ></Image>
@@ -78,7 +78,7 @@ export default async function HomePage({
           <SerivceGuide>올 한 해 따뜻했던 기억 이곳에 채워보세요</SerivceGuide>
         </ServiceGuideContainer>
         <Image
-          alt="로고 주변 일러스트"
+          alt="모모리 로고 주변 일러스트"
           src={logoAroundIllust}
           width={273.6}
           height={162.9}
