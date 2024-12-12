@@ -2,6 +2,7 @@
 import { create } from "zustand/react";
 import { MemoryState, MemoryStateSchema } from "@/types/store";
 import toast from "react-hot-toast";
+import * as Sentry from "@sentry/react";
 
 export const useMemoryStore = create<MemoryState>()((set, get) => ({
   memoryPhoto: { photo: undefined, previewUrl: "" },
@@ -48,9 +49,17 @@ export const useMemoryStore = create<MemoryState>()((set, get) => ({
         set({ currentAction });
         return true;
       case "upload_memory_credential":
+        Sentry.addBreadcrumb({
+          category: 'memory-validation',
+          message: '필터 유효성 검사 시작'
+      });
         const validateSelectFilterResult =
           MemoryStateSchema.shape.memoryFilter.safeParse(memoryFilter);
         if (!validateSelectFilterResult.success) {
+          Sentry.setExtra('filterValidationError', {
+            filter: memoryFilter,
+            error: validateSelectFilterResult.error.errors[0]
+        });
           toast.error(validateSelectFilterResult.error.errors[0].message, {
             style: {
               height: "65px",

@@ -10,6 +10,7 @@ import { revalidatePage } from "@/utils/server/revalidatePage";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import toast from "react-hot-toast";
+import * as Sentry from "@sentry/react";
 
 interface UploadMemoryHeaderProps {
   page: "upload_memory_photo" | "select_filter" | "upload_memory_credential";
@@ -25,13 +26,27 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
   const momory_uuid = useParams().uuid;
 
   const handleSubmitCallback = useCallback(async () => {
-    if (!setCurrentAction("submit")) return;
+    Sentry.addBreadcrumb({
+      category: "memory-upload",
+      message: "업로드 시작",
+      level: "info",
+    });
+    if (!setCurrentAction("submit")) {
+      Sentry.captureMessage("setCurrentAction 실패");
+      return;
+    }
     const { memoryPhoto, memoryFilter, memoryCredential } =
       useMemoryStore.getState();
     const formData = new FormData();
 
-    if (!memoryPhoto.photo) return;
+    if (!memoryPhoto.photo) {
+      Sentry.captureMessage('사진 없음');
+      return};
     const compressdFile = await compressImage(memoryPhoto.photo);
+    Sentry.addBreadcrumb({
+      category: 'memory-upload',
+      message: '이미지 압축 완료',
+  });
     formData.append("file", compressdFile);
     formData.append("momory_uuid", momory_uuid as string);
     formData.append("filter", memoryFilter);
@@ -58,7 +73,8 @@ export default function UploadMemoryHeader({ page }: UploadMemoryHeaderProps) {
           }, 1000);
           return "사진이 성공적으로 저장되었어요😘";
         },
-        error: () => {
+        error: (error) => {
+          Sentry.captureException(error);
           setIsSubmitting(false);
           return "사진 업로드에 실패했어요. 다시 시도해주세요😌";
         },
