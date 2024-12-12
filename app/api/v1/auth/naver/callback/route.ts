@@ -22,6 +22,7 @@ async function fetchWithRetry(url: string, data: any, retries: number = 2, timeo
 // 사용자가 네이버 로그인 요청후 네이버 서버에서 인가코드를 보내주는 곳
 export async function GET(request: NextRequest) {
   // 인가코드를 받아옴
+  let access_token
   const code = request.nextUrl.searchParams.get("code");
   // state가 있으면 리다이렉트 uri를 받아오기
   const momory_redirect_uri = request.nextUrl.searchParams.get(
@@ -32,6 +33,7 @@ export async function GET(request: NextRequest) {
   }
 
   // 네이버 서버에 인가코드를 보내서 토큰을 받아오는 과정
+  try{
   const naverTokenResponse = await fetchWithRetry(
     `https://nid.naver.com/oauth2.0/token`,
     new URLSearchParams({
@@ -48,8 +50,11 @@ export async function GET(request: NextRequest) {
     return redirectWithError(request, "auth", "naver_auth");
   }
   // 네이버 서버에서 받아온 액세스토큰을 추출
-  const { access_token } = naverTokenResponse.data;
-
+  access_token = naverTokenResponse.data.access_token;
+  } catch (error) {
+    console.error("error: ", error)
+    return redirectWithError(request, "auth", "naver_auth");
+  }
   // 네이버 서버에 액세스 토큰을 보내서 사용자 정보를 받아오는 과정
   const userEmailResponse = await api("https://openapi.naver.com/v1/nid/me", {
     headers: {
