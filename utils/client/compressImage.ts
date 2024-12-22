@@ -1,6 +1,6 @@
 export const compressImage = async (file: File): Promise<File> => {
   // 500KB로 제한
-  const MAX_FILE_SIZE = 0.5 * 1024 * 1024;
+  const MAX_FILE_SIZE = 1 * 1024 * 1024;
  
   if (file.size <= MAX_FILE_SIZE) {
     return file;
@@ -14,8 +14,8 @@ export const compressImage = async (file: File): Promise<File> => {
       let width = img.width;
       let height = img.height;
  
-      // 최대 해상도 제한 640px로 변경 (1280의 절반)
-      const MAX_DIMENSION = 640; 
+      // 최대 해상도 제한 1280으로 변경
+      const MAX_DIMENSION = 1280; 
       if (width > height && width > MAX_DIMENSION) {
         height = Math.round((height * MAX_DIMENSION) / width);
         width = MAX_DIMENSION;
@@ -56,7 +56,7 @@ export const compressImage = async (file: File): Promise<File> => {
  
           // 압축 후에도 크기가 큰 경우 재압축
           if (compressedFile.size > MAX_FILE_SIZE) {
-            const recompressQuality = 0.6; // 품질을 60%로 낮춤
+            const recompressQuality = 0.8; // 품질을 60%로 낮춤
             canvas.toBlob(
               (reBlob) => {
                 if (!reBlob) {
@@ -75,7 +75,7 @@ export const compressImage = async (file: File): Promise<File> => {
           }
         },
         "image/webp",
-        0.7 // 초기 품질을 70%로 낮춤
+        0.9 // 초기 품질을 70%로 낮춤
       );
     };
  
